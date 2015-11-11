@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }}</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">{{ title }}</a>
+    </div>
+
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+  <div class="row">
+    {# dump(results) #}
+
+    {% if results|length == 0 %}
+      <div class="alert alert-warning" role="alert">No checks registered!</div>
+    {% endif %}
+
+    <table class="table table-bordered">
+      {% for entry in results %}
+        {% if entry.success == true %}
+          {%  set class = 'success' %}
+        {% else %}
+          {%  set class = 'danger' %}
+        {% endif %}
+        <tr class="{{ class }}">
+          <th>{{ entry.label }}</th>
+          <td>
+            {% if entry.success == true %}
+              <span class="glyphicon glyphicon-ok"></span>
+            {% else %}
+              <span class="glyphicon glyphicon-exclamation-sign"></span>
+            {% endif %}
+            {{ entry.error|default('OK') }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+</body>
+</html>

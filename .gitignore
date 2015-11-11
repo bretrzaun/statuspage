@@ -1,0 +1,5 @@
+vendor/
+tests/unittest.xml
+tests/coverage.xml
+tests/report/
+.idea/

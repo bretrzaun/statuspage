@@ -1,4 +1,6 @@
-# StatusPage - a Silex ServiceProvider
+# StatusPage
+
+[![Build Status](https://travis-ci.org/bretrzaun/statuspage.svg?branch=master)](https://travis-ci.org/bretrzaun/statuspage)
 
 Add a simple status page to Silex application with custom checks.
 

@@ -27,3 +27,6 @@ $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
     })
 ));
 ```
+# UnitTests
+The code is automatically tested.
+https://travis-ci.org/bretrzaun/statuspage

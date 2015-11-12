@@ -7,14 +7,22 @@ use BretRZaun\StatusPage\Result;
 class DoctrineConnectionCheck extends AbstractCheck
 {
 
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
     protected $db;
 
     public function __construct($label, \Doctrine\DBAL\Connection $db)
     {
-        $this->label = $label;
+        parent::__construct($label);
         $this->db = $db;
     }
 
+    /**
+     * Check Doctrine connection
+     *
+     * @return Result
+     */
     public function check()
     {
         $result = new Result($this->label);

@@ -4,7 +4,7 @@ namespace BretRZaun\StatusPage\Check;
 
 use BretRZaun\StatusPage\Result;
 
-class DoctrineCheck extends AbstractCheck
+class DoctrineConnectionCheck extends AbstractCheck
 {
 
     protected $db;

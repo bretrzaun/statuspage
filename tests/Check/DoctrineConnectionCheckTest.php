@@ -1,6 +1,6 @@
 <?php
 
-class DoctrineCheckTest extends PHPUnit_Framework_TestCase
+class DoctrineConnectionCheckTest extends PHPUnit_Framework_TestCase
 {
 
     public function testSuccess()
@@ -11,7 +11,7 @@ class DoctrineCheckTest extends PHPUnit_Framework_TestCase
         $db->expects($this->once())
             ->method('connect');
 
-        $check = new \BretRZaun\StatusPage\Check\DoctrineCheck('Test', $db);
+        $check = new \BretRZaun\StatusPage\Check\DoctrineConnectionCheck('Test', $db);
         $result = $check->check();
 
         $this->assertTrue($result->getSuccess());
@@ -28,7 +28,7 @@ class DoctrineCheckTest extends PHPUnit_Framework_TestCase
             ->will($this->throwException(new Exception('test failure')))
         ;
 
-        $check = new \BretRZaun\StatusPage\Check\DoctrineCheck('Test', $db);
+        $check = new \BretRZaun\StatusPage\Check\DoctrineConnectionCheck('Test', $db);
         $result = $check->check();
 
         $this->assertFalse($result->getSuccess());

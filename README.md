@@ -20,7 +20,7 @@ Registering the service provider you add the checks via a callback method:
 $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
     'statuspage.title' => 'MySilexApp - Status Page',
     'statuspage.checker' => $app->protect(function($app, $statusChecker) {
-        $check = new \BretRZaun\StatusPage\Check\DoctrineCheck('Database', $app['db']);
+        $check = new \BretRZaun\StatusPage\Check\DoctrineConnectionCheck('Database', $app['db']);
         $statusChecker->addCheck($check);
         
         // ... add more checks here

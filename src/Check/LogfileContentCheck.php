@@ -3,7 +3,7 @@ namespace BretRZaun\StatusPage\Check;
 
 use BretRZaun\StatusPage\Result;
 
-class LogfileCheck extends AbstractCheck
+class LogfileContentCheck extends AbstractCheck
 {
 
     protected $filename;

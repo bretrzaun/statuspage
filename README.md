@@ -27,3 +27,12 @@ $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
     })
 ));
 ```
+
+## Tests
+
+To run the tests, just enter:
+
+```
+composer install
+vendor/bin/phpunit
+```

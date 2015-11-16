@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/bretrzaun/statuspage.svg?branch=master)](https://travis-ci.org/bretrzaun/statuspage)
 
-Add a simple status page to Silex application with custom checks.
+Add a simple status page to Silex applications with custom checks.
 
-The status page runs all registers checks and renders a page showing its results.
+The status page runs all registered checks and renders a page showing its results.
 
 ## Installation
 

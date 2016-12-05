@@ -1,12 +1,15 @@
 <?php
 namespace BretRZaun\StatusPage;
 
+use Pimple\Container;
+use Silex\Api\BootableProviderInterface;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Pimple\ServiceProviderInterface;
+use Symfony\Component\HttpFoundation\Response;
 
-class StatusPageServiceProvider implements ServiceProviderInterface
+class StatusPageServiceProvider implements ServiceProviderInterface, BootableProviderInterface
 {
-    public function register(Application $app)
+    public function register(Container $container)
     {
 
     }
@@ -31,7 +34,7 @@ class StatusPageServiceProvider implements ServiceProviderInterface
                 )
             );
 
-            $response = new \Symfony\Component\HttpFoundation\Response($content, $code);
+            $response = new Response($content, $code);
             return $response;
         });
     }

@@ -3,7 +3,7 @@ namespace BretRZaun\StatusPage\Check;
 
 use BretRZaun\StatusPage\Result;
 
-class LogfileCheck extends AbstractCheck
+class LogfileContentCheck extends AbstractCheck
 {
 
     protected $filename;
@@ -11,7 +11,7 @@ class LogfileCheck extends AbstractCheck
 
     public function __construct($label, $filename)
     {
-        $this->label = $label;
+        parent::__construct($label);
         $this->filename = $filename;
     }
 
@@ -31,8 +31,8 @@ class LogfileCheck extends AbstractCheck
         }
 
         if (!empty($this->content)) {
-            $filecontent = file_get_contents($this->filename);
-            if (strstr($filecontent, $this->content) === false) {
+            $fileContent = file_get_contents($this->filename);
+            if (strstr($fileContent, $this->content) === false) {
                 $result->setSuccess(false);
                 $result->setError('Log file failure');
                 $result->setDetails('Timestamp: '.date('d.m.Y H:i', filemtime($this->filename)));

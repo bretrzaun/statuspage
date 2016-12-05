@@ -1,12 +1,12 @@
 <?php
 
-use BretRZaun\StatusPage\Check\LogfileCheck;
+use BretRZaun\StatusPage\Check\LogfileContentCheck;
 
-class LogfileCheckTest extends PHPUnit_Framework_TestCase
+class LogfileContentCheckTest extends PHPUnit_Framework_TestCase
 {
     public function testFileDoesNotExists()
     {
-        $check = new LogfileCheck('Test', 'doesnotexist.txt');
+        $check = new LogfileContentCheck('Test', 'doesnotexist.txt');
         $result = $check->check();
 
         $this->assertFalse($result->getSuccess());
@@ -15,7 +15,7 @@ class LogfileCheckTest extends PHPUnit_Framework_TestCase
 
     public function testSuccess()
     {
-        $check = new LogfileCheck('Test', __DIR__.'/../test.log');
+        $check = new LogfileContentCheck('Test', __DIR__.'/../test.log');
         $check->setCheckfor('complete');
         $result = $check->check();
 
@@ -24,7 +24,7 @@ class LogfileCheckTest extends PHPUnit_Framework_TestCase
 
     public function testFailure()
     {
-        $check = new LogfileCheck('Test', __DIR__.'/../test.log');
+        $check = new LogfileContentCheck('Test', __DIR__.'/../test.log');
         $check->setCheckfor('foo');
         $result = $check->check();
 

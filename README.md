@@ -29,6 +29,17 @@ $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
 ));
 ```
 
+## Out-of-the-box checks
+
+- *CallbackCheck* generic check using a PHP callback function
+- *DoctrineConnectionCheck* checks for a valid [Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) connection
+- *LogFileContentCheck* check a (log) file for certain content
+- *UrlCheck* checks a URL
+ 
+### Custom checks
+
+Custom checks can be easily added by inheriting ```BretRZaun\StatusPage\Check\AbstractCheck```.
+
 ## Tests
 
 To run the tests, just enter:

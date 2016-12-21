@@ -26,10 +26,5 @@
     },
     "suggest": {
         "doctrine/dbal" : "for checking DB connections"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "1.1.x-dev"
-        }
     }
 }

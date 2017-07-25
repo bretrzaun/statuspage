@@ -14,6 +14,7 @@
         }
     },
     "require": {
+        "php" : ">7.0",
         "silex/silex": "^2.0",
         "twig/twig": "^1.23",
         "guzzlehttp/guzzle": "^6.0"

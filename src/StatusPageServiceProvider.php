@@ -18,7 +18,7 @@ class StatusPageServiceProvider implements ServiceProviderInterface, BootablePro
     {
         $app->get('/status', function() use ($app) {
 
-            $checker = new StatusChecker($app);
+            $checker = new StatusChecker();
             if (isset($app['statuspage.checker'])) {
                 $app['statuspage.checker']($app, $checker);
             }
@@ -34,8 +34,7 @@ class StatusPageServiceProvider implements ServiceProviderInterface, BootablePro
                 )
             );
 
-            $response = new Response($content, $code);
-            return $response;
+            return new Response($content, $code);
         });
     }
 }

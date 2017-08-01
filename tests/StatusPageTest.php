@@ -1,6 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage\Tests;
 
+use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Result;
 use BretRZaun\StatusPage\StatusPageServiceProvider;
 use Silex\WebTestCase;
@@ -32,7 +33,7 @@ class StatusPageTest extends WebTestCase
 
     public function testSuccess()
     {
-        $mock = $this->getMockBuilder('BretRZaun\StatusPage\Check\AbstractCheck')
+        $mock = $this->getMockBuilder(AbstractCheck::class)
             ->setConstructorArgs(array('TestCheck'))
             ->getMock();
 
@@ -60,7 +61,7 @@ class StatusPageTest extends WebTestCase
 
     public function testFailer()
     {
-        $mock = $this->getMockBuilder('BretRZaun\StatusPage\Check\AbstractCheck')
+        $mock = $this->getMockBuilder(AbstractCheck::class)
             ->setConstructorArgs(array('TestCheck'))
             ->getMock();
 

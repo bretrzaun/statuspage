@@ -4,6 +4,8 @@ namespace BretRZaun\StatusPage\Tests;
 use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Result;
 use BretRZaun\StatusPage\StatusPageServiceProvider;
+use Silex\Application;
+use Silex\Provider\TwigServiceProvider;
 use Silex\WebTestCase;
 
 class StatusPageTest extends WebTestCase
@@ -11,18 +13,18 @@ class StatusPageTest extends WebTestCase
 
     public function createApplication()
     {
-        $app = new \Silex\Application();
+        $app = new Application();
         $app['debug'] = true;
         unset($app['exception_handler']);
-        $app->register(new \Silex\Provider\TwigServiceProvider());
+        $app->register(new TwigServiceProvider());
         return $app;
     }
 
     public function testNoChecks()
     {
-        $this->app->register(new StatusPageServiceProvider(), array(
+        $this->app->register(new StatusPageServiceProvider(), [
             'statuspage.title' => 'TestPage'
-        ));
+        ]);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', '/status');
@@ -44,12 +46,12 @@ class StatusPageTest extends WebTestCase
             ->method('check')
             ->willReturn($result);
 
-        $this->app->register(new StatusPageServiceProvider(), array(
+        $this->app->register(new StatusPageServiceProvider(), [
             'statuspage.title' => 'TestPage',
             'statuspage.checker' => $this->app->protect(function($app, $statusChecker) use ($mock) {
                 $statusChecker->addCheck($mock);
             })
-        ));
+        ]);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', '/status');

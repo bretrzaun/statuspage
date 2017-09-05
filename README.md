@@ -58,6 +58,7 @@ $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
 
 - **CallbackCheck**: generic check using a PHP callback function
 - **DoctrineConnectionCheck**: checks for a valid [Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) connection
+- **ElasticsearchCheck**: checks an [Elasticsearch Client](https://github.com/elastic/elasticsearch-php) for successful pings 
 - **LogFileContentCheck**: check a (log) file for certain content
 - **UrlCheck**: checks a URL
 - **PhpExtensionCheck**: check a given PHP extension is loaded

@@ -3,8 +3,9 @@ namespace BretRZaun\StatusPage\Tests\Check;
 
 use BretRZaun\StatusPage\Check\DoctrineConnectionCheck;
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\TestCase;
 
-class DoctrineConnectionCheckTest extends \PHPUnit_Framework_TestCase
+class DoctrineConnectionCheckTest extends TestCase
 {
 
     public function testSuccess()

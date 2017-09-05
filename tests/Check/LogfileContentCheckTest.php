@@ -1,8 +1,10 @@
 <?php
+namespace BretRZaun\StatusPage\Tests\Check;
 
 use BretRZaun\StatusPage\Check\LogfileContentCheck;
+use PHPUnit\Framework\TestCase;
 
-class LogfileContentCheckTest extends PHPUnit_Framework_TestCase
+class LogfileContentCheckTest extends TestCase
 {
     public function testFileDoesNotExists()
     {

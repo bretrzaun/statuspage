@@ -37,10 +37,11 @@
           <td>
             {% if entry.success == true %}
               <span class="glyphicon glyphicon-ok"></span>
+              {{ entry.error|default('OK') }}
             {% else %}
               <span class="glyphicon glyphicon-exclamation-sign"></span>
+              {{ entry.error|default('Failure') }}
             {% endif %}
-            {{ entry.error|default('OK') }}
           </td>
         </tr>
       {% endfor %}

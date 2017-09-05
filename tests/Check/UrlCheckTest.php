@@ -6,8 +6,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
-class UrlCheckTest extends \PHPUnit_Framework_TestCase
+class UrlCheckTest extends TestCase
 {
 
     public function testSuccess()

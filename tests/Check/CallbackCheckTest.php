@@ -2,8 +2,9 @@
 namespace BretRZaun\StatusPage\Tests\Check;
 
 use BretRZaun\StatusPage\Check\CallbackCheck;
+use PHPUnit\Framework\TestCase;
 
-class CallbackCheckTest extends \PHPUnit_Framework_TestCase
+class CallbackCheckTest extends TestCase
 {
 
     public function testSuccess()

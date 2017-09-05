@@ -23,9 +23,11 @@
         "phpunit/phpunit" : "~5.0",
         "symfony/browser-kit": "^3.3",
         "symfony/css-selector": "^3.3",
-        "doctrine/dbal": "~2.2"
+        "doctrine/dbal": "~2.2",
+        "elasticsearch/elasticsearch": "*"
     },
     "suggest": {
-        "doctrine/dbal" : "for checking DB connections"
+        "doctrine/dbal" : "for checking DB connections",
+        "elasticsearch/elasticsearch" : "for checking Elasticsearch"
     }
 }

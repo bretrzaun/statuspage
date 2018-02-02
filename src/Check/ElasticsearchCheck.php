@@ -13,15 +13,22 @@ class ElasticsearchCheck extends AbstractCheck
     protected $client;
 
     /**
+     * @var array
+     */
+    protected $indices;
+
+    /**
      * Constructor
      *
      * @param $label
      * @param Client $client
+     * @param array $indices Indices to check for
      */
-    public function __construct($label, Client $client)
+    public function __construct($label, Client $client, array $indices = [])
     {
         parent::__construct($label);
         $this->client = $client;
+        $this->indices = $indices;
     }
 
     /**
@@ -34,6 +41,12 @@ class ElasticsearchCheck extends AbstractCheck
         $result = new Result($this->label);
         if ($this->client->ping() !== true) {
             $result->setSuccess(false);
+        }
+
+        foreach ($this->indices as $index) {
+            if (!$this->client->indices()->exists(['index' => $index])) {
+                $result->setError("Index '$index' does not exist");
+            }
         }
         return $result;
     }

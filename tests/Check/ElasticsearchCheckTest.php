@@ -56,7 +56,7 @@ class ElasticsearchCheckTest extends TestCase
         $check = new ElasticsearchCheck('elasticsearch test', $client, ['notexisting-test-index']);
         $result = $check->check();
 
-        $this->assertTrue($result->getSuccess());
+        $this->assertFalse($result->getSuccess());
         $this->assertEquals('Index \'notexisting-test-index\' does not exist', $result->getError());
     }
 }

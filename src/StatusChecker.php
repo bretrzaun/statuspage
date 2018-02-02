@@ -27,7 +27,7 @@ class StatusChecker implements StatusCheckerInterface
         }
     }
 
-    public function getResults()
+    public function getResults(): array
     {
         return $this->results;
     }

@@ -43,7 +43,7 @@ class FileCheck extends AbstractCheck
         return $this;
     }
 
-    public function check()
+    public function check(): Result
     {
         $result = new Result($this->label);
 

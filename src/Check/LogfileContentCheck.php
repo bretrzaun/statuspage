@@ -20,7 +20,7 @@ class LogfileContentCheck extends AbstractCheck
         $this->content = $content;
     }
 
-    public function check()
+    public function check(): Result
     {
         $result = new Result($this->label);
 

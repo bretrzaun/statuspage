@@ -42,7 +42,7 @@ class UrlCheck extends AbstractCheck
      *
      * @return Result
      */
-    public function check()
+    public function check(): Result
     {
         $result = new Result($this->label);
         try {

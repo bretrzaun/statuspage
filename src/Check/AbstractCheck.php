@@ -1,6 +1,8 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
 
+use BretRZaun\StatusPage\Result;
+
 abstract class AbstractCheck
 {
     protected $label;
@@ -10,5 +12,5 @@ abstract class AbstractCheck
         $this->label = $label;
     }
 
-    abstract public function check();
+    abstract public function check(): Result;
 }

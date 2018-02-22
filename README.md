@@ -68,6 +68,7 @@ $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
 - **LogFileContentCheck**: check a (log) file for certain content
 - **UrlCheck**: checks a URL
 - **PhpExtensionCheck**: check a given PHP extension is loaded
+- **PhpMemoryLimitCheck**: check PHP memory limit
  
 ### Custom checks
 

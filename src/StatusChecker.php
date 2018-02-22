@@ -5,25 +5,35 @@ use BretRZaun\StatusPage\Check\AbstractCheck;
 
 class StatusChecker implements StatusCheckerInterface
 {
+    /**
+     * registered ungrouped checks
+     * @var AbstractCheck[]
+     */
+    protected $ungroupedChecks;
 
     /**
-     * results of the registered checks
-     * @var array
+     * @var StatusCheckerGroup[]
      */
     protected $results = array();
 
-
-    protected $checks = array();
-
     public function addCheck(AbstractCheck $checker)
     {
-        $this->checks[] = $checker;
+        if (!$this->ungroupedChecks) {
+            $this->ungroupedChecks = new StatusCheckerGroup('Ungrouped');
+            $this->results[] = $this->ungroupedChecks;
+        }
+        $this->ungroupedChecks->addCheck($checker);
+    }
+
+    public function addGroup(StatusCheckerGroup $group)
+    {
+        $this->results[] = $group;
     }
 
     public function check()
     {
-        foreach($this->checks as $checker) {
-            $this->results[] = $checker->check();
+        foreach($this->results as $group) {
+            $group->check();
         }
     }
 
@@ -32,11 +42,11 @@ class StatusChecker implements StatusCheckerInterface
         return $this->results;
     }
 
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         $error = false;
-        foreach($this->results as $result) {
-            if (!$result->getSuccess()) {
+        foreach($this->results as $group) {
+            if ($group->hasErrors()) {
                 $error = true;
                 break;
             }

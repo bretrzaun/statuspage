@@ -20,6 +20,12 @@ $checker = new \BretRZaun\StatusPage\StatusChecker();
 // add your checks here
 $checker->addCheck(...);
 
+// in different groups if you like
+$group = new StatusCheckerGroup('Group 01');
+$group->addCheck(...);
+$group->addCheck(...);
+$checker->addGroup($group);
+
 // run the checks
 $checker->check();
 
@@ -49,7 +55,7 @@ $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
         $check = new \BretRZaun\StatusPage\Check\DoctrineConnectionCheck('Database', $app['db']);
         $statusChecker->addCheck($check);
         
-        // ... add more checks here
+        // ... add more checks or groups here
     })
 ));
 ```

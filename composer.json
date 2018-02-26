@@ -30,6 +30,11 @@
         "doctrine/dbal" : "for checking DB connections",
         "elasticsearch/elasticsearch" : "for checking Elasticsearch"
     },
+    "config" : {
+        "platform": {
+            "php" : "7.0"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.0.x-dev"

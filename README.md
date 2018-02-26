@@ -7,6 +7,10 @@ Add a simple status page to applications with custom checks.
 
 The status page runs all registered checks and renders a page showing its results.
 
+<p align="center">
+    <img src="examples/standalone.png">
+</p>
+
 ## Installation
 
 ```

@@ -28,7 +28,7 @@ $checker->addCheck(new PhpExtensionCheck('PHP Extension / SimpleXML', 'SimpleXML
 $checker->check();
 
 // use the built-in Twig template
-$loader = new Twig_Loader_Filesystem('../resources/views/');
+$loader = new Twig_Loader_Filesystem(__DIR__ . '/../resources/views/');
 $twig = new Twig_Environment($loader, ['autoescape' => false]);
 
 $content = $twig->render(

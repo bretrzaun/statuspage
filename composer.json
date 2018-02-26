@@ -29,5 +29,10 @@
     "suggest": {
         "doctrine/dbal" : "for checking DB connections",
         "elasticsearch/elasticsearch" : "for checking Elasticsearch"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
     }
 }

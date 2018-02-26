@@ -7,7 +7,7 @@ class StatusChecker implements StatusCheckerInterface
 {
     /**
      * registered ungrouped checks
-     * @var AbstractCheck[]
+     * @var StatusCheckerGroup[]
      */
     protected $ungroupedChecks;
 
@@ -19,7 +19,7 @@ class StatusChecker implements StatusCheckerInterface
     public function addCheck(AbstractCheck $checker)
     {
         if (!$this->ungroupedChecks) {
-            $this->ungroupedChecks = new StatusCheckerGroup('Ungrouped');
+            $this->ungroupedChecks = new StatusCheckerGroup('');
             $this->results[] = $this->ungroupedChecks;
         }
         $this->ungroupedChecks->addCheck($checker);

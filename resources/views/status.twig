@@ -1,52 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>{{ title }}</title>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ title }}</title>
+
+    <!-- Bootstrap 4 JS & CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <style type="text/css">
+        .card-header {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">{{ title }}</a>
-    </div>
-
-  </div><!-- /.container-fluid -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">{{ title }}</a>
 </nav>
 
+<div class="mt-4"></div>
+
+{% if results|length == 0 %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-warning" role="alert">No checks registered!</div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 <div class="container">
-  <div class="row">
-    {# dump(results) #}
+    <div class="row">
+        <div class="col">
+            <div>
 
-    {% if results|length == 0 %}
-      <div class="alert alert-warning" role="alert">No checks registered!</div>
-    {% endif %}
+                {% for group in results %}
+                    {# determine group color #}
+                    {% if group.hasErrors() == false %}
+                        {% set classColor = 'success' %}
+                    {% else %}
+                        {% set classColor = 'danger' %}
+                    {% endif %}
 
-    <table class="table table-bordered">
-      {% for entry in results %}
-        {% if entry.success == true %}
-          {%  set class = 'success' %}
-        {% else %}
-          {%  set class = 'danger' %}
-        {% endif %}
-        <tr class="{{ class }}">
-          <th>{{ entry.label }}</th>
-          <td>
-            {% if entry.success == true %}
-              <span class="glyphicon glyphicon-ok"></span>
-              {{ entry.error|default('OK') }}
-            {% else %}
-              <span class="glyphicon glyphicon-exclamation-sign"></span>
-              {{ entry.error|default('Failure') }}
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  </div>
+                    {# determin if group contents are shown by default #}
+                    {% set classShow = '' %}
+                    {% set hasEmptyTitle = group.getTitle() is empty %}
+                    {% if group.hasErrors() or hasEmptyTitle %}
+                        {% set classShow = ' show' %}
+                    {% endif %}
+                    <div class="card{{ hasEmptyTitle ? ' mt-3' : '' }}">
+                        {% if not hasEmptyTitle %}
+                            <div class="card-header text-white bg-{{ classColor }}" id="heading-{{ loop.index0 }}"
+                                 data-toggle="collapse"
+                                 data-target="#collapse-{{ loop.index0 }}" aria-controls="collapse-{{ loop.index0 }}"
+                                 aria-expanded="true">
+                                <h2 class="mb-0">
+                                    {{ group.getTitle() }}
+                                </h2>
+                            </div>
+                        {% endif %}
+
+                        <div id="collapse-{{ loop.index0 }}" class="collapse{{ classShow }}" aria-labelledby="heading-{{ loop.index0 }}">
+                            <div class="card-body p-0">
+                                <table class="table table-bordered table-hover m-0">
+                                    {% for result in group.getResults() %}
+                                        {% if result.success == true %}
+                                            {% set classColor = 'success' %}
+                                        {% else %}
+                                            {% set classColor = 'danger' %}
+                                        {% endif %}
+                                        <tr class="table-{{ classColor }}">
+                                            <th width="50%">{{ result.label }}</th>
+                                            <td width="50%">
+                                                {% if result.success == true %}
+                                                    {{ result.error|default('OK') }}
+                                                {% else %}
+                                                    {{ result.error|default('Failure') }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

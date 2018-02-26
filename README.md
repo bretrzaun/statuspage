@@ -7,6 +7,10 @@ Add a simple status page to applications with custom checks.
 
 The status page runs all registered checks and renders a page showing its results.
 
+<p align="center">
+    <img src="examples/standalone.png">
+</p>
+
 ## Installation
 
 ```
@@ -19,6 +23,12 @@ composer require bretrzaun/statuspage
 $checker = new \BretRZaun\StatusPage\StatusChecker();
 // add your checks here
 $checker->addCheck(...);
+
+// in different groups if you like
+$group = new StatusCheckerGroup('Group 01');
+$group->addCheck(...);
+$group->addCheck(...);
+$checker->addGroup($group);
 
 // run the checks
 $checker->check();
@@ -49,7 +59,7 @@ $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
         $check = new \BretRZaun\StatusPage\Check\DoctrineConnectionCheck('Database', $app['db']);
         $statusChecker->addCheck($check);
         
-        // ... add more checks here
+        // ... add more checks or groups here
     })
 ));
 ```
@@ -62,6 +72,8 @@ $app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
 - **LogFileContentCheck**: check a (log) file for certain content
 - **UrlCheck**: checks a URL
 - **PhpExtensionCheck**: check a given PHP extension is loaded
+- **PhpMemoryLimitCheck**: check PHP memory limit
+- **PhpVersionCheck**: check PHP version
  
 ### Custom checks
 

@@ -46,61 +46,83 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div>
-
-                {% for group in results %}
-                    {# determine group color #}
-                    {% if group.hasErrors() == false %}
-                        {% set classColor = 'success' %}
-                    {% else %}
-                        {% set classColor = 'danger' %}
-                    {% endif %}
-
-                    {# determin if group contents are shown by default #}
-                    {% set classShow = '' %}
-                    {% set hasEmptyTitle = group.getTitle() is empty %}
-                    {% if group.hasErrors() or hasEmptyTitle %}
-                        {% set classShow = ' show' %}
-                    {% endif %}
-                    <div class="card{{ hasEmptyTitle ? ' mt-3' : '' }}">
-                        {% if not hasEmptyTitle %}
-                            <div class="card-header text-white bg-{{ classColor }}" id="heading-{{ loop.index0 }}"
-                                 data-toggle="collapse"
-                                 data-target="#collapse-{{ loop.index0 }}" aria-controls="collapse-{{ loop.index0 }}"
-                                 aria-expanded="true">
-                                <h2 class="mb-0">
-                                    {{ group.getTitle() }}
-                                </h2>
-                            </div>
+            {% if showDetails is not defined or showDetails %}
+                {# show detailed results #}
+                <div>
+                    {% for group in results %}
+                        {# determine group color #}
+                        {% if group.hasErrors() == false %}
+                            {% set classColor = 'success' %}
+                        {% else %}
+                            {% set classColor = 'danger' %}
                         {% endif %}
 
-                        <div id="collapse-{{ loop.index0 }}" class="collapse{{ classShow }}" aria-labelledby="heading-{{ loop.index0 }}">
-                            <div class="card-body p-0">
-                                <table class="table table-bordered table-hover m-0">
-                                    {% for result in group.getResults() %}
-                                        {% if result.success == true %}
-                                            {% set classColor = 'success' %}
-                                        {% else %}
-                                            {% set classColor = 'danger' %}
-                                        {% endif %}
-                                        <tr class="table-{{ classColor }}">
-                                            <th width="50%">{{ result.label }}</th>
-                                            <td width="50%">
-                                                {% if result.success == true %}
-                                                    {{ result.error|default('OK') }}
-                                                {% else %}
-                                                    {{ result.error|default('Failure') }}
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
+                        {# determin if group contents are shown by default #}
+                        {% set classShow = '' %}
+                        {% set hasEmptyTitle = group.getTitle() is empty %}
+                        {% if group.hasErrors() or hasEmptyTitle %}
+                            {% set classShow = ' show' %}
+                        {% endif %}
+                        <div class="card{{ hasEmptyTitle ? ' mt-3' : '' }}">
+                            {% if not hasEmptyTitle %}
+                                <div class="card-header text-white bg-{{ classColor }}" id="heading-{{ loop.index0 }}"
+                                     data-toggle="collapse"
+                                     data-target="#collapse-{{ loop.index0 }}" aria-controls="collapse-{{ loop.index0 }}"
+                                     aria-expanded="true">
+                                    <h2 class="mb-0">
+                                        {{ group.getTitle() }}
+                                    </h2>
+                                </div>
+                            {% endif %}
+
+                            <div id="collapse-{{ loop.index0 }}" class="collapse{{ classShow }}" aria-labelledby="heading-{{ loop.index0 }}">
+                                <div class="card-body p-0">
+                                    <table class="table table-bordered table-hover m-0">
+                                        {% for result in group.getResults() %}
+                                            {% if result.success == true %}
+                                                {% set classColor = 'success' %}
+                                            {% else %}
+                                                {% set classColor = 'danger' %}
+                                            {% endif %}
+                                            <tr class="table-{{ classColor }}">
+                                                <th width="50%">{{ result.label }}</th>
+                                                <td width="50%">
+                                                    {% if result.success == true %}
+                                                        {{ result.error|default('OK') }}
+                                                    {% else %}
+                                                        {{ result.error|default('Failure') }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {# show abbreviated results #}
+                {% set hasErrors = false %}
+                {% for group in results %}
+                    {% if group.hasErrors() == true %}
+                        {% set hasErrors = true %}
+                    {% endif %}
                 {% endfor %}
+                {% if hasErrors == false %}
+                    {% set classColor = 'success' %}
+                    {% set statusText = 'System is up and running' %}
+                {% else %}
+                    {% set classColor = 'danger' %}
+                    {% set statusText = 'System is having some issues' %}
+                {% endif %}
 
-            </div>
+                <div class="text-white bg-{{ classColor }} p-3 rounded">
+                    <h2 class="mb-0">
+                        {{ statusText }}
+                    </h2>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

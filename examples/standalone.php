@@ -27,6 +27,10 @@ $checker->addCheck(new PhpExtensionCheck('PHP Extension / SimpleXML', 'SimpleXML
 // run the checks
 $checker->check();
 
+// determine if the user is allowed to see the details (based on their IP)
+$whitelistPattern = '.*'; // this intentionally matches everything
+$showDetails = (bool)preg_match('|(?mi-Us)' . $whitelistPattern . '|', $_SERVER['REMOTE_ADDR']);
+
 // use the built-in Twig template
 $loader = new Twig_Loader_Filesystem(__DIR__ . '/../resources/views/');
 $twig = new Twig_Environment($loader, ['autoescape' => false]);
@@ -35,7 +39,8 @@ $content = $twig->render(
     'status.twig',
     [
         'results' => $checker->getResults(),
-        'title' => 'My status page'
+        'title' => 'My status page',
+        'showDetails' => $showDetails,
     ]
 );
 

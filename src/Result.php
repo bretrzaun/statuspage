@@ -23,7 +23,7 @@ class Result
         $this->success = $success;
     }
 
-    public function getSuccess()
+    public function getSuccess(): bool
     {
         return $this->success;
     }

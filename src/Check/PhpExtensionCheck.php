@@ -30,7 +30,7 @@ class PhpExtensionCheck extends AbstractCheck
     public function check(): Result
     {
         $result = new Result($this->label);
-        if (!extension_loaded($this->extension)) {
+        if (!\extension_loaded($this->extension)) {
             $result->setSuccess(false);
             $result->setError('Extension '.$this->extension.' is missing');
         }

@@ -3,16 +3,17 @@
 namespace BretRZaun\StatusPage\Check;
 
 use BretRZaun\StatusPage\Result;
+use Doctrine\DBAL\Connection;
 
 class DoctrineConnectionCheck extends AbstractCheck
 {
 
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Connection
      */
     protected $db;
 
-    public function __construct($label, \Doctrine\DBAL\Connection $db)
+    public function __construct($label, Connection $db)
     {
         parent::__construct($label);
         $this->db = $db;

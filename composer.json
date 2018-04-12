@@ -1,6 +1,6 @@
 {
     "name" : "bretrzaun/statuspage",
-    "description": "Adds a status page to a Silex app",
+    "description": "Adds a status page to an app",
     "license": "MIT",
     "authors" : [
         {
@@ -33,11 +33,6 @@
     "config" : {
         "platform": {
             "php" : "7.0"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0.x-dev"
         }
     }
 }

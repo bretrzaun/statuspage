@@ -17,8 +17,9 @@ $checker->addGroup($group01);
 $group02 = new StatusCheckerGroup('PHP Extensions');
 $group02->addCheck(new PhpExtensionCheck('PHP Extension / cURL', 'curl'));
 $group02->addCheck(new PhpExtensionCheck('PHP Extension / Zlib', 'zlib'));
-$group02->addCheck(new PhpExtensionCheck('PHP Extension / xml', 'xml'));
+$group02->addCheck(new PhpExtensionCheck('PHP Extension / xml', 'xml', '7.0.0'));
 $group02->addCheck(new PhpExtensionCheck('PHP Extension / foo', 'foo'));
+$group02->addCheck(new PhpExtensionCheck('PHP Extension / xml', 'xml', '99.0.0'));
 $checker->addGroup($group02);
 
 $checker->addCheck(new PhpExtensionCheck('PHP Extension / libxml', 'libxml'));

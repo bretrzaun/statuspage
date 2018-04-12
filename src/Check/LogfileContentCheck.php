@@ -32,7 +32,7 @@ class LogfileContentCheck extends AbstractCheck
 
         if (!empty($this->content)) {
             $fileContent = file_get_contents($this->filename);
-            if (strstr($fileContent, $this->content) === false) {
+            if (false === strpos($fileContent, $this->content)) {
                 $result->setSuccess(false);
                 $result->setError('Log file failure');
                 $result->setDetails('Timestamp: '.date('d.m.Y H:i', filemtime($this->filename)));

@@ -37,7 +37,7 @@ class CallbackCheck extends AbstractCheck
                 $result->setSuccess(false);
                 $result->setError($return);
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $result->setSuccess(false);
             $result->setError($e->getMessage());
         }

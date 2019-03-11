@@ -56,7 +56,7 @@ class FileCheck extends AbstractCheck
         if (array_key_exists('writable', $this->options)) {
             if (!is_writable($this->filename)) {
                 $result->setSuccess(false);
-                $result->setError("$this->filename ist not writable!");
+                $result->setError("$this->filename is not writable!");
             }
         }
 

@@ -16,7 +16,7 @@ class StatusChecker implements StatusCheckerInterface
      */
     protected $results = array();
 
-    public function addCheck(AbstractCheck $checker)
+    public function addCheck(AbstractCheck $checker): void
     {
         if (!$this->ungroupedChecks) {
             $this->ungroupedChecks = new StatusCheckerGroup('');
@@ -25,12 +25,12 @@ class StatusChecker implements StatusCheckerInterface
         $this->ungroupedChecks->addCheck($checker);
     }
 
-    public function addGroup(StatusCheckerGroup $group)
+    public function addGroup(StatusCheckerGroup $group): void
     {
         $this->results[] = $group;
     }
 
-    public function check()
+    public function check(): void
     {
         foreach($this->results as $group) {
             $group->check();

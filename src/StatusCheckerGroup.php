@@ -12,7 +12,7 @@ class StatusCheckerGroup
     protected $checks = [];
 
     /** @var Result[] */
-    protected $results = array();
+    protected $results = [];
 
 
     /**
@@ -37,7 +37,7 @@ class StatusCheckerGroup
      *
      * @param AbstractCheck $checker
      */
-    public function addCheck(AbstractCheck $checker)
+    public function addCheck(AbstractCheck $checker): void
     {
         $this->checks[] = $checker;
     }
@@ -45,7 +45,7 @@ class StatusCheckerGroup
     /**
      * Runs all added checks.
      */
-    public function check()
+    public function check(): void
     {
         foreach($this->checks as $checker) {
             $this->results[] = $checker->check();

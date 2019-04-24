@@ -2,7 +2,6 @@
 
 namespace BretRZaun\StatusPage\Tests\Check;
 
-use BretRZaun\StatusPage\Check\LogfileContentCheck;
 use BretRZaun\StatusPage\Check\PhpMemoryLimitCheck;
 use PHPUnit\Framework\TestCase;
 
@@ -16,16 +15,16 @@ class PhpMemoryLimitCheckTest extends TestCase
         $this->checker = new PhpMemoryLimitCheck('Test', 1024);
     }
 
-    public function getTestSizeStringConversion()
+    public function getTestSizeStringConversion(): array
     {
-        return array(
-            array('1024M', 1024),
-            array('128m', 128),
-            array('2048K', 2),
-            array('512k', 0.5),
-            array('1G', 1024),
-            array('2G', 2048),
-        );
+        return [
+            ['1024M', 1024],
+            ['128m', 128],
+            ['2048K', 2],
+            ['512k', 0.5],
+            ['1G', 1024],
+            ['2G', 2048],
+        ];
     }
 
     /**
@@ -34,7 +33,7 @@ class PhpMemoryLimitCheckTest extends TestCase
      *
      * @dataProvider getTestSizeStringConversion
      */
-    public function testSizeStringConversion($sizeString, $expectedMegabytes)
+    public function testSizeStringConversion($sizeString, $expectedMegabytes): void
     {
         $actual = $this->checker->getMegabytesFromSizeString($sizeString);
         $this->assertEquals($expectedMegabytes, $actual);

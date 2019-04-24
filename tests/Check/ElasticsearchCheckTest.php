@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class ElasticsearchCheckTest extends TestCase
 {
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $client = $this->createMock(Client::class);
         $client->expects($this->once())
@@ -23,7 +23,7 @@ class ElasticsearchCheckTest extends TestCase
         $this->assertEmpty($result->getError());
     }
 
-    public function testFailure()
+    public function testFailure(): void
     {
         $client = $this->createMock(Client::class);
         $client->expects($this->once())
@@ -36,7 +36,7 @@ class ElasticsearchCheckTest extends TestCase
         $this->assertFalse($result->getSuccess());
     }
 
-    public function testMissingIndex()
+    public function testMissingIndex(): void
     {
         $client = $this->createMock(Client::class);
         $client->expects($this->once())

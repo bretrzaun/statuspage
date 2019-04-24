@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class CallbackCheckTest extends TestCase
 {
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $check = new CallbackCheck('callback test', function() {
             return true;
@@ -19,7 +19,7 @@ class CallbackCheckTest extends TestCase
         $this->assertEmpty($result->getError());
     }
 
-    public function testFailure()
+    public function testFailure(): void
     {
         $check = new CallbackCheck('callback test', function() {
             return 'an error occured!';

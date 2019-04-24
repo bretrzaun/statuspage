@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 class UrlCheckTest extends TestCase
 {
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $mock = new MockHandler([
             new Response(200)
@@ -27,7 +27,7 @@ class UrlCheckTest extends TestCase
         $this->assertEmpty($result->getError());
     }
 
-    public function testFailure()
+    public function testFailure(): void
     {
         $mock = new MockHandler([
             new Response(404)

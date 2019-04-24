@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class FileCheckTest extends TestCase
 {
-    public function testFileDoesNotExists()
+    public function testFileDoesNotExists(): void
     {
         $check = new FileCheck('Test', 'doesnotexist.txt');
         $result = $check->check();
@@ -15,7 +15,7 @@ class FileCheckTest extends TestCase
         $this->assertEquals('doesnotexist.txt does not exist!', $result->getError());
     }
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $check = new FileCheck('Test', __DIR__.'/../test.log');
         $result = $check->check();
@@ -23,7 +23,7 @@ class FileCheckTest extends TestCase
         $this->assertTrue($result->getSuccess());
     }
 
-    public function testWritable()
+    public function testWritable(): void
     {
         $check = new FileCheck('Test', __DIR__.'/../test.log');
         $check->isWritable();

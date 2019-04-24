@@ -24,7 +24,7 @@ class StatusPageTest extends WebTestCase
         return $app;
     }
 
-    public function testNoChecks()
+    public function testNoChecks(): void
     {
         $this->app->register(new StatusPageServiceProvider(), [
             'statuspage.title' => 'TestPage'
@@ -37,10 +37,10 @@ class StatusPageTest extends WebTestCase
         $this->assertCount(1, $crawler->filter('a:contains("TestPage")'));
     }
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $mock = $this->getMockBuilder(AbstractCheck::class)
-            ->setConstructorArgs(array('TestCheck'))
+            ->setConstructorArgs(['TestCheck'])
             ->getMock();
 
         $result = new Result('TestCheck');
@@ -65,7 +65,7 @@ class StatusPageTest extends WebTestCase
         $this->assertCount(1, $crawler->filter('td:contains("OK")'));
     }
 
-    public function testFailer()
+    public function testFailer(): void
     {
         $mock = $this->getMockBuilder(AbstractCheck::class)
             ->setConstructorArgs(array('TestCheck'))
@@ -79,12 +79,12 @@ class StatusPageTest extends WebTestCase
             ->method('check')
             ->willReturn($result);
 
-        $this->app->register(new StatusPageServiceProvider(), array(
+        $this->app->register(new StatusPageServiceProvider(), [
             'statuspage.title' => 'TestPage',
             'statuspage.checker' => $this->app->protect(function($app, $statusChecker) use ($mock) {
                 $statusChecker->addCheck($mock);
             })
-        ));
+        ]);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', '/status');
@@ -102,12 +102,12 @@ class StatusPageTest extends WebTestCase
      */
     public function getTestShowDetails(): array
     {
-        return array(
-            array(false, false, 'System is up and running', 'my test detail'),
-            array(true, false, 'System is having some issues', 'my test detail'),
-            array(false, true, 'my test detail', 'System is up and running'),
-            array(true, true, 'my test detail', 'System is having some issues'),
-        );
+        return [
+            [false, false, 'System is up and running', 'my test detail'],
+            [true, false, 'System is having some issues', 'my test detail'],
+            [false, true, 'my test detail', 'System is up and running'],
+            [true, true, 'my test detail', 'System is having some issues'],
+        ];
     }
 
     /**
@@ -115,7 +115,7 @@ class StatusPageTest extends WebTestCase
      *
      * @dataProvider getTestShowDetails
      */
-    public function testShowDetails($hasFailure, $showDetailsParam, $htmlContains, $htmlNotContains)
+    public function testShowDetails($hasFailure, $showDetailsParam, $htmlContains, $htmlNotContains): void
     {
         $checker = new StatusChecker();
         $check = new CallbackCheck('my test detail', function() use ($hasFailure) {

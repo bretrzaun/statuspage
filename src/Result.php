@@ -18,7 +18,7 @@ class Result
         return $this->label;
     }
 
-    public function setSuccess($success)
+    public function setSuccess($success): void
     {
         $this->success = $success;
     }
@@ -28,7 +28,7 @@ class Result
         return $this->success;
     }
 
-    public function setError($error)
+    public function setError($error): void
     {
         $this->error = $error;
     }
@@ -38,7 +38,7 @@ class Result
         return $this->error;
     }
 
-    public function setDetails($details)
+    public function setDetails($details): void
     {
         $this->details = $details;
     }

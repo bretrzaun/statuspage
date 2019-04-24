@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class LogfileContentCheckTest extends TestCase
 {
-    public function testFileDoesNotExists()
+    public function testFileDoesNotExists(): void
     {
         $check = new LogfileContentCheck('Test', 'doesnotexist.txt');
         $result = $check->check();
@@ -15,7 +15,7 @@ class LogfileContentCheckTest extends TestCase
         $this->assertEquals('Log file doesnotexist.txt does not exist!', $result->getError());
     }
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $check = new LogfileContentCheck('Test', __DIR__.'/../test.log');
         $check->setCheckfor('complete');
@@ -24,7 +24,7 @@ class LogfileContentCheckTest extends TestCase
         $this->assertTrue($result->getSuccess());
     }
 
-    public function testFailure()
+    public function testFailure(): void
     {
         $check = new LogfileContentCheck('Test', __DIR__.'/../test.log');
         $check->setCheckfor('foo');

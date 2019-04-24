@@ -15,7 +15,7 @@ class LogfileContentCheck extends AbstractCheck
         $this->filename = $filename;
     }
 
-    public function setCheckfor($content)
+    public function setCheckfor($content): void
     {
         $this->content = $content;
     }

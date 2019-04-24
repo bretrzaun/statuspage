@@ -2,7 +2,9 @@
 namespace BretRZaun\StatusPage\Check;
 
 use BretRZaun\StatusPage\Result;
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class UrlCheck extends AbstractCheck
 {
@@ -32,7 +34,7 @@ class UrlCheck extends AbstractCheck
      *
      * @param Client $client
      */
-    public function setHttpClient(Client $client)
+    public function setHttpClient(Client $client): void
     {
         $this->client = $client;
     }
@@ -41,6 +43,7 @@ class UrlCheck extends AbstractCheck
      * Check URL
      *
      * @return Result
+     * @throws GuzzleException
      */
     public function check(): Result
     {
@@ -51,7 +54,7 @@ class UrlCheck extends AbstractCheck
                 $result->setSuccess(false);
                 $result->setError('HTTP status code is '.$res->getStatusCode());
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $result->setSuccess(false);
             $result->setError('URL failed: '.$this->url);
         }

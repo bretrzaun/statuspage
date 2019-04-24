@@ -7,22 +7,22 @@ use PHPUnit\Framework\TestCase;
 
 class PhpExtensionCheckTest extends TestCase
 {
-    public function getTestPhpExtensionCheck()
+    public function getTestPhpExtensionCheck(): array
     {
-        return array(
-            array(null, null, '7.1.0', true),
-            array('7.0.0', '7.2.0', '7.1.0', true),
-            array('7.0.0', '7.2.0', '7.0.0', true),
-            array('7.0.0', '7.2.0', '7.2.0', false),
-            array('7.0.0', '7.2.0', '5.6.0', false),
-            array('7.0.0', '7.2.0', '7.3.0', false),
-            array(null, '7.2.0', '5.6.0', true),
-            array(null, '7.2.0', '7.1.0', true),
-            array(null, '7.2.0', '7.3.0', false),
-            array('7.0.0', null, '5.6.0', false),
-            array('7.0.0', null, '7.1.0', true),
-            array('7.0.0', null, '7.3.0', true),
-        );
+        return [
+            [null, null, '7.1.0', true],
+            ['7.0.0', '7.2.0', '7.1.0', true],
+            ['7.0.0', '7.2.0', '7.0.0', true],
+            ['7.0.0', '7.2.0', '7.2.0', false],
+            ['7.0.0', '7.2.0', '5.6.0', false],
+            ['7.0.0', '7.2.0', '7.3.0', false],
+            [null, '7.2.0', '5.6.0', true],
+            [null, '7.2.0', '7.1.0', true],
+            [null, '7.2.0', '7.3.0', false],
+            ['7.0.0', null, '5.6.0', false],
+            ['7.0.0', null, '7.1.0', true],
+            ['7.0.0', null, '7.3.0', true],
+        ];
     }
 
     /**
@@ -33,7 +33,7 @@ class PhpExtensionCheckTest extends TestCase
      *
      * @dataProvider getTestPhpExtensionCheck
      */
-    public function testPhpExtensionCheck($greaterEquals, $lessThan, $extensionVersion, $expected)
+    public function testPhpExtensionCheck($greaterEquals, $lessThan, $extensionVersion, $expected): void
     {
         $mock = $this->getMockBuilder(PhpExtensionCheck::class)
             ->setConstructorArgs(['Test', 'test_extension', $greaterEquals, $lessThan])

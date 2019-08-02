@@ -16,10 +16,14 @@ class PhpIniCheckTest extends TestCase
             ['allow_url_fopen', PhpIniCheck::TypeBoolean, true, null, true],
             ['allow_url_fopen', PhpIniCheck::TypeBoolean, false, null, false],
 
+            // php.ini default value: off
+            ['allow_url_include', PhpIniCheck::TypeBoolean, true, null, false],
+            ['allow_url_include', PhpIniCheck::TypeBoolean, false, null, true],
+
             // php.ini default value: 128M
             ['memory_limit', PhpIniCheck::TypeMemory, 64, null, true],
             ['memory_limit', PhpIniCheck::TypeMemory, 128, null, true],
-            ['memory_limit', PhpIniCheck::TypeMemory, 256, null, false],
+            ['memory_limit', PhpIniCheck::TypeMemory, 5000, null, false],
 
             // php.ini default value: 1000
             ['max_input_vars', PhpIniCheck::TypeNumber, 1000, null, true],

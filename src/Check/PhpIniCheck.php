@@ -88,6 +88,22 @@ class PhpIniCheck extends AbstractCheck
      */
     protected function checkBoolean() {
         $result = new Result($this->label);
+        // some boolval advance
+        switch (strtolower($this->iniValue)) {
+            case 'on':
+                $this->iniValue = true;
+                break;
+            case 'off':
+                $this->iniValue = false;
+                break;
+            case 'yes':
+                $this->iniValue = true;
+                break;
+            case 'no':
+                $this->iniValue = false;
+                break;
+        }
+
         $result->setSuccess( boolval($this->iniValue) === boolval($this->varValue) );
         $result->setError("php.ini value of '".$this->varName."' is set to '".strval(boolval($this->iniValue))."' instead of expected '".strval(boolval($this->varValue))."'");
         return $result;

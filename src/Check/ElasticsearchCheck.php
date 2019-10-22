@@ -3,6 +3,7 @@ namespace BretRZaun\StatusPage\Check;
 
 use BretRZaun\StatusPage\Result;
 use Elasticsearch\Client;
+use Exception;
 
 class ElasticsearchCheck extends AbstractCheck
 {
@@ -39,15 +40,20 @@ class ElasticsearchCheck extends AbstractCheck
     public function check(): Result
     {
         $result = new Result($this->label);
-        if ($this->client->ping() !== true) {
-            $result->setSuccess(false);
-        }
-
-        foreach ($this->indices as $index) {
-            if (!$this->client->indices()->exists(['index' => $index])) {
+        try {
+            if ($this->client->ping() !== true) {
                 $result->setSuccess(false);
-                $result->setError("Index '$index' does not exist");
+                return $result;
             }
+            foreach ($this->indices as $index) {
+                if (!$this->client->indices()->exists(['index' => $index])) {
+                    $result->setSuccess(false);
+                    $result->setError("Index '$index' does not exist");
+                }
+            }
+        } catch (Exception $e) {
+            $result->setSuccess(false);
+            $result->setError($e->getMessage());
         }
         return $result;
     }

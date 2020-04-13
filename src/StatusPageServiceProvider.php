@@ -7,6 +7,9 @@ use Silex\Application;
 use Pimple\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated
+ */
 class StatusPageServiceProvider implements ServiceProviderInterface, BootableProviderInterface
 {
     public function register(Container $container)

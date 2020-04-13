@@ -40,6 +40,6 @@ class UrlCheckTest extends TestCase
         $result = $check->check();
 
         $this->assertFalse($result->getSuccess());
-        $this->assertContains('URL failed: http://foo.int', $result->getError());
+        $this->assertStringContainsString('URL failed: http://foo.int', $result->getError());
     }
 }

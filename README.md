@@ -45,41 +45,25 @@ $content = $twig->render(
             'title' => 'My status page'
         ]
     );
-$code = $checker->hasErrors() ? 503 : 200;    
-// create a response with $content and $code     
-```
-
-## Usage with Silex
-
-Registering the service provider you add the checks via a callback method: 
-
-```
-$app->register(new \BretRZaun\StatusPage\StatusPageServiceProvider(), array(
-    'statuspage.title' => 'MySilexApp - Status Page',
-    'statuspage.checker' => $app->protect(function($app, $statusChecker) {
-        $check = new \BretRZaun\StatusPage\Check\DoctrineConnectionCheck('Database', $app['db']);
-        $statusChecker->addCheck($check);
-        
-        // ... add more checks or groups here
-    })
-));
+$code = $checker->hasErrors() ? 503 : 200;
+// create a response with $content and $code
 ```
 
 ## Out-of-the-box checks
 
 - **CallbackCheck**: generic check using a PHP callback function
 - **DoctrineConnectionCheck**: checks for a valid [Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) connection
-- **ElasticsearchCheck**: checks an [Elasticsearch Client](https://github.com/elastic/elasticsearch-php) for successful pings 
+- **ElasticsearchCheck**: checks an [Elasticsearch Client](https://github.com/elastic/elasticsearch-php) for successful pings
 - **LogFileContentCheck**: check a (log) file for certain content
 - **UrlCheck**: checks a URL
 - **PhpExtensionCheck**: check a given PHP extension is loaded
 - **PhpIniCheck**: check a value of php.ini
 - **PhpMemoryLimitCheck**: check PHP memory limit
 - **PhpVersionCheck**: check PHP version
- 
+
 ### Custom checks
 
-Custom checks can be easily added by inheriting ```BretRZaun\StatusPage\Check\AbstractCheck```.
+Custom checks can be easily added by inheriting `BretRZaun\StatusPage\Check\AbstractCheck`.
 
 ## Tests
 

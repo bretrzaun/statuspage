@@ -6,34 +6,36 @@ use BretRZaun\StatusPage\Check\CallbackCheck;
 use BretRZaun\StatusPage\Result;
 use BretRZaun\StatusPage\StatusChecker;
 use BretRZaun\StatusPage\StatusPageServiceProvider;
-use Silex\Application;
-use Silex\Provider\TwigServiceProvider;
-use Silex\WebTestCase;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Symfony\Component\DomCrawler\Crawler;
 
-class StatusPageTest extends WebTestCase
+class StatusPageTest extends TestCase
 {
 
-    public function createApplication()
+    protected function render(StatusChecker $checker, string $title): string
     {
-        $app = new Application();
-        $app['debug'] = true;
-        unset($app['exception_handler']);
-        $app->register(new TwigServiceProvider());
-        return $app;
+        // use the built-in Twig template
+        $loader = new FilesystemLoader('resources/views/');
+        $twig = new Environment($loader, ['autoescape' => false]);
+
+        $checker->check();
+        $content = $twig->render(
+            'status.twig',
+            [
+                'results' => $checker->getResults(),
+                'title' => $title
+            ]
+        ); 
+        return $content;       
     }
 
     public function testNoChecks(): void
     {
-        $this->app->register(new StatusPageServiceProvider(), [
-            'statuspage.title' => 'TestPage'
-        ]);
+        $html = $this->render(new StatusChecker(), 'TestPage');
+        $crawler = new Crawler($html);
 
-        $client = $this->createClient();
-        $crawler = $client->request('GET', '/status');
-
-        $this->assertTrue($client->getResponse()->isOk());
         $this->assertCount(1, $crawler->filter('a:contains("TestPage")'));
     }
 
@@ -50,17 +52,11 @@ class StatusPageTest extends WebTestCase
             ->method('check')
             ->willReturn($result);
 
-        $this->app->register(new StatusPageServiceProvider(), [
-            'statuspage.title' => 'TestPage',
-            'statuspage.checker' => $this->app->protect(function($app, $statusChecker) use ($mock) {
-                $statusChecker->addCheck($mock);
-            })
-        ]);
-
-        $client = $this->createClient();
-        $crawler = $client->request('GET', '/status');
-
-        $this->assertTrue($client->getResponse()->isOk());
+        $statusChecker = new StatusChecker();
+        $statusChecker->addCheck($mock);
+        $html = $this->render($statusChecker, 'TestPage');
+        
+        $crawler = new Crawler($html);
         $this->assertCount(1, $crawler->filter('th:contains("TestCheck")'));
         $this->assertCount(1, $crawler->filter('td:contains("OK")'));
     }
@@ -79,18 +75,11 @@ class StatusPageTest extends WebTestCase
             ->method('check')
             ->willReturn($result);
 
-        $this->app->register(new StatusPageServiceProvider(), [
-            'statuspage.title' => 'TestPage',
-            'statuspage.checker' => $this->app->protect(function($app, $statusChecker) use ($mock) {
-                $statusChecker->addCheck($mock);
-            })
-        ]);
-
-        $client = $this->createClient();
-        $crawler = $client->request('GET', '/status');
-
-        $this->assertFalse($client->getResponse()->isOk());
-        $this->assertEquals(503, $client->getResponse()->getStatusCode());
+        $statusChecker = new StatusChecker();
+        $statusChecker->addCheck($mock);
+        $html = $this->render($statusChecker, 'TestPage');
+    
+        $crawler = new Crawler($html);
         $this->assertCount(1, $crawler->filter('th:contains("TestCheck")'));
         $this->assertCount(1, $crawler->filter('td:contains("Failed")'));
     }
@@ -124,8 +113,8 @@ class StatusPageTest extends WebTestCase
         $checker->addCheck($check);
         $checker->check();
 
-        $loader = new Twig_Loader_Filesystem(__DIR__ . '/../resources/views/');
-        $twig = new Twig_Environment($loader, ['autoescape' => false]);
+        $loader = new FilesystemLoader(__DIR__ . '/../resources/views/');
+        $twig = new Environment($loader, ['autoescape' => false]);
         $content = $twig->render(
             'status.twig',
             [
@@ -135,7 +124,7 @@ class StatusPageTest extends WebTestCase
             ]
         );
 
-        $this->assertContains($htmlContains, $content);
-        $this->assertNotContains($htmlNotContains, $content);
+        $this->assertStringContainsString($htmlContains, $content);
+        $this->assertStringNotContainsString($htmlNotContains, $content);
     }
 }

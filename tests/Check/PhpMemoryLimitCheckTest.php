@@ -10,7 +10,7 @@ class PhpMemoryLimitCheckTest extends TestCase
     /** @var PhpMemoryLimitCheck */
     protected $checker;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->checker = new PhpMemoryLimitCheck('Test', 1024);
     }

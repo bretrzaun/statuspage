@@ -18,7 +18,7 @@ The status page runs all registered checks and renders a page showing its result
 composer require bretrzaun/statuspage
 ```
 
-## Standalone usage
+## Usage
 
 ```
 $checker = new \BretRZaun\StatusPage\StatusChecker();

@@ -14,7 +14,7 @@ class StatusChecker implements StatusCheckerInterface
     /**
      * @var StatusCheckerGroup[]
      */
-    protected $results = array();
+    protected $results = [];
 
     public function addCheck(CheckInterface $checker): void
     {

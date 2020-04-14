@@ -3,7 +3,7 @@ namespace BretRZaun\StatusPage\Check;
 
 use BretRZaun\StatusPage\Result;
 
-abstract class AbstractCheck
+abstract class AbstractCheck implements CheckInterface
 {
     protected $label;
 

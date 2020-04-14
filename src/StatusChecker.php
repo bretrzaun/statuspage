@@ -1,7 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage;
 
-use BretRZaun\StatusPage\Check\AbstractCheck;
+use BretRZaun\StatusPage\Check\CheckInterface;
 
 class StatusChecker implements StatusCheckerInterface
 {
@@ -16,7 +16,7 @@ class StatusChecker implements StatusCheckerInterface
      */
     protected $results = array();
 
-    public function addCheck(AbstractCheck $checker): void
+    public function addCheck(CheckInterface $checker): void
     {
         if (!$this->ungroupedChecks) {
             $this->ungroupedChecks = new StatusCheckerGroup('');

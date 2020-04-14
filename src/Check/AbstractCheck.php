@@ -7,7 +7,7 @@ abstract class AbstractCheck implements CheckInterface
 {
     protected $label;
 
-    public function __construct($label)
+    public function __construct(string $label)
     {
         $this->label = $label;
     }

@@ -13,7 +13,7 @@ class DoctrineConnectionCheck extends AbstractCheck
      */
     protected $db;
 
-    public function __construct($label, Connection $db)
+    public function __construct(string $label, Connection $db)
     {
         parent::__construct($label);
         $this->db = $db;

@@ -17,7 +17,7 @@ class CallbackCheck extends AbstractCheck
      * @param $label
      * @param callable $callback
      */
-    public function __construct($label, callable $callback)
+    public function __construct(string $label, callable $callback)
     {
         parent::__construct($label);
         $this->callback = $callback;

@@ -17,14 +17,14 @@ class PhpVersionCheck extends AbstractCheck
      * @param string $greaterEquals minimum PHP version (optional)
      * @param string $lessThan PHP version has to be smaller than this (optional)
      */
-    public function __construct($label, $greaterEquals = null, $lessThan = null)
+    public function __construct(string $label, string $greaterEquals = null, string $lessThan = null)
     {
         parent::__construct($label);
         $this->greaterEquals = $greaterEquals;
         $this->lessThan = $lessThan;
     }
 
-    public function getPhpVersion()
+    public function getPhpVersion(): string
     {
         return PHP_VERSION;
     }

@@ -30,7 +30,7 @@ class FileCheck extends AbstractCheck
      * @param $filename
      * @param array $options
      */
-    public function __construct($label, $filename, array $options = [])
+    public function __construct(string $label, string $filename, array $options = [])
     {
         parent::__construct($label);
         $this->filename = $filename;

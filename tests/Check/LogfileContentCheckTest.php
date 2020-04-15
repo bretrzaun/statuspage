@@ -32,6 +32,6 @@ class LogfileContentCheckTest extends TestCase
 
         $this->assertFalse($result->getSuccess());
         $this->assertEquals('Log file failure', $result->getError());
-        $this->assertContains('Timestamp:', $result->getDetails());
+        $this->assertStringContainsString('Timestamp:', $result->getDetails());
     }
 }

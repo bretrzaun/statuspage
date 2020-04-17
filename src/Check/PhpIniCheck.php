@@ -86,7 +86,8 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkBoolean() {
+    protected function checkBoolean() 
+    {
         $result = new Result($this->label);
         // some boolval advance
         switch (strtolower($this->iniValue)) {
@@ -112,7 +113,8 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkMemory() {
+    protected function checkMemory() 
+    {
         $result = new Result($this->label);
         if ($this->iniValue != -1) {
             $value = $this->stringToMegabyte($this->iniValue);
@@ -125,7 +127,8 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkNumber() {
+    protected function checkNumber() 
+    {
         $result = new Result($this->label);
         if (!is_null($this->varValue)) {
             if ($this->iniValue < $this->varValue) {
@@ -148,7 +151,8 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkRegex() {
+    protected function checkRegex() 
+    {
         $result = new Result($this->label);
         $result->setSuccess(preg_match('~'.$this->varValue.'~', $this->iniValue));
         $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."', expected is '".strval($this->varValue)."'");
@@ -158,7 +162,8 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkString() {
+    protected function checkString() 
+    {
         $result = new Result($this->label);
         $result->setSuccess( strval($this->iniValue) == strval($this->varValue) );
         $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."', expected is '".strval($this->varValue)."'");

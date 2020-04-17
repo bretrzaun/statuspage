@@ -1,4 +1,5 @@
 <?php
+
 namespace BretRZaun\StatusPage\Tests;
 
 use BretRZaun\StatusPage\Check\AbstractCheck;
@@ -27,8 +28,8 @@ class StatusPageTest extends TestCase
                 'results' => $checker->getResults(),
                 'title' => $title
             ]
-        ); 
-        return $content;       
+        );
+        return $content;
     }
 
     public function testNoChecks(): void
@@ -55,7 +56,7 @@ class StatusPageTest extends TestCase
         $statusChecker = new StatusChecker();
         $statusChecker->addCheck($mock);
         $html = $this->render($statusChecker, 'TestPage');
-        
+
         $crawler = new Crawler($html);
         $this->assertCount(1, $crawler->filter('th:contains("TestCheck")'));
         $this->assertCount(1, $crawler->filter('td:contains("OK")'));
@@ -78,7 +79,7 @@ class StatusPageTest extends TestCase
         $statusChecker = new StatusChecker();
         $statusChecker->addCheck($mock);
         $html = $this->render($statusChecker, 'TestPage');
-    
+
         $crawler = new Crawler($html);
         $this->assertCount(1, $crawler->filter('th:contains("TestCheck")'));
         $this->assertCount(1, $crawler->filter('td:contains("Failed")'));
@@ -107,7 +108,7 @@ class StatusPageTest extends TestCase
     public function testShowDetails($hasFailure, $showDetailsParam, $htmlContains, $htmlNotContains): void
     {
         $checker = new StatusChecker();
-        $check = new CallbackCheck('my test detail', function() use ($hasFailure) {
+        $check = new CallbackCheck('my test detail', function () use ($hasFailure) {
             return $hasFailure ? 'an error occured!' : true;
         });
         $checker->addCheck($check);

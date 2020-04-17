@@ -22,7 +22,7 @@ class UrlCheck extends AbstractCheck
      * @param string $label Label
      * @param string $url URL to be tested
      */
-    public function __construct($label, $url)
+    public function __construct(string $label, string $url)
     {
         parent::__construct($label);
         $this->url = $url;

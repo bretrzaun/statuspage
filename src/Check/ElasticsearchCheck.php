@@ -25,7 +25,7 @@ class ElasticsearchCheck extends AbstractCheck
      * @param Client $client
      * @param array $indices Indices to check for
      */
-    public function __construct($label, Client $client, array $indices = [])
+    public function __construct(string $label, Client $client, array $indices = [])
     {
         parent::__construct($label);
         $this->client = $client;

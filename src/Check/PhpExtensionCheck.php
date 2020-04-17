@@ -21,7 +21,7 @@ class PhpExtensionCheck extends AbstractCheck
      * @param string $greaterEquals minimum version (optional)
      * @param string $lessThan      version has to be smaller than this (optional)
      */
-    public function __construct($label, $extension, $greaterEquals = null, $lessThan = null)
+    public function __construct(string $label, string $extension, string $greaterEquals = null, string $lessThan = null)
     {
         parent::__construct($label);
         $this->extension = $extension;

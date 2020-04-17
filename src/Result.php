@@ -8,12 +8,12 @@ class Result
     protected $label;
     protected $details;
 
-    public function __construct($label)
+    public function __construct(string $label)
     {
         $this->label = $label;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -28,22 +28,22 @@ class Result
         return $this->success;
     }
 
-    public function setError($error): void
+    public function setError(string $error): void
     {
         $this->error = $error;
     }
 
-    public function getError()
+    public function getError(): ?string
     {
         return $this->error;
     }
 
-    public function setDetails($details): void
+    public function setDetails(string $details): void
     {
         $this->details = $details;
     }
 
-    public function getDetails()
+    public function getDetails(): ?string
     {
         return $this->details;
     }

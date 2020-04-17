@@ -9,7 +9,7 @@ class LogfileContentCheck extends AbstractCheck
     protected $filename;
     protected $content;
 
-    public function __construct($label, $filename)
+    public function __construct(string $label, string $filename)
     {
         parent::__construct($label);
         $this->filename = $filename;

@@ -16,7 +16,7 @@ class PhpMemoryLimitCheck extends AbstractCheck
      * @param string $label Label
      * @param string $memoryRequired amount of memory that is (at least) required in megabytes
      */
-    public function __construct($label, $memoryRequired)
+    public function __construct(string $label, string $memoryRequired)
     {
         parent::__construct($label);
         $this->memoryRequired = $memoryRequired;

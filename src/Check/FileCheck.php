@@ -3,14 +3,6 @@ namespace BretRZaun\StatusPage\Check;
 
 use BretRZaun\StatusPage\Result;
 
-/**
- * checks if the given file exists
- *
- * Options:
- * - *writable*: checks if the file is writable
- *
- * @package BretRZaun\StatusPage\Check
- */
 class FileCheck extends AbstractCheck
 {
 
@@ -20,46 +12,127 @@ class FileCheck extends AbstractCheck
     protected $filename;
 
     /**
-     * @var array
+     * @var boolean
      */
-    protected $options;
+    protected $writable;
+
+    /**
+     * @var integer
+     */
+    protected $maxage;
+
+    /**
+     * @var string
+     */
+    protected $unwantedRegex;
 
     /**
      * FileCheck constructor.
      * @param $label
      * @param $filename
-     * @param array $options
      */
-    public function __construct(string $label, string $filename, array $options = [])
+    public function __construct($label, $filename)
     {
         parent::__construct($label);
         $this->filename = $filename;
-        $this->options = $options;
     }
 
-    public function isWritable()
+    /**
+     * @param string $filename
+     * @return FileCheck
+     */
+    public function setFilename($filename)
     {
-        $this->options['writable'] = true;
+        $this->filename = $filename;
         return $this;
     }
 
+    /**
+     * @return FileCheck
+     */
+    public function setWritable()
+    {
+        $this->writable = true;
+        return $this;
+    }
+
+    /**
+     * @param int $maxage
+     * @return FileCheck
+     */
+    public function setMaxage($maxage)
+    {
+        $this->maxage = $maxage;
+        return $this;
+    }
+
+    /**
+     * @param string $unwantedRegex
+     * @return FileCheck
+     */
+    public function setUnwantedRegex($unwantedRegex)
+    {
+        $this->unwantedRegex = $unwantedRegex;
+        return $this;
+    }
+
+
+    /**
+     * @return Result
+     */
     public function check(): Result
     {
         $result = new Result($this->label);
 
         if (!file_exists($this->filename)) {
             $result->setSuccess(false);
-            $result->setError("$this->filename does not exist!");
+            $result->setError($this->filename." does not exist!");
             return $result;
         }
 
-        if (array_key_exists('writable', $this->options)) {
-            if (!is_writable($this->filename)) {
+        if (null !== $this->maxage) {
+            $mtime = filemtime($this->filename);
+            if ($mtime === false) {
                 $result->setSuccess(false);
-                $result->setError("$this->filename is not writable!");
+                $result->setError("mtime() returns error");
+                return $result;
             }
+            $age = (time()-$mtime);
+            $age = round($age/60); // sec-to-min
+            if ($age > (int)$this->maxage) {
+                $result->setSuccess(false);
+                $result->setError($this->filename." is to old!");
+                return $result;
+            }
+        }
+
+        if (null !== $this->writable && !is_writable($this->filename)) {
+            $result->setSuccess(false);
+            $result->setError($this->filename." is not writable!");
+            return $result;
+        }
+
+        if (null !== $this->unwantedRegex) {
+            $fp = fopen($this->filename, 'r');
+            if ($fp === false) {
+                $result->setSuccess(false);
+                $result->setError("fopen() returns error");
+                return $result;
+            }
+            $linenr = 0;
+            while($line = fgets($fp)) {
+                $linenr++;
+                if (preg_match('~'.$this->unwantedRegex.'~i', $line)) {
+                    $result->setSuccess(false);
+                    $result->setError("Found '".$this->unwantedRegex."' in '".$line."' [".$this->filename.":".$linenr."]");
+                    fclose($fp);
+                    return $result;
+                }
+            }
+            fclose($fp);
         }
 
         return $result;
     }
+
 }

@@ -1,6 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage;
 
+use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Check\CheckInterface;
 
 class StatusCheckerGroup

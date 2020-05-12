@@ -21,7 +21,7 @@ class UrlCheckTest extends TestCase
 
         $check = new UrlCheck('Test-Url', 'http://www.example.org');
         $check->setHttpClient($client);
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertTrue($result->getSuccess());
         $this->assertEmpty($result->getError());
@@ -37,7 +37,7 @@ class UrlCheckTest extends TestCase
 
         $check = new UrlCheck('Test', 'http://foo.int');
         $check->setHttpClient($client);
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertFalse($result->getSuccess());
         $this->assertStringContainsString('URL failed: http://foo.int', $result->getError());

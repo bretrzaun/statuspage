@@ -62,7 +62,7 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    public function check(): Result
+    public function checkStatus(): Result
     {
         switch ($this->varType) {
             case self::TypeBoolean:
@@ -86,7 +86,7 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkBoolean() 
+    protected function checkBoolean()
     {
         $result = new Result($this->label);
         // some boolval advance
@@ -113,7 +113,7 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkMemory() 
+    protected function checkMemory()
     {
         $result = new Result($this->label);
         if ($this->iniValue != -1) {
@@ -127,7 +127,7 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkNumber() 
+    protected function checkNumber()
     {
         $result = new Result($this->label);
         if (!is_null($this->varValue)) {
@@ -151,7 +151,7 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkRegex() 
+    protected function checkRegex()
     {
         $result = new Result($this->label);
         $result->setSuccess(preg_match('~'.$this->varValue.'~', $this->iniValue));
@@ -162,7 +162,7 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkString() 
+    protected function checkString()
     {
         $result = new Result($this->label);
         $result->setSuccess( strval($this->iniValue) == strval($this->varValue) );

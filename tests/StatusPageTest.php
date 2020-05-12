@@ -50,7 +50,7 @@ class StatusPageTest extends TestCase
         $result->setSuccess(true);
 
         $mock->expects($this->once())
-            ->method('check')
+            ->method('checkStatus')
             ->willReturn($result);
 
         $statusChecker = new StatusChecker();
@@ -73,7 +73,7 @@ class StatusPageTest extends TestCase
         $result->setError('Failed');
 
         $mock->expects($this->once())
-            ->method('check')
+            ->method('checkStatus')
             ->willReturn($result);
 
         $statusChecker = new StatusChecker();

@@ -9,7 +9,7 @@ class LogfileContentCheckTest extends TestCase
     public function testFileDoesNotExists(): void
     {
         $check = new LogfileContentCheck('Test', 'doesnotexist.txt');
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertFalse($result->getSuccess());
         $this->assertEquals('Log file doesnotexist.txt does not exist!', $result->getError());
@@ -19,7 +19,7 @@ class LogfileContentCheckTest extends TestCase
     {
         $check = new LogfileContentCheck('Test', __DIR__.'/../test.log');
         $check->setCheckfor('complete');
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertTrue($result->getSuccess());
     }
@@ -28,7 +28,7 @@ class LogfileContentCheckTest extends TestCase
     {
         $check = new LogfileContentCheck('Test', __DIR__.'/../test.log');
         $check->setCheckfor('foo');
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertFalse($result->getSuccess());
         $this->assertEquals('Log file failure', $result->getError());

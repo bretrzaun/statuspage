@@ -47,7 +47,7 @@ class PhpExtensionCheckTest extends TestCase
             ->willReturn($extensionVersion);
 
         /** @var PhpExtensionCheck $mock */
-        $result = $mock->check();
+        $result = $mock->checkStatus();
         $actual = $result->getSuccess();
 
         $this->assertEquals($expected, $actual);

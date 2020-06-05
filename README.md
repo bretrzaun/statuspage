@@ -63,7 +63,7 @@ $code = $checker->hasErrors() ? 503 : 200;
 
 ### Custom checks
 
-Custom checks can be easily added by inheriting `BretRZaun\StatusPage\Check\AbstractCheck`.
+Custom checks can be easily added by implementing `BretRZaun\StatusPage\Check\CheckInterface` or inheriting `BretRZaun\StatusPage\Check\AbstractCheck`.
 
 ## Tests
 

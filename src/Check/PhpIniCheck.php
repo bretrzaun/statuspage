@@ -29,7 +29,7 @@ class PhpIniCheck extends AbstractCheck
      *
      * @return PhpIniCheck
      */
-    public function __construct(string $label, string $varName, string $varType, $varValue, $maxValue=null)
+    public function __construct(string $label, string $varName, string $varType, $varValue, $maxValue = null)
     {
         parent::__construct($label);
         $this->varName = $varName;
@@ -45,14 +45,14 @@ class PhpIniCheck extends AbstractCheck
      */
     protected function stringToMegabyte(string $size)
     {
-        $value = preg_replace('~[^0-9]*~','', $size);
+        $value = preg_replace('~[^0-9]*~', '', $size);
         switch (substr(strtolower($size), -1)) {
             case 'm':
-                return (int)$value;
+                return (int) $value;
             case 'k':
-                return round((int)$value / 1024);
+                return round((int) $value / 1024);
             case 'g':
-                return ((int)$value * 1024);
+                return ((int) $value * 1024);
             default:
                 return false;
         }
@@ -77,7 +77,7 @@ class PhpIniCheck extends AbstractCheck
                 return $this->checkString();
             default:
                 $result = new Result($this->label);
-                $result->setError("Invalid Type: " . $this->varType);
+                $result->setError("Invalid Type: ".$this->varType);
                 return $result;
         }
     }
@@ -118,7 +118,7 @@ class PhpIniCheck extends AbstractCheck
         $result = new Result($this->label);
         if ($this->iniValue != -1) {
             $value = $this->stringToMegabyte($this->iniValue);
-            if ( $value < $this->varValue) {
+            if ($value < $this->varValue) {
                 $result->setError(
                     "php.ini value of '".$this->varName."' is set to '".
                     strval($this->iniValue)."', minimum expected is '".

@@ -96,9 +96,9 @@ class FileCheck extends AbstractCheck
                 $result->setError("mtime() returns error");
                 return $result;
             }
-            $age = (time()-$mtime);
-            $age = round($age/60); // sec-to-min
-            if ($age > (int)$this->maxage) {
+            $age = (time() - $mtime);
+            $age = round($age / 60); // sec-to-min
+            if ($age > (int) $this->maxage) {
                 $result->setError($this->filename." is to old!");
                 return $result;
             }
@@ -116,7 +116,7 @@ class FileCheck extends AbstractCheck
                 return $result;
             }
             $linenr = 0;
-            while($line = fgets($fp)) {
+            while ($line = fgets($fp)) {
                 $linenr++;
                 if (preg_match('~'.$this->unwantedRegex.'~i', $line)) {
                     $result->setError("Found '".$this->unwantedRegex."' in '".$line."' [".$this->filename.":".$linenr."]");

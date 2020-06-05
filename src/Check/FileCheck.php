@@ -93,21 +93,18 @@ class FileCheck extends AbstractCheck
         if (null !== $this->maxage) {
             $mtime = filemtime($this->filename);
             if ($mtime === false) {
-                $result->setSuccess(false);
                 $result->setError("mtime() returns error");
                 return $result;
             }
             $age = (time()-$mtime);
             $age = round($age/60); // sec-to-min
             if ($age > (int)$this->maxage) {
-                $result->setSuccess(false);
                 $result->setError($this->filename." is to old!");
                 return $result;
             }
         }
 
         if (null !== $this->writable && !is_writable($this->filename)) {
-            $result->setSuccess(false);
             $result->setError($this->filename." is not writable!");
             return $result;
         }
@@ -115,7 +112,6 @@ class FileCheck extends AbstractCheck
         if (null !== $this->unwantedRegex) {
             $fp = fopen($this->filename, 'r');
             if ($fp === false) {
-                $result->setSuccess(false);
                 $result->setError("fopen() returns error");
                 return $result;
             }
@@ -123,7 +119,6 @@ class FileCheck extends AbstractCheck
             while($line = fgets($fp)) {
                 $linenr++;
                 if (preg_match('~'.$this->unwantedRegex.'~i', $line)) {
-                    $result->setSuccess(false);
                     $result->setError("Found '".$this->unwantedRegex."' in '".$line."' [".$this->filename.":".$linenr."]");
                     fclose($fp);
                     return $result;

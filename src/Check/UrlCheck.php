@@ -51,11 +51,9 @@ class UrlCheck extends AbstractCheck
         try {
             $res = $this->client->request('GET', $this->url);
             if ($res->getStatusCode() !== 200) {
-                $result->setSuccess(false);
                 $result->setError('HTTP status code is '.$res->getStatusCode());
             }
         } catch (Exception $e) {
-            $result->setSuccess(false);
             $result->setError('URL failed: '.$this->url);
         }
         return $result;

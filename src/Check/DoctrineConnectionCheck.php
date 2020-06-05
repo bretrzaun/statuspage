@@ -30,7 +30,6 @@ class DoctrineConnectionCheck extends AbstractCheck
         try {
             $this->db->connect();
         } catch (\Exception $e) {
-            $result->setSuccess(false);
             $result->setError($e->getMessage());
         }
         return $result;

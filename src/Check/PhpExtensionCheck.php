@@ -79,11 +79,9 @@ class PhpExtensionCheck extends AbstractCheck
             $version = $this->getExtensionVersion();
             if ((null !== $this->greaterEquals && !version_compare($this->greaterEquals, $version, '<=')) ||
                 (null !== $this->lessThan && !version_compare($this->lessThan, $version, '>'))) {
-                $result->setSuccess(false);
                 $result->setError('Extension ' . $this->extension . ' loaded, but version ' . $version . ' not supported<br/>Version must be ' . $this->getVersionConstraintString());
             }
         } else {
-            $result->setSuccess(false);
             $result->setError('Extension ' . $this->extension . ' is missing');
         }
 

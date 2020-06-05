@@ -47,12 +47,10 @@ class ElasticsearchCheck extends AbstractCheck
             }
             foreach ($this->indices as $index) {
                 if (!$this->client->indices()->exists(['index' => $index])) {
-                    $result->setSuccess(false);
                     $result->setError("Index '$index' does not exist");
                 }
             }
         } catch (Exception $e) {
-            $result->setSuccess(false);
             $result->setError($e->getMessage());
         }
         return $result;

@@ -60,7 +60,6 @@ class PhpMemoryLimitCheck extends AbstractCheck
         $memoryLimit = $this->getMegabytesFromSizeString($memoryLimitString);
 
         if ($this->memoryRequired > $memoryLimit) {
-            $result->setSuccess(false);
             $result->setError("Memory required: {$this->memoryRequired}M; limit: {$memoryLimitString}");
         }
 

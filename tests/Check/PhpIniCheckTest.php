@@ -56,7 +56,7 @@ class PhpIniCheckTest extends TestCase
     {
         $checker = new PhpIniCheck('UnitTest_'.$varName, $varName, $varType, $minValue, $maxValue);
         $result = $checker->checkStatus();
-        $this->assertEquals($expected, $result->getSuccess(), $result->getError());
+        $this->assertEquals($expected, $result->getSuccess(), (string)$result->getError());
     }
 
 }

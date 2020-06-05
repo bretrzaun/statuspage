@@ -40,12 +40,10 @@ class PhpVersionCheck extends AbstractCheck
 
         $phpVersion = $this->getPhpVersion();
         if (null !== $this->greaterEquals && !version_compare($this->greaterEquals, $phpVersion, '<=')) {
-            $result->setSuccess(false);
             $result->setError("PHP version must be >= {$this->greaterEquals}; is " . $phpVersion);
         }
 
         if (null !== $this->lessThan && !version_compare($this->lessThan, $phpVersion, '>')) {
-            $result->setSuccess(false);
             $result->setError("PHP version must be < {$this->lessThan}; is " . $phpVersion);
         }
 

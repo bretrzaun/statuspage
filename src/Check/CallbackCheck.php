@@ -36,11 +36,9 @@ class CallbackCheck extends AbstractCheck
             if ($return instanceof Result) {
                 $result = $return;
             } else if ($return !== true) {
-                $result->setSuccess(false);
                 $result->setError($return);
             }
         } catch (\Throwable $e) {
-            $result->setSuccess(false);
             $result->setError($e->getMessage());
         }
         return $result;

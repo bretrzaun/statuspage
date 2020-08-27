@@ -5,5 +5,5 @@ use BretRZaun\StatusPage\Result;
 
 interface CheckInterface
 {
-    public function check(): Result;
+    public function checkStatus(): Result;
 }

@@ -29,7 +29,7 @@ class PhpIniCheck extends AbstractCheck
      *
      * @return PhpIniCheck
      */
-    public function __construct(string $label, string $varName, string $varType, $varValue, $maxValue=null)
+    public function __construct(string $label, string $varName, string $varType, $varValue, $maxValue = null)
     {
         parent::__construct($label);
         $this->varName = $varName;
@@ -45,14 +45,14 @@ class PhpIniCheck extends AbstractCheck
      */
     protected function stringToMegabyte(string $size)
     {
-        $value = preg_replace('~[^0-9]*~','', $size);
+        $value = preg_replace('~[^0-9]*~', '', $size);
         switch (substr(strtolower($size), -1)) {
             case 'm':
-                return (int)$value;
+                return (int) $value;
             case 'k':
-                return round((int)$value / 1024);
+                return round((int) $value / 1024);
             case 'g':
-                return ((int)$value * 1024);
+                return ((int) $value * 1024);
             default:
                 return false;
         }
@@ -62,7 +62,7 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    public function check(): Result
+    public function checkStatus(): Result
     {
         switch ($this->varType) {
             case self::TypeBoolean:
@@ -77,8 +77,7 @@ class PhpIniCheck extends AbstractCheck
                 return $this->checkString();
             default:
                 $result = new Result($this->label);
-                $result->setSuccess(false);
-                $result->setError("Invalid Type: " . $this->varType);
+                $result->setError("Invalid Type: ".$this->varType);
                 return $result;
         }
     }
@@ -86,7 +85,7 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkBoolean() 
+    protected function checkBoolean()
     {
         $result = new Result($this->label);
         // some boolval advance
@@ -105,21 +104,8 @@ class PhpIniCheck extends AbstractCheck
                 break;
         }
 
-        $result->setSuccess( boolval($this->iniValue) === boolval($this->varValue) );
-        $result->setError("php.ini value of '".$this->varName."' is set to '".strval(boolval($this->iniValue))."' instead of expected '".strval(boolval($this->varValue))."'");
-        return $result;
-    }
-
-    /**
-     * @return Result
-     */
-    protected function checkMemory() 
-    {
-        $result = new Result($this->label);
-        if ($this->iniValue != -1) {
-            $value = $this->stringToMegabyte($this->iniValue);
-            $result->setSuccess( $value >= $this->varValue );
-            $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."', minimum expected is '".strval($this->varValue)."'");
+        if (boolval($this->iniValue) !== boolval($this->varValue)) {
+            $result->setError("php.ini value of '".$this->varName."' is set to '".strval(boolval($this->iniValue))."' instead of expected '".strval(boolval($this->varValue))."'");
         }
         return $result;
     }
@@ -127,47 +113,69 @@ class PhpIniCheck extends AbstractCheck
     /**
      * @return Result
      */
-    protected function checkNumber() 
+    protected function checkMemory()
+    {
+        $result = new Result($this->label);
+        if ($this->iniValue != -1) {
+            $value = $this->stringToMegabyte($this->iniValue);
+            if ($value < $this->varValue) {
+                $result->setError(
+                    "php.ini value of '".$this->varName."' is set to '".
+                    strval($this->iniValue)."', minimum expected is '".
+                    strval($this->varValue)."'"
+                );
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * @return Result
+     */
+    protected function checkNumber()
     {
         $result = new Result($this->label);
         if (!is_null($this->varValue)) {
             if ($this->iniValue < $this->varValue) {
-                $result->setSuccess(false);
                 $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."', minimum expected is '".strval($this->varValue)."'");
                 return $result;
             }
         }
         if (!is_null($this->maxValue)) {
             if ($this->iniValue > $this->maxValue) {
-                $result->setSuccess(false);
                 $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."', maximum expected is '".strval($this->maxValue)."'");
                 return $result;
             }
         }
-        $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue));
+        $result->setDetails("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."'");
         return $result;
     }
 
     /**
      * @return Result
      */
-    protected function checkRegex() 
+    protected function checkRegex()
     {
         $result = new Result($this->label);
-        $result->setSuccess(preg_match('~'.$this->varValue.'~', $this->iniValue));
-        $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."', expected is '".strval($this->varValue)."'");
+        if (!preg_match('~'.$this->varValue.'~', $this->iniValue)) {
+            $result->setError(
+                "php.ini value of '".$this->varName."' is set to '".
+                strval($this->iniValue)."', expected is '".
+                strval($this->varValue)."'"
+            );
+        }
         return $result;
     }
 
     /**
      * @return Result
      */
-    protected function checkString() 
+    protected function checkString()
     {
         $result = new Result($this->label);
-        $result->setSuccess( strval($this->iniValue) == strval($this->varValue) );
-        $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."', expected is '".strval($this->varValue)."'");
+        if (strval($this->iniValue) != strval($this->varValue)) {
+            $result->setError("php.ini value of '".$this->varName."' is set to '".strval($this->iniValue)."', expected is '".strval($this->varValue)."'");
+        }
         return $result;
     }
-
 }

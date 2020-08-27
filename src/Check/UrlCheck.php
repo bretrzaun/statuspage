@@ -45,17 +45,15 @@ class UrlCheck extends AbstractCheck
      * @return Result
      * @throws GuzzleException
      */
-    public function check(): Result
+    public function checkStatus(): Result
     {
         $result = new Result($this->label);
         try {
             $res = $this->client->request('GET', $this->url);
             if ($res->getStatusCode() !== 200) {
-                $result->setSuccess(false);
                 $result->setError('HTTP status code is '.$res->getStatusCode());
             }
         } catch (Exception $e) {
-            $result->setSuccess(false);
             $result->setError('URL failed: '.$this->url);
         }
         return $result;

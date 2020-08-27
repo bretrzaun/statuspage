@@ -20,12 +20,11 @@ class LogfileContentCheck extends AbstractCheck
         $this->content = $content;
     }
 
-    public function check(): Result
+    public function checkStatus(): Result
     {
         $result = new Result($this->label);
 
         if (!file_exists($this->filename)) {
-            $result->setSuccess(false);
             $result->setError("Log file $this->filename does not exist!");
             return $result;
         }
@@ -33,7 +32,6 @@ class LogfileContentCheck extends AbstractCheck
         if (!empty($this->content)) {
             $fileContent = file_get_contents($this->filename);
             if (false === strpos($fileContent, $this->content)) {
-                $result->setSuccess(false);
                 $result->setError('Log file failure');
                 $result->setDetails('Timestamp: '.date('d.m.Y H:i', filemtime($this->filename)));
             }

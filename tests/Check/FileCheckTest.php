@@ -34,11 +34,11 @@ class FileCheckTest extends TestCase {
     public function testFileExists()
     {
         $check = new FileCheck(__METHOD__, self::$testFile);
-        $result = $check->check();
+        $result = $check->checkStatus();
         $this->assertTrue($result->getSuccess());
 
         $check = new FileCheck(__METHOD__, '/file/does/not.exist');
-        $result = $check->check();
+        $result = $check->checkStatus();
         $this->assertFalse($result->getSuccess());
     }
 
@@ -47,7 +47,7 @@ class FileCheckTest extends TestCase {
         // file is newer than one minute
         $check = new FileCheck(__METHOD__, self::$testFile);
         $check->setMaxage(1);
-        $result = $check->check();
+        $result = $check->checkStatus();
         $this->assertTrue($result->getSuccess());
 
         // manipulate timestamp - file should be older
@@ -55,7 +55,7 @@ class FileCheckTest extends TestCase {
         $this->assertTrue( $res, 'touch() failed' );
         // do not forget to clear PHP cache
         clearstatcache(true, self::$testFile);
-        $result = $check->check();
+        $result = $check->checkStatus();
         $this->assertFalse($result->getSuccess());
     }
 
@@ -81,7 +81,7 @@ class FileCheckTest extends TestCase {
     {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $check->setUnwantedRegex($pattern);
-        $result = $check->check();
+        $result = $check->checkStatus();
         $this->assertEquals($expected, $result->getSuccess());
     }
 
@@ -90,14 +90,14 @@ class FileCheckTest extends TestCase {
     {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $check->setWritable();
-        $result = $check->check();
+        $result = $check->checkStatus();
         $this->assertTrue($result->getSuccess());
 
         if (posix_getuid() === 0){
             $this->markTestSkipped('This test can not run as root user');
         } else {
             $this->assertTrue(chmod(self::$testFile, 0444), 'Can not modify permissions');
-            $result = $check->check();
+            $result = $check->checkStatus();
             $this->assertFalse($result->getSuccess());
         }
     }

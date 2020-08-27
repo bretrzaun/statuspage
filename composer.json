@@ -28,10 +28,5 @@
   "suggest": {
     "doctrine/dbal": "for checking DB connections",
     "elasticsearch/elasticsearch": "for checking Elasticsearch"
-  },
-  "config": {
-    "platform": {
-      "php": "7.2.5"
-    }
   }
 }

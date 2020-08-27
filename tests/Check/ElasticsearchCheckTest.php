@@ -17,7 +17,7 @@ class ElasticsearchCheckTest extends TestCase
             ->willReturn(true);
 
         $check = new ElasticsearchCheck('elasticsearch test', $client);
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertTrue($result->getSuccess());
         $this->assertEmpty($result->getError());
@@ -31,7 +31,7 @@ class ElasticsearchCheckTest extends TestCase
             ->willReturn(false);
 
         $check = new ElasticsearchCheck('elasticsearch test', $client);
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertFalse($result->getSuccess());
     }
@@ -54,7 +54,7 @@ class ElasticsearchCheckTest extends TestCase
             ->willReturn($incidesMock);
 
         $check = new ElasticsearchCheck('elasticsearch test', $client, ['notexisting-test-index']);
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertFalse($result->getSuccess());
         $this->assertEquals('Index \'notexisting-test-index\' does not exist', $result->getError());

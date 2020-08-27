@@ -12,5 +12,5 @@ abstract class AbstractCheck implements CheckInterface
         $this->label = $label;
     }
 
-    abstract public function check(): Result;
+    abstract public function checkStatus(): Result;
 }

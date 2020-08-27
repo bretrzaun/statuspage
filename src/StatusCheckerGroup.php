@@ -1,6 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage;
 
+use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Check\CheckInterface;
 
 class StatusCheckerGroup
@@ -48,7 +49,8 @@ class StatusCheckerGroup
     public function check(): void
     {
         foreach($this->checks as $checker) {
-            $this->results[] = $checker->check();
+            /* @var $checker CheckInterface */
+            $this->results[] = $checker->checkStatus();
         }
     }
 

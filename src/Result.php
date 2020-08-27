@@ -18,7 +18,7 @@ class Result
         return $this->label;
     }
 
-    public function setSuccess($success): void
+    public function setSuccess(bool $success): void
     {
         $this->success = $success;
     }
@@ -30,6 +30,7 @@ class Result
 
     public function setError(string $error): void
     {
+        $this->setSuccess(false);
         $this->error = $error;
     }
 

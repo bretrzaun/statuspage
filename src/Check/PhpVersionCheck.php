@@ -34,19 +34,17 @@ class PhpVersionCheck extends AbstractCheck
      *
      * @return Result
      */
-    public function check(): Result
+    public function checkStatus(): Result
     {
         $result = new Result($this->label);
 
         $phpVersion = $this->getPhpVersion();
         if (null !== $this->greaterEquals && !version_compare($this->greaterEquals, $phpVersion, '<=')) {
-            $result->setSuccess(false);
-            $result->setError("PHP version must be >= {$this->greaterEquals}; is " . $phpVersion);
+            $result->setError("PHP version must be >= {$this->greaterEquals}; is ".$phpVersion);
         }
 
         if (null !== $this->lessThan && !version_compare($this->lessThan, $phpVersion, '>')) {
-            $result->setSuccess(false);
-            $result->setError("PHP version must be < {$this->lessThan}; is " . $phpVersion);
+            $result->setError("PHP version must be < {$this->lessThan}; is ".$phpVersion);
         }
 
         return $result;

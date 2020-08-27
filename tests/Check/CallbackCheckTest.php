@@ -13,7 +13,7 @@ class CallbackCheckTest extends TestCase
         $check = new CallbackCheck('callback test', function() {
             return true;
         });
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertTrue($result->getSuccess());
         $this->assertEmpty($result->getError());
@@ -24,7 +24,7 @@ class CallbackCheckTest extends TestCase
         $check = new CallbackCheck('callback test', function() {
             return 'an error occured!';
         });
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertFalse($result->getSuccess());
         $this->assertEquals('an error occured!', $result->getError());
@@ -38,7 +38,7 @@ class CallbackCheckTest extends TestCase
             $result->setDetails('ok - with comment');
             return $result;
         });
-        $result = $check->check();
+        $result = $check->checkStatus();
 
         $this->assertTrue($result->getSuccess());
         $this->assertEquals('ok - with comment', $result->getDetails());

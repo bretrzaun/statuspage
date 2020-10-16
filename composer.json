@@ -24,7 +24,7 @@
     "symfony/css-selector": "^5.0",
     "doctrine/dbal": "~2.2",
     "elasticsearch/elasticsearch": "*",
-    "mongodb/mongodb": "^1.5"
+    "mongodb/mongodb": "^1.4"
   },
   "suggest": {
     "doctrine/dbal": "for checking DB connections",

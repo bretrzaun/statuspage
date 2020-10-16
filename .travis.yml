@@ -4,4 +4,6 @@ php:
   - 7.3
   - 7.4
 
+before_install:
+  - phpenv config-add myconfig.ini
 install: composer install

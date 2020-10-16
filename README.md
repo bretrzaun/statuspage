@@ -55,11 +55,12 @@ $code = $checker->hasErrors() ? 503 : 200;
 - **DoctrineConnectionCheck**: checks for a valid [Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) connection
 - **ElasticsearchCheck**: checks an [Elasticsearch Client](https://github.com/elastic/elasticsearch-php) for successful pings
 - **LogFileContentCheck**: check a (log) file for certain content
-- **UrlCheck**: checks a URL
+- **MongoDbCheck**: checks a [MongoDB](https://mongodb.com) client
 - **PhpExtensionCheck**: check a given PHP extension is loaded
 - **PhpIniCheck**: check a value of php.ini
 - **PhpMemoryLimitCheck**: check PHP memory limit
 - **PhpVersionCheck**: check PHP version
+- **UrlCheck**: checks a URL
 
 ### Custom checks
 

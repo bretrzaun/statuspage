@@ -21,7 +21,7 @@ class MongoDbCheck extends AbstractCheck
         $this->databases[] = $database;
     }
 
-    public function ensureDatabaseHasCollecion(string $database, string $collection)
+    public function ensureDatabaseHasCollection(string $database, string $collection)
     {
         $this->ensureDatabaseExists($database);
         if (!isset($this->collections[$database])) {
@@ -34,18 +34,38 @@ class MongoDbCheck extends AbstractCheck
     {
         $result = new Result($this->label);
         try {
-            $dbs = $this->client->listDatabaseNames()->getArrayCopy();
-
+            $databases = $this->listDatabaseNames();
             if (count($this->databases) > 0) {
-                $this->checkDatabases($dbs);
+                $this->checkDatabases($databases);
             }
             if (count($this->collections) > 0) {
-                $this->checkCollections($dbs);
+                $this->checkCollections($databases);
             }
         } catch(\Exception $e) {
             $result->setError($e->getMessage());
         }
         return $result;
+    }
+
+    private function listDatabaseNames(): array
+    {
+        $databaseNames = [];
+        $iterator = $this->client->listDatabases();
+        foreach ($iterator as $dbInfo) {
+            $databaseNames[] = $dbInfo->getName();
+        }
+        return $databaseNames;
+    }
+
+    private function listCollectionNames(string $databaseName): array
+    {
+        $database = $this->client->selectDatabase($databaseName);
+        $collectionNames = [];
+        $iterator = $database->listCollections();
+        foreach ($iterator as $collectionInfo) {
+            $collectionNames[] = $collectionInfo->getName();
+        }
+        return $collectionNames;
     }
 
     private function checkDatabases($databases)
@@ -59,15 +79,13 @@ class MongoDbCheck extends AbstractCheck
 
     private function checkCollections(array $databases)
     {
-        foreach($this->collections as $databaseName => $collections) {
-            $database = $this->client->selectDatabase($databaseName);
-            $collectionNames = $database->listCollectionNames()->getArrayCopy();
-            foreach($collections as $collection) {
+        foreach ($this->collections as $databaseName => $collections) {
+            $collectionNames = $this->listCollectionNames($databaseName);
+            foreach ($collections as $collection) {
                 if (!in_array($collection, $collectionNames)) {
                     throw new \RuntimeException('Collection '.$collection.' does not exist in database '.$databaseName);
                 }
             }
         }
     }
-
 }

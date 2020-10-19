@@ -4,6 +4,8 @@ namespace BretRZaun\StatusPage\Tests\Check;
 use MongoDB\Client;
 use BretRZaun\StatusPage\Check\MongoDbCheck;
 use PHPUnit\Framework\TestCase;
+use MongoDB\Model\DatabaseInfo;
+use MongoDB\Model\CollectionInfo;
 
 class MongoDbCheckTest extends TestCase
 {
@@ -12,8 +14,10 @@ class MongoDbCheckTest extends TestCase
     {
         $client = $this->createMock(Client::class);
         $client->expects($this->once())
-            ->method('listDatabaseNames')
-            ->willReturn(new \ArrayIterator(['test']));
+            ->method('listDatabases')
+            ->willReturn(new \ArrayIterator(
+                [new DatabaseInfo(['name' => 'test'])]
+            ));
 
         $check = new MongoDbCheck('mongodb test', $client);
         $result = $check->checkStatus();
@@ -26,7 +30,7 @@ class MongoDbCheckTest extends TestCase
     {
         $client = $this->createMock(Client::class);
         $client->expects($this->once())
-            ->method('listDatabaseNames')
+            ->method('listDatabases')
             ->willThrowException(new \MongoDB\Driver\Exception\ConnectionTimeoutException);
 
         $check = new MongoDbCheck('mongodb test', $client);
@@ -39,8 +43,10 @@ class MongoDbCheckTest extends TestCase
     {
         $client = $this->createMock(Client::class);
         $client->expects($this->exactly(2))
-            ->method('listDatabaseNames')
-            ->willReturn(new \ArrayIterator(['test']));
+            ->method('listDatabases')
+            ->willReturn(new \ArrayIterator(
+                [new DatabaseInfo(['name' => 'test'])]
+            ));
 
         $check = new MongoDbCheck('mongodb test', $client);
         $check->ensureDatabaseExists('test');
@@ -58,13 +64,17 @@ class MongoDbCheckTest extends TestCase
     {
         $client = $this->createMock(Client::class);
         $client->expects($this->exactly(2))
-            ->method('listDatabaseNames')
-            ->willReturn(new \ArrayIterator(['test-db']));
+            ->method('listDatabases')
+            ->willReturn(new \ArrayIterator(
+                [new DatabaseInfo(['name' => 'test-db'])]
+            ));
 
         $mockDatabase = $this->createMock(\MongoDB\Database::class);
         $mockDatabase->expects($this->exactly(2))
-            ->method('listCollectionNames')
-            ->willReturn(new \ArrayIterator(['my-collection']));
+            ->method('listCollections')
+            ->willReturn(new \ArrayIterator(
+                [new CollectionInfo(['name' => 'my-collection'])]
+            ));
 
         $client->expects($this->exactly(2))
             ->method('selectDatabase')
@@ -72,13 +82,13 @@ class MongoDbCheckTest extends TestCase
             ;
 
         $check = new MongoDbCheck('mongodb test', $client);
-        $check->ensureDatabaseHasCollecion('test-db', 'my-collection');
+        $check->ensureDatabaseHasCollection('test-db', 'my-collection');
         $result = $check->checkStatus();
         $this->assertEquals('', $result->getError());
         $this->assertTrue($result->getSuccess());
 
         $check = new MongoDbCheck('mongodb test', $client);
-        $check->ensureDatabaseHasCollecion('test-db', 'foo');
+        $check->ensureDatabaseHasCollection('test-db', 'foo');
         $result = $check->checkStatus();
         $this->assertFalse($result->getSuccess());
         $this->assertEquals(

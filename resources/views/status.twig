@@ -60,7 +60,7 @@
                                      data-target="#collapse-{{ loop.index0 }}" aria-controls="collapse-{{ loop.index0 }}"
                                      aria-expanded="true">
                                     <h5 class="mb-0">
-                                        {{ group.getTitle() }}
+                                        {{- group.getTitle() -}}
                                     </h5>
                                 </div>
                             {% endif %}
@@ -77,11 +77,11 @@
                                             <tr class="table-{{ classColor }}">
                                                 <th width="50%">{{ result.label }}</th>
                                                 <td width="50%">
-                                                    {% if result.success == true %}
-                                                        {{ result.details|default('OK') }}
+                                                    {%- if result.success == true %}
+                                                        {{- result.details|default('OK') -}}
                                                     {% else %}
-                                                        {{ result.error|default('Failure') }}
-                                                    {% endif %}
+                                                        {{- result.error|default('Failure') -}}
+                                                    {%- endif -%}
                                                 </td>
                                             </tr>
                                         {% endfor %}

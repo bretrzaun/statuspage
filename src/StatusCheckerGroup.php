@@ -9,7 +9,7 @@ class StatusCheckerGroup
     /** @var string */
     protected $title;
 
-    /** @var AbstractCheck[] */
+    /** @var CheckInterface[] */
     protected $checks = [];
 
     /** @var Result[] */
@@ -49,7 +49,6 @@ class StatusCheckerGroup
     public function check(): void
     {
         foreach($this->checks as $checker) {
-            /* @var $checker CheckInterface */
             $this->results[] = $checker->checkStatus();
         }
     }

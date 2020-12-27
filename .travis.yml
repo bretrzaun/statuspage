@@ -1,7 +1,9 @@
 language: php
 php:
-  - 7.2
   - 7.3
   - 7.4
+  - 8.0
 
+before_install:
+  - phpenv config-add myconfig.ini
 install: composer install

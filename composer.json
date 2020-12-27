@@ -14,19 +14,24 @@
     }
   },
   "require": {
-    "php": ">=7.2.5",
-    "twig/twig": "^2.0|^3.0",
+    "php": ">=7.3",
+    "twig/twig": "^2.0||^3.0",
     "guzzlehttp/guzzle": "^6.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.0",
+    "phpunit/phpunit": "^9.0",
     "symfony/browser-kit": "^5.0",
     "symfony/css-selector": "^5.0",
     "doctrine/dbal": "~2.2",
-    "elasticsearch/elasticsearch": "*"
+    "elasticsearch/elasticsearch": "*",
+    "mongodb/mongodb": "^1.4"
   },
   "suggest": {
     "doctrine/dbal": "for checking DB connections",
-    "elasticsearch/elasticsearch": "for checking Elasticsearch"
+    "elasticsearch/elasticsearch": "for checking Elasticsearch",
+    "mongodb/mongodb": "for checking MongoDB connections"
+  },
+  "scripts": {
+    "test": "phpunit"
   }
 }

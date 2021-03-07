@@ -28,8 +28,8 @@ class PhpMemoryLimitCheckTest extends TestCase
     }
 
     /**
-     * @param $sizeString
-     * @param $expectedMegabytes
+     * @param string $sizeString
+     * @param int|float $expectedMegabytes
      *
      * @dataProvider getTestSizeStringConversion
      */

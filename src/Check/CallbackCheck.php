@@ -14,7 +14,7 @@ class CallbackCheck extends AbstractCheck
     /**
      * Constructor
      *
-     * @param $label
+     * @param string $label
      * @param callable $callback
      */
     public function __construct(string $label, callable $callback)

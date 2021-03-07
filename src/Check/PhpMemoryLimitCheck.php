@@ -25,7 +25,7 @@ class PhpMemoryLimitCheck extends AbstractCheck
     /**
      * Returns size in megabytes from a PHP size string like '1024M'.
      *
-     * @param $sizeStr
+     * @param string $sizeStr
      * @return float|int
      */
     public function getMegabytesFromSizeString($sizeStr)

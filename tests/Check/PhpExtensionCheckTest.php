@@ -26,10 +26,10 @@ class PhpExtensionCheckTest extends TestCase
     }
 
     /**
-     * @param $greaterEquals
-     * @param $lessThan
-     * @param $extensionVersion
-     * @param $expected
+     * @param string|null $greaterEquals
+     * @param string|null $lessThan
+     * @param string $extensionVersion
+     * @param bool $expected
      *
      * @dataProvider getTestPhpExtensionCheck
      */

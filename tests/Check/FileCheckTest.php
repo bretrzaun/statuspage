@@ -73,8 +73,8 @@ class FileCheckTest extends TestCase {
     }
 
     /**
-     * @param $pattern
-     * @param $expected
+     * @param string $pattern
+     * @param bool $expected
      * @dataProvider dataPattern
      */
     public function testPattern($pattern, $expected)

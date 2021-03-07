@@ -26,10 +26,10 @@ class PhpVersionCheckTest extends TestCase
     }
 
     /**
-     * @param $greaterEquals
-     * @param $lessThan
-     * @param $phpVersion
-     * @param $expected
+     * @param string|null $greaterEquals
+     * @param string|null $lessThan
+     * @param string $phpVersion
+     * @param bool $expected
      *
      * @dataProvider getTestPhpVersionCheck
      */

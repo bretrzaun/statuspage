@@ -44,11 +44,11 @@ class PhpIniCheckTest extends TestCase
     }
 
     /**
-     * @param $varName
-     * @param $varType
-     * @param $minValue
-     * @param $maxValue
-     * @param $expected
+     * @param string $varName
+     * @param string $varType
+     * @param mixed $minValue
+     * @param mixed $maxValue
+     * @param bool $expected
      *
      * @dataProvider getTestData
      */

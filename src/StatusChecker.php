@@ -2,12 +2,17 @@
 namespace BretRZaun\StatusPage;
 
 use BretRZaun\StatusPage\Check\CheckInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
-class StatusChecker implements StatusCheckerInterface
+class StatusChecker implements StatusCheckerInterface, LoggerAwareInterface
 {
+
+    use LoggerAwareTrait;
+
     /**
      * registered ungrouped checks
-     * @var StatusCheckerGroup[]
+     * @var StatusCheckerGroup
      */
     protected $ungroupedChecks;
 
@@ -18,15 +23,18 @@ class StatusChecker implements StatusCheckerInterface
 
     public function addCheck(CheckInterface $checker): void
     {
-        if (!$this->ungroupedChecks) {
+        if ($this->ungroupedChecks === null) {
             $this->ungroupedChecks = new StatusCheckerGroup('');
-            $this->results[] = $this->ungroupedChecks;
+            $this->addGroup($this->ungroupedChecks);
         }
         $this->ungroupedChecks->addCheck($checker);
     }
 
     public function addGroup(StatusCheckerGroup $group): void
     {
+        if ($this->logger) {
+            $group->setLogger($this->logger);
+        }
         $this->results[] = $group;
     }
 

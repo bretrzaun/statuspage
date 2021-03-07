@@ -1,11 +1,14 @@
 <?php
 namespace BretRZaun\StatusPage;
 
-use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Check\CheckInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
-class StatusCheckerGroup
+class StatusCheckerGroup implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /** @var string */
     protected $title;
 
@@ -49,7 +52,15 @@ class StatusCheckerGroup
     public function check(): void
     {
         foreach($this->checks as $checker) {
-            $this->results[] = $checker->checkStatus();
+            $result = $checker->checkStatus();
+            if ($this->logger) {
+                if ($result->isSuccess()) {
+                    $this->logger->info($result->getLabel().': OK', ['details' => $result->getDetails()]);
+                } else {
+                    $this->logger->alert($result->getLabel().': '.$result->getError(), ['details' => $result->getDetails()]);
+                }
+            }
+            $this->results[] = $result;
         }
     }
 

@@ -20,7 +20,7 @@ composer require bretrzaun/statuspage
 
 ## Usage
 
-```
+```php
 $checker = new \BretRZaun\StatusPage\StatusChecker();
 // add your checks here
 $checker->addCheck(...);

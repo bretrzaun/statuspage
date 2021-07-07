@@ -6,7 +6,6 @@ use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Check\CallbackCheck;
 use BretRZaun\StatusPage\Result;
 use BretRZaun\StatusPage\StatusChecker;
-use BretRZaun\StatusPage\StatusPageServiceProvider;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;

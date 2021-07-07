@@ -17,4 +17,7 @@
   <logging>
     <junit outputFile="tests/unittest.xml"/>
   </logging>
+  <php>
+    <ini name="memory_limit" value="128M"/>
+  </php>
 </phpunit>

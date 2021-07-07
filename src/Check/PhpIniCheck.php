@@ -50,7 +50,7 @@ class PhpIniCheck extends AbstractCheck
             case 'm':
                 return (int) $value;
             case 'k':
-                return round((int) $value / 1024);
+                return (int)round((int) $value / 1024);
             case 'g':
                 return ((int) $value * 1024);
             default:

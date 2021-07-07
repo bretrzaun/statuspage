@@ -37,7 +37,7 @@ class PhpVersionCheckTest extends TestCase
     {
         $mock = $this->getMockBuilder(PhpVersionCheck::class)
             ->setConstructorArgs(['Test', $greaterEquals, $lessThan])
-            ->setMethods(['getPhpVersion'])
+            ->onlyMethods(['getPhpVersion'])
             ->getMock();
         $mock->expects($this->once())
             ->method('getPhpVersion')

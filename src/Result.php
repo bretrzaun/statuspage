@@ -23,7 +23,15 @@ class Result
         $this->success = $success;
     }
 
+    /**
+     * @deprecated
+     */
     public function getSuccess(): bool
+    {
+        return $this->success;
+    }
+
+    public function isSuccess(): bool
     {
         return $this->success;
     }

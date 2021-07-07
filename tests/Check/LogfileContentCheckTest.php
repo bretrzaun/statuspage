@@ -11,7 +11,7 @@ class LogfileContentCheckTest extends TestCase
         $check = new LogfileContentCheck('Test', 'doesnotexist.txt');
         $result = $check->checkStatus();
 
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
         $this->assertEquals('Log file doesnotexist.txt does not exist!', $result->getError());
     }
 
@@ -21,7 +21,7 @@ class LogfileContentCheckTest extends TestCase
         $check->setCheckfor('complete');
         $result = $check->checkStatus();
 
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
     }
 
     public function testFailure(): void
@@ -30,7 +30,7 @@ class LogfileContentCheckTest extends TestCase
         $check->setCheckfor('foo');
         $result = $check->checkStatus();
 
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
         $this->assertEquals('Log file failure', $result->getError());
         $this->assertStringContainsString('Timestamp:', $result->getDetails());
     }

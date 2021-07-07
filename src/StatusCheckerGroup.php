@@ -54,7 +54,7 @@ class StatusCheckerGroup implements LoggerAwareInterface
         foreach($this->checks as $checker) {
             $result = $checker->checkStatus();
             if ($this->logger) {
-                if ($result->getSuccess()) {
+                if ($result->isSuccess()) {
                     $this->logger->info($result->getLabel().': OK', ['details' => $result->getDetails()]);
                 } else {
                     $this->logger->alert($result->getLabel().': '.$result->getError(), ['details' => $result->getDetails()]);
@@ -83,7 +83,7 @@ class StatusCheckerGroup implements LoggerAwareInterface
     {
         $error = false;
         foreach($this->results as $result) {
-            if (!$result->getSuccess()) {
+            if (!$result->isSuccess()) {
                 $error = true;
                 break;
             }

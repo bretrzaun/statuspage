@@ -22,7 +22,7 @@ class MongoDbCheckTest extends TestCase
         $check = new MongoDbCheck('mongodb test', $client);
         $result = $check->checkStatus();
 
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
         $this->assertEmpty($result->getError());
     }
 
@@ -36,7 +36,7 @@ class MongoDbCheckTest extends TestCase
         $check = new MongoDbCheck('mongodb test', $client);
         $result = $check->checkStatus();
 
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
     }
 
     public function testDatabaseExists(): void
@@ -51,12 +51,12 @@ class MongoDbCheckTest extends TestCase
         $check = new MongoDbCheck('mongodb test', $client);
         $check->ensureDatabaseExists('test');
         $result = $check->checkStatus();
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
 
         $check = new MongoDbCheck('mongodb test', $client);
         $check->ensureDatabaseExists('foo');
         $result = $check->checkStatus();
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
         $this->assertEquals('Database foo does not exist', $result->getError());
     }
 
@@ -85,12 +85,12 @@ class MongoDbCheckTest extends TestCase
         $check->ensureDatabaseHasCollection('test-db', 'my-collection');
         $result = $check->checkStatus();
         $this->assertEquals('', $result->getError());
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
 
         $check = new MongoDbCheck('mongodb test', $client);
         $check->ensureDatabaseHasCollection('test-db', 'foo');
         $result = $check->checkStatus();
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
         $this->assertEquals(
             'Collection foo does not exist in database test-db',
             $result->getError()

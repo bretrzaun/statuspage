@@ -35,11 +35,11 @@ class FileCheckTest extends TestCase {
     {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $result = $check->checkStatus();
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
 
         $check = new FileCheck(__METHOD__, '/file/does/not.exist');
         $result = $check->checkStatus();
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
     }
 
     public function testAge()
@@ -48,7 +48,7 @@ class FileCheckTest extends TestCase {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $check->setMaxage(1);
         $result = $check->checkStatus();
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
 
         // manipulate timestamp - file should be older
         $res = touch(self::$testFile, time()-3600,  time()-3600 );
@@ -56,7 +56,7 @@ class FileCheckTest extends TestCase {
         // do not forget to clear PHP cache
         clearstatcache(true, self::$testFile);
         $result = $check->checkStatus();
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
     }
 
     /**
@@ -82,7 +82,7 @@ class FileCheckTest extends TestCase {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $check->setUnwantedRegex($pattern);
         $result = $check->checkStatus();
-        $this->assertEquals($expected, $result->getSuccess());
+        $this->assertEquals($expected, $result->isSuccess());
     }
 
 
@@ -91,14 +91,14 @@ class FileCheckTest extends TestCase {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $check->setWritable();
         $result = $check->checkStatus();
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
 
         if (posix_getuid() === 0){
             $this->markTestSkipped('This test can not run as root user');
         } else {
             $this->assertTrue(chmod(self::$testFile, 0444), 'Can not modify permissions');
             $result = $check->checkStatus();
-            $this->assertFalse($result->getSuccess());
+            $this->assertFalse($result->isSuccess());
         }
     }
 

@@ -45,7 +45,7 @@ class PhpVersionCheckTest extends TestCase
 
         /** @var PhpVersionCheck $mock */
         $result = $mock->checkStatus();
-        $actual = $result->getSuccess();
+        $actual = $result->isSuccess();
 
         $this->assertEquals($expected, $actual);
     }

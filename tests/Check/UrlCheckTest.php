@@ -23,7 +23,7 @@ class UrlCheckTest extends TestCase
         $check->setHttpClient($client);
         $result = $check->checkStatus();
 
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
         $this->assertEmpty($result->getError());
     }
 
@@ -39,7 +39,7 @@ class UrlCheckTest extends TestCase
         $check->setHttpClient($client);
         $result = $check->checkStatus();
 
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
         $this->assertStringContainsString('URL failed: http://foo.int', $result->getError());
     }
 }

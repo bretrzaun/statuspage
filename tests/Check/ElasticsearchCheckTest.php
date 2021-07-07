@@ -19,7 +19,7 @@ class ElasticsearchCheckTest extends TestCase
         $check = new ElasticsearchCheck('elasticsearch test', $client);
         $result = $check->checkStatus();
 
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
         $this->assertEmpty($result->getError());
     }
 
@@ -33,7 +33,7 @@ class ElasticsearchCheckTest extends TestCase
         $check = new ElasticsearchCheck('elasticsearch test', $client);
         $result = $check->checkStatus();
 
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
     }
 
     public function testMissingIndex(): void
@@ -56,7 +56,7 @@ class ElasticsearchCheckTest extends TestCase
         $check = new ElasticsearchCheck('elasticsearch test', $client, ['notexisting-test-index']);
         $result = $check->checkStatus();
 
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
         $this->assertEquals('Index \'notexisting-test-index\' does not exist', $result->getError());
     }
 }

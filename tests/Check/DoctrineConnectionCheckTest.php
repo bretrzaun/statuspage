@@ -20,7 +20,7 @@ class DoctrineConnectionCheckTest extends TestCase
         $check = new DoctrineConnectionCheck('Test', $db);
         $result = $check->checkStatus();
 
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
         $this->assertEmpty($result->getError());
     }
 
@@ -37,7 +37,7 @@ class DoctrineConnectionCheckTest extends TestCase
         $check = new DoctrineConnectionCheck('Test', $db);
         $result = $check->checkStatus();
 
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
         $this->assertEquals('test failure', $result->getError());
     }
 }

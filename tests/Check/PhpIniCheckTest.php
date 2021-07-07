@@ -3,7 +3,6 @@
 namespace BretRZaun\StatusPage\Tests\Check;
 
 use BretRZaun\StatusPage\Check\PhpIniCheck;
-use BretRZaun\StatusPage\Check\PhpMemoryLimitCheck;
 use PHPUnit\Framework\TestCase;
 
 class PhpIniCheckTest extends TestCase

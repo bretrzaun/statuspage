@@ -33,18 +33,18 @@ class PhpMemoryLimitCheck extends AbstractCheck
         switch (substr($sizeStr, -1)) {
             case 'M':
             case 'm':
-                return (int)$sizeStr;
+                return (int) $sizeStr;
 
             case 'K':
             case 'k':
-                return (int)$sizeStr / 1024;
+                return (int) $sizeStr / 1024;
 
             case 'G':
             case 'g':
-                return (int)$sizeStr * 1024;
+                return (int) $sizeStr * 1024;
 
             default:
-                return (int)$sizeStr;
+                return (int) $sizeStr;
         }
     }
 

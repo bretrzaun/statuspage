@@ -51,7 +51,7 @@ class StatusCheckerGroup implements LoggerAwareInterface
      */
     public function check(): void
     {
-        foreach($this->checks as $checker) {
+        foreach ($this->checks as $checker) {
             $result = $checker->checkStatus();
             if ($this->logger) {
                 if ($result->isSuccess()) {
@@ -82,7 +82,7 @@ class StatusCheckerGroup implements LoggerAwareInterface
     public function hasErrors(): bool
     {
         $error = false;
-        foreach($this->results as $result) {
+        foreach ($this->results as $result) {
             if (!$result->isSuccess()) {
                 $error = true;
                 break;

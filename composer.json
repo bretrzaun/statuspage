@@ -20,20 +20,25 @@
     "guzzlehttp/guzzle": "^6.0||^7.0"
   },
   "require-dev": {
+    "doctrine/dbal": "~3.2",
+    "doctrine/migrations": "^3.3",
+    "elasticsearch/elasticsearch": "*",
+    "mongodb/mongodb": "^1.4",
+    "monolog/monolog": "^2.3",
+    "phpstan/phpstan": "^1.0",
     "phpunit/phpunit": "^9.0",
     "symfony/browser-kit": "^5.0||^6.0",
     "symfony/css-selector": "^5.0||^6.0",
-    "symfony/event-dispatcher": "^5.0||^6.0",
-    "doctrine/dbal": "~3.2",
-    "elasticsearch/elasticsearch": "*",
-    "mongodb/mongodb": "^1.4",
-    "phpstan/phpstan": "^1.0",
-    "monolog/monolog": "^2.3"
+    "symfony/event-dispatcher": "^5.0||^6.0"
   },
   "suggest": {
     "doctrine/dbal": "for checking DB connections",
+    "doctrine/migrations": "for checking Doctrine Migration status",
     "elasticsearch/elasticsearch": "for checking Elasticsearch",
     "mongodb/mongodb": "for checking MongoDB connections"
+  },
+  "config": {
+    "sort-packages": true
   },
   "scripts": {
     "test": "phpunit"

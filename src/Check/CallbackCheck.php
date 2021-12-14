@@ -32,12 +32,7 @@ class CallbackCheck extends AbstractCheck
     {
         $result = new Result($this->label);
         try {
-            $return = \call_user_func($this->callback, $this->label);
-            if ($return instanceof Result) {
-                $result = $return;
-            } else if ($return !== true) {
-                $result->setError($return);
-            }
+            \call_user_func($this->callback, $result);
         } catch (\Throwable $e) {
             $result->setError($e->getMessage());
         }

@@ -21,8 +21,8 @@ class CallbackCheckTest extends TestCase
 
     public function testFailure(): void
     {
-        $check = new CallbackCheck('callback test', function() {
-            return 'an error occured!';
+        $check = new CallbackCheck('callback test', function(Result $result) {
+            $result->setError('an error occured!');
         });
         $result = $check->checkStatus();
 
@@ -32,11 +32,9 @@ class CallbackCheckTest extends TestCase
 
     public function testReturnResult(): void
     {
-        $check = new CallbackCheck('callback test', function($label) {
-            $result = new Result($label);
+        $check = new CallbackCheck('callback test', function(Result $result) {
             $result->setSuccess(true);
             $result->setDetails('ok - with comment');
-            return $result;
         });
         $result = $check->checkStatus();
 

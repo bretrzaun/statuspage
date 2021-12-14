@@ -20,11 +20,9 @@ class StatusLogTest extends TestCase
         $logger->pushHandler($handler);
         $statusChecker->setLogger($logger);
 
-        $statusChecker->addCheck(new CallbackCheck('Test 1', function($label) {
-            return new Result($label);
+        $statusChecker->addCheck(new CallbackCheck('Test 1', function() {
         }));
-        $statusChecker->addCheck(new CallbackCheck('Test 2', function($label) {
-            $result = new Result($label);
+        $statusChecker->addCheck(new CallbackCheck('Test 2', function(Result $result) {
             $result->setError('this check failed!');
             return $result;
         }));

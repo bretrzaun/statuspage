@@ -1,0 +1,5 @@
+build:
+    environment:
+        php:
+            pecl_extensions:
+              - mongodb

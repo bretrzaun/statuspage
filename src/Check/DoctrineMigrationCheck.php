@@ -23,7 +23,7 @@ class DoctrineMigrationCheck extends AbstractCheck
         $version = $aliasResolver->resolveVersionAlias('latest');
 
         $result = new Result($this->label);
-        if ($version) {
+        if ((string)$version !== '') {
             $result->setDetails('current version: '.$version);
         }
         if ($count > 0) {

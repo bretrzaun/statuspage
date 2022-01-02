@@ -14,7 +14,6 @@ class StatusLogTest extends TestCase
     public function testLogger(): void
     {
         $statusChecker = new StatusChecker();
-        #$logger = new TestLogger();
         $logger = new Logger('test');
         $handler = new TestHandler();
         $logger->pushHandler($handler);

@@ -29,7 +29,7 @@ class DoctrineConnectionCheck extends AbstractCheck
         $result = new Result($this->label);
         try {
             $this->db->connect();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $result->setError($e->getMessage());
         }
         return $result;

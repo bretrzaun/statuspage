@@ -28,10 +28,10 @@ class FileCheck extends AbstractCheck
 
     /**
      * FileCheck constructor.
-     * @param $label
-     * @param $filename
+     * @param string $label
+     * @param string $filename
      */
-    public function __construct($label, $filename)
+    public function __construct(string $label, string $filename)
     {
         parent::__construct($label);
         $this->filename = $filename;
@@ -41,7 +41,7 @@ class FileCheck extends AbstractCheck
      * @param string $filename
      * @return FileCheck
      */
-    public function setFilename($filename)
+    public function setFilename(string $filename): self
     {
         $this->filename = $filename;
         return $this;
@@ -50,7 +50,7 @@ class FileCheck extends AbstractCheck
     /**
      * @return FileCheck
      */
-    public function setWritable()
+    public function setWritable(): self
     {
         $this->writable = true;
         return $this;
@@ -60,7 +60,7 @@ class FileCheck extends AbstractCheck
      * @param int $maxage
      * @return FileCheck
      */
-    public function setMaxage($maxage)
+    public function setMaxage(int $maxage): self
     {
         $this->maxage = $maxage;
         return $this;
@@ -70,12 +70,11 @@ class FileCheck extends AbstractCheck
      * @param string $unwantedRegex
      * @return FileCheck
      */
-    public function setUnwantedRegex($unwantedRegex)
+    public function setUnwantedRegex(string $unwantedRegex): self
     {
         $this->unwantedRegex = $unwantedRegex;
         return $this;
     }
-
 
     /**
      * @return Result
@@ -129,5 +128,4 @@ class FileCheck extends AbstractCheck
 
         return $result;
     }
-
 }

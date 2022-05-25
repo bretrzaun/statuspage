@@ -3,7 +3,6 @@
 namespace BretRZaun\StatusPage\Tests\Check;
 
 use BretRZaun\StatusPage\Check\PhpIniCheck;
-use BretRZaun\StatusPage\Check\PhpMemoryLimitCheck;
 use PHPUnit\Framework\TestCase;
 
 class PhpIniCheckTest extends TestCase
@@ -44,11 +43,11 @@ class PhpIniCheckTest extends TestCase
     }
 
     /**
-     * @param $varName
-     * @param $varType
-     * @param $minValue
-     * @param $maxValue
-     * @param $expected
+     * @param string $varName
+     * @param string $varType
+     * @param mixed $minValue
+     * @param mixed $maxValue
+     * @param bool $expected
      *
      * @dataProvider getTestData
      */
@@ -56,7 +55,7 @@ class PhpIniCheckTest extends TestCase
     {
         $checker = new PhpIniCheck('UnitTest_'.$varName, $varName, $varType, $minValue, $maxValue);
         $result = $checker->checkStatus();
-        $this->assertEquals($expected, $result->getSuccess(), (string)$result->getError());
+        $this->assertEquals($expected, $result->isSuccess(), (string)$result->getError());
     }
 
 }

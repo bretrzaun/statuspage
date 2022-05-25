@@ -26,10 +26,10 @@ class PhpExtensionCheckTest extends TestCase
     }
 
     /**
-     * @param $greaterEquals
-     * @param $lessThan
-     * @param $extensionVersion
-     * @param $expected
+     * @param string|null $greaterEquals
+     * @param string|null $lessThan
+     * @param string $extensionVersion
+     * @param bool $expected
      *
      * @dataProvider getTestPhpExtensionCheck
      */
@@ -37,7 +37,7 @@ class PhpExtensionCheckTest extends TestCase
     {
         $mock = $this->getMockBuilder(PhpExtensionCheck::class)
             ->setConstructorArgs(['Test', 'test_extension', $greaterEquals, $lessThan])
-            ->setMethods(['isExtensionLoaded', 'getExtensionVersion'])
+            ->onlyMethods(['isExtensionLoaded', 'getExtensionVersion'])
             ->getMock();
         $mock->expects($this->once())
             ->method('isExtensionLoaded')
@@ -48,7 +48,7 @@ class PhpExtensionCheckTest extends TestCase
 
         /** @var PhpExtensionCheck $mock */
         $result = $mock->checkStatus();
-        $actual = $result->getSuccess();
+        $actual = $result->isSuccess();
 
         $this->assertEquals($expected, $actual);
     }

@@ -6,7 +6,6 @@ use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Check\CallbackCheck;
 use BretRZaun\StatusPage\Result;
 use BretRZaun\StatusPage\StatusChecker;
-use BretRZaun\StatusPage\StatusPageServiceProvider;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -108,8 +107,10 @@ class StatusPageTest extends TestCase
     public function testShowDetails($hasFailure, $showDetailsParam, $htmlContains, $htmlNotContains): void
     {
         $checker = new StatusChecker();
-        $check = new CallbackCheck('my test detail', function () use ($hasFailure) {
-            return $hasFailure ? 'an error occured!' : true;
+        $check = new CallbackCheck('my test detail', function (Result $result) use ($hasFailure) {
+            if ($hasFailure) {
+                $result->setError('an error occured!');
+            }
         });
         $checker->addCheck($check);
         $checker->check();

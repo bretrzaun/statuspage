@@ -15,32 +15,30 @@ class CallbackCheckTest extends TestCase
         });
         $result = $check->checkStatus();
 
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
         $this->assertEmpty($result->getError());
     }
 
     public function testFailure(): void
     {
-        $check = new CallbackCheck('callback test', function() {
-            return 'an error occured!';
+        $check = new CallbackCheck('callback test', function(Result $result) {
+            $result->setError('an error occured!');
         });
         $result = $check->checkStatus();
 
-        $this->assertFalse($result->getSuccess());
+        $this->assertFalse($result->isSuccess());
         $this->assertEquals('an error occured!', $result->getError());
     }
 
     public function testReturnResult(): void
     {
-        $check = new CallbackCheck('callback test', function($label) {
-            $result = new Result($label);
+        $check = new CallbackCheck('callback test', function(Result $result) {
             $result->setSuccess(true);
             $result->setDetails('ok - with comment');
-            return $result;
         });
         $result = $check->checkStatus();
 
-        $this->assertTrue($result->getSuccess());
+        $this->assertTrue($result->isSuccess());
         $this->assertEquals('ok - with comment', $result->getDetails());
 
     }

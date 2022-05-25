@@ -1,7 +1,7 @@
 # StatusPage
 
 [![Latest Stable Version](https://poser.pugx.org/bretrzaun/statuspage/v/stable)](https://packagist.org/packages/bretrzaun/statuspage)
-[![Build Status](https://travis-ci.org/bretrzaun/statuspage.svg?branch=master)](https://travis-ci.org/bretrzaun/statuspage)
+[![Tests](https://github.com/bretrzaun/statuspage/actions/workflows/tests.yml/badge.svg)](https://github.com/bretrzaun/statuspage/actions/workflows/tests.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bretrzaun/statuspage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bretrzaun/statuspage/?branch=master)
 
 Add a simple status page to applications with custom checks.
@@ -20,7 +20,7 @@ composer require bretrzaun/statuspage
 
 ## Usage
 
-```
+```php
 $checker = new \BretRZaun\StatusPage\StatusChecker();
 // add your checks here
 $checker->addCheck(...);

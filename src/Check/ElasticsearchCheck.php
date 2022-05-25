@@ -21,7 +21,7 @@ class ElasticsearchCheck extends AbstractCheck
     /**
      * Constructor
      *
-     * @param $label
+     * @param string $label
      * @param Client $client
      * @param array $indices Indices to check for
      */

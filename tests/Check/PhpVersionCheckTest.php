@@ -26,10 +26,10 @@ class PhpVersionCheckTest extends TestCase
     }
 
     /**
-     * @param $greaterEquals
-     * @param $lessThan
-     * @param $phpVersion
-     * @param $expected
+     * @param string|null $greaterEquals
+     * @param string|null $lessThan
+     * @param string $phpVersion
+     * @param bool $expected
      *
      * @dataProvider getTestPhpVersionCheck
      */
@@ -37,7 +37,7 @@ class PhpVersionCheckTest extends TestCase
     {
         $mock = $this->getMockBuilder(PhpVersionCheck::class)
             ->setConstructorArgs(['Test', $greaterEquals, $lessThan])
-            ->setMethods(['getPhpVersion'])
+            ->onlyMethods(['getPhpVersion'])
             ->getMock();
         $mock->expects($this->once())
             ->method('getPhpVersion')
@@ -45,7 +45,7 @@ class PhpVersionCheckTest extends TestCase
 
         /** @var PhpVersionCheck $mock */
         $result = $mock->checkStatus();
-        $actual = $result->getSuccess();
+        $actual = $result->isSuccess();
 
         $this->assertEquals($expected, $actual);
     }

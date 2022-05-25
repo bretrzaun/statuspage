@@ -1,19 +1,23 @@
-<phpunit colors="true" bootstrap="vendor/autoload.php">
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+    <report>
+      <clover outputFile="tests/coverage.xml"/>
+      <html outputDirectory="tests/report" lowUpperBound="35" highLowerBound="70"/>
+    </report>
+  </coverage>
   <testsuites>
     <testsuite name="StatusPage">
       <directory>tests/</directory>
     </testsuite>
   </testsuites>
-  <filter>
-    <whitelist>
-      <directory suffix=".php">src/</directory>
-    </whitelist>
-  </filter>
-
   <logging>
-    <log type="coverage-html" target="tests/report"
-         lowUpperBound="35" highLowerBound="70"/>
-    <log type="coverage-clover" target="tests/coverage.xml"/>
-    <log type="junit" target="tests/unittest.xml"/>
+    <junit outputFile="tests/unittest.xml"/>
   </logging>
+  <php>
+    <ini name="memory_limit" value="128M"/>
+  </php>
 </phpunit>

@@ -1,10 +1,10 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
 
-use BretRZaun\StatusPage\Result;
 use Exception;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use BretRZaun\StatusPage\Result;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class UrlCheck extends AbstractCheck
 {
@@ -21,20 +21,19 @@ class UrlCheck extends AbstractCheck
      *
      * @param string $label Label
      * @param string $url URL to be tested
+     * @param ClientInterface $client HTTP-Client to use
      */
-    public function __construct(string $label, string $url)
+    public function __construct(string $label, string $url, ClientInterface $client)
     {
         parent::__construct($label);
         $this->url = $url;
-        $this->setHttpClient(new Client());
+        $this->setHttpClient($client);
     }
 
     /**
      * set http client
-     *
-     * @param Client $client
      */
-    public function setHttpClient(Client $client): void
+    public function setHttpClient(ClientInterface $client): void
     {
         $this->client = $client;
     }
@@ -49,11 +48,12 @@ class UrlCheck extends AbstractCheck
     {
         $result = new Result($this->label);
         try {
-            $res = $this->client->request('GET', $this->url);
-            if ($res->getStatusCode() !== 200) {
-                $result->setError('HTTP status code is '.$res->getStatusCode());
+            $request = $this->client->createRequest('GET', $this->url);
+            $response = $this->client->sendRequest($request);
+            if ($response->getStatusCode() !== 200) {
+                $result->setError('HTTP status code for '.$this->url.' is '.$response->getStatusCode());
             }
-        } catch (Exception $e) {
+        } catch (ClientExceptionInterface $e) {
             $result->setError('URL failed: '.$this->url);
         }
         return $result;

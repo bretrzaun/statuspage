@@ -9,13 +9,17 @@ use Elastic\Elasticsearch\Response\Elasticsearch;
 use PHPUnit\Framework\TestCase;
 
 // enable mock final classes
-BypassFinals::enable();
 
+/**
+ * @runTestsInSeparateProcesses
+ */
 class ElasticsearchCheckTest extends TestCase
 {
 
     public function testSuccess(): void
     {
+        BypassFinals::enable();
+
         /** @noinspection PhpUnitInvalidMockingEntityInspection */
         $client = $this->createMock(Client::class);
         $client->expects($this->once())
@@ -38,6 +42,8 @@ class ElasticsearchCheckTest extends TestCase
 
     public function testFailure(): void
     {
+        BypassFinals::enable();
+
         /** @noinspection PhpUnitInvalidMockingEntityInspection */
         $client = $this->createMock(Client::class);
         $client->expects($this->once())
@@ -59,6 +65,8 @@ class ElasticsearchCheckTest extends TestCase
 
     public function testMissingIndex(): void
     {
+        BypassFinals::enable();
+
         /** @noinspection PhpUnitInvalidMockingEntityInspection */
         $client = $this->createMock(Client::class);
         $client->expects($this->once())

@@ -2,25 +2,22 @@
 namespace BretRZaun\StatusPage\Tests\Check;
 
 use BretRZaun\StatusPage\Check\UrlCheck;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
+use Symfony\Component\HttpClient\Psr18Client;
 
 class UrlCheckTest extends TestCase
 {
 
     public function testSuccess(): void
     {
-        $mock = new MockHandler([
-            new Response(200)
-        ]);
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
+        $responses = [
+            new MockResponse('body1', [])
+        ];
+        $client = new Psr18Client(new MockHttpClient($responses));
 
-        $check = new UrlCheck('Test-Url', 'http://www.example.org');
-        $check->setHttpClient($client);
+        $check = new UrlCheck('Test-Url', 'http://www.example.org', $client);
         $result = $check->checkStatus();
 
         $this->assertTrue($result->isSuccess());
@@ -29,17 +26,18 @@ class UrlCheckTest extends TestCase
 
     public function testFailure(): void
     {
-        $mock = new MockHandler([
-            new Response(404)
-        ]);
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
+        $responses = [
+            new MockResponse('body1', ['http_code' => 404])
+        ];
+        $client = new Psr18Client(new MockHttpClient($responses));
 
-        $check = new UrlCheck('Test', 'http://foo.int');
-        $check->setHttpClient($client);
+        $check = new UrlCheck('Test', 'http://foo.int', $client);
         $result = $check->checkStatus();
 
         $this->assertFalse($result->isSuccess());
-        $this->assertStringContainsString('URL failed: http://foo.int', $result->getError());
+        $this->assertStringContainsString(
+            'HTTP status code for http://foo.int is 404',
+            $result->getError()
+        );
     }
 }

@@ -15,7 +15,7 @@ class DoctrineConnectionCheckTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $db->expects($this->once())
-            ->method('connect');
+            ->method('getNativeConnection');
 
         $check = new DoctrineConnectionCheck('Test', $db);
         $result = $check->checkStatus();
@@ -30,7 +30,7 @@ class DoctrineConnectionCheckTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $db->expects($this->once())
-            ->method('connect')
+            ->method('getNativeConnection')
             ->will($this->throwException(new Exception('test failure')))
         ;
 

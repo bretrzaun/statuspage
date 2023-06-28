@@ -20,9 +20,10 @@
     "twig/twig": "^2.0||^3.0"
   },
   "require-dev": {
+    "dg/bypass-finals": "^1.4",
     "doctrine/dbal": "~3.2",
     "doctrine/migrations": "^3.3",
-    "elasticsearch/elasticsearch": "^6.0||^7.0",
+    "elasticsearch/elasticsearch": "^6.0||^7.0||^8.0",
     "mongodb/mongodb": "^1.4",
     "monolog/monolog": "^2.3",
     "nyholm/psr7": "^1.5",

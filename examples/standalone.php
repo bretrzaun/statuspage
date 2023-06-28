@@ -11,7 +11,7 @@ use BretRZaun\StatusPage\StatusCheckerGroup;
 $checker = new StatusChecker();
 
 $group01 = new StatusCheckerGroup('General');
-$group01->addCheck(new PhpVersionCheck('PHP Version', '7.0.0', '7.2.0'));
+$group01->addCheck(new PhpVersionCheck('PHP Version', '8.0.0', '8.2.0'));
 $group01->addCheck(new PhpMemoryLimitCheck('memory_limit', 128));
 $checker->addGroup($group01);
 
@@ -39,6 +39,11 @@ $checker->addGroup($group03);
 $checker->addCheck(new PhpExtensionCheck('PHP Extension / libxml', 'libxml'));
 $checker->addCheck(new PhpExtensionCheck('PHP Extension / SimpleXML', 'SimpleXML'));
 
+$client = \Elastic\Elasticsearch\ClientBuilder::create()
+    ->setHosts(['localhost:9200'])
+    ->build();
+$checker->addCheck(new \BretRZaun\StatusPage\Check\ElasticsearchCheck('Elasticsearch', $client, ['foo', 'bar']));
+
 // run the checks
 $checker->check();
 
@@ -47,8 +52,8 @@ $whitelistPattern = '.*'; // this intentionally matches everything
 $showDetails = (bool)preg_match('|(?mi-Us)' . $whitelistPattern . '|', $_SERVER['REMOTE_ADDR']);
 
 // use the built-in Twig template
-$loader = new Twig_Loader_Filesystem(__DIR__ . '/../resources/views/');
-$twig = new Twig_Environment($loader, ['autoescape' => false]);
+$loader = new Twig\Loader\FilesystemLoader(__DIR__ . '/../resources/views/');
+$twig = new Twig\Environment($loader, ['autoescape' => false]);
 
 $content = $twig->render(
     'status.twig',

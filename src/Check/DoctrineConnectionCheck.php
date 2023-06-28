@@ -28,7 +28,7 @@ class DoctrineConnectionCheck extends AbstractCheck
     {
         $result = new Result($this->label);
         try {
-            $this->db->connect();
+            $this->db->getNativeConnection();
         } catch (\Throwable $e) {
             $result->setError($e->getMessage());
         }

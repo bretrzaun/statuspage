@@ -17,18 +17,24 @@ class DoctrineMigrationCheck extends AbstractCheck
 
     public function checkStatus(): Result
     {
-        $calc = $this->dependencyFactory->getMigrationStatusCalculator();
-        $count = $calc->getNewMigrations()->count();
-        $aliasResolver = $this->dependencyFactory->getVersionAliasResolver();
-        $version = $aliasResolver->resolveVersionAlias('latest');
-
         $result = new Result($this->label);
-        if ((string)$version !== '') {
-            $result->setDetails('current version: '.$version);
+
+        try {
+            $calc = $this->dependencyFactory->getMigrationStatusCalculator();
+            $count = $calc->getNewMigrations()->count();
+            $aliasResolver = $this->dependencyFactory->getVersionAliasResolver();
+            $version = $aliasResolver->resolveVersionAlias('latest');
+        
+            if ((string)$version !== '') {
+                $result->setDetails('current version: '.$version);
+            }
+            if ($count > 0) {
+                $result->setError($count.' outstanding migration(s)');
+            }
+        } catch (\Throwable $e) {
+            $result->setError($e->getMessage());
         }
-        if ($count > 0) {
-            $result->setError($count.' outstanding migration(s)');
-        }
+        
         return $result;
     }
 }

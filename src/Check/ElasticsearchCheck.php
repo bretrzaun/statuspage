@@ -1,32 +1,23 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
 
-use Elasticsearch\Client;
 use BretRZaun\StatusPage\Result;
 use Exception;
-use function PHPUnit\Framework\isEmpty;
 
 class ElasticsearchCheck extends AbstractCheck
 {
+    protected \Elastic\Elasticsearch\Client $client;
 
-    /**
-     * @var \Elasticsearch\Client|\Elastic\Elasticsearch\Client
-     */
-    protected $client;
-
-    /**
-     * @var array
-     */
-    protected $indices;
+    protected array $indices;
 
     /**
      * Constructor
      *
      * @param string $label
-     * @param \Elasticsearch\Client|\Elastic\Elasticsearch\Client $client
+     * @param \Elastic\Elasticsearch\Client $client
      * @param array $indices Indices to check for
      */
-    public function __construct(string $label, Client|\Elastic\Elasticsearch\Client $client, array $indices = [])
+    public function __construct(string $label, \Elastic\Elasticsearch\Client $client, array $indices = [])
     {
         parent::__construct($label);
 
@@ -36,8 +27,6 @@ class ElasticsearchCheck extends AbstractCheck
 
     /**
      * Check callback
-     *
-     * @return Result
      */
     public function checkStatus(): Result
     {

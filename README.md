@@ -39,7 +39,7 @@ $loader = new Twig_Loader_Filesystem('resources/views/');
 $twig = new Twig_Environment($loader, ['autoescape' => false]);
 
 $content = $twig->render(
-    'status.twig',
+    'bootstrap_5.html.twig',
         [
             'results' => $checker->getResults(),
             'title' => 'My status page'

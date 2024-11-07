@@ -1,6 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
 
+use Elasticsearch\Client;
 use BretRZaun\StatusPage\Result;
 use Exception;
 use function PHPUnit\Framework\isEmpty;
@@ -25,7 +26,7 @@ class ElasticsearchCheck extends AbstractCheck
      * @param \Elasticsearch\Client|\Elastic\Elasticsearch\Client $client
      * @param array $indices Indices to check for
      */
-    public function __construct(string $label, \Elasticsearch\Client|\Elastic\Elasticsearch\Client $client, array $indices = [])
+    public function __construct(string $label, Client|\Elastic\Elasticsearch\Client $client, array $indices = [])
     {
         parent::__construct($label);
 
@@ -43,7 +44,7 @@ class ElasticsearchCheck extends AbstractCheck
         $result = new Result($this->label);
         try {
             $info = $this->client->info();
-            $versionParts = explode('.', $info['version']['number']);
+            $versionParts = explode('.', (string) $info['version']['number']);
             $esMajorVersion = (int)array_shift($versionParts);
             if ($esMajorVersion >= 8) {
                 if ($this->client->ping()->asBool() !== true) {

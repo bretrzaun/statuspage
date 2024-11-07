@@ -2,6 +2,7 @@
 
 namespace BretRZaun\StatusPage\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Check\CallbackCheck;
 use BretRZaun\StatusPage\Result;
@@ -101,9 +102,8 @@ class StatusPageTest extends TestCase
 
     /**
      * Checks if showing / hiding details works
-     *
-     * @dataProvider getTestShowDetails
      */
+    #[DataProvider('getTestShowDetails')]
     public function testShowDetails($hasFailure, $showDetailsParam, $htmlContains, $htmlNotContains): void
     {
         $checker = new StatusChecker();

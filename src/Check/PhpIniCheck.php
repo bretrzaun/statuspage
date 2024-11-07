@@ -81,7 +81,7 @@ class PhpIniCheck extends AbstractCheck
     {
         $result = new Result($this->label);
         // some boolval advance
-        switch (strtolower($this->iniValue)) {
+        switch (strtolower((string) $this->iniValue)) {
             case 'on':
                 $this->iniValue = true;
                 break;
@@ -149,7 +149,7 @@ class PhpIniCheck extends AbstractCheck
     protected function checkRegex()
     {
         $result = new Result($this->label);
-        if (!preg_match('~'.$this->varValue.'~', $this->iniValue)) {
+        if (!preg_match('~'.$this->varValue.'~', (string) $this->iniValue)) {
             $result->setError(
                 "php.ini value of '".$this->varName."' is set to '".
                 strval($this->iniValue)."', expected is '".

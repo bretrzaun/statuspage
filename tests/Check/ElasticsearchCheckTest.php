@@ -1,6 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage\Tests\Check;
 
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use BretRZaun\StatusPage\Check\ElasticsearchCheck;
 use DG\BypassFinals;
 use Elastic\Elasticsearch\Client;
@@ -9,7 +10,7 @@ use Elastic\Elasticsearch\Response\Elasticsearch;
 use PHPUnit\Framework\TestCase;
 
 // enable mock final classes
-#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
+#[RunTestsInSeparateProcesses]
 class ElasticsearchCheckTest extends TestCase
 {
 

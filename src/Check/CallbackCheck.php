@@ -1,6 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
 
+use Throwable;
 use BretRZaun\StatusPage\Result;
 
 class CallbackCheck extends AbstractCheck
@@ -33,7 +34,7 @@ class CallbackCheck extends AbstractCheck
         $result = new Result($this->label);
         try {
             \call_user_func($this->callback, $result);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $result->setError($e->getMessage());
         }
         return $result;

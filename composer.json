@@ -13,6 +13,11 @@
       "BretRZaun\\StatusPage\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "BretRZaun\\StatusPage\\Tests\\": "tests/"
+    }
+  },
   "require": {
     "php": ">=8.1",
     "psr/http-client": "^1.0",
@@ -48,6 +53,7 @@
     }
   },
   "scripts": {
-    "test": "phpunit"
+    "rector": "rector",
+    "test": "phpunit --no-coverage"
   }
 }

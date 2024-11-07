@@ -2,6 +2,7 @@
 
 namespace BretRZaun\StatusPage\Tests\Check;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use BretRZaun\StatusPage\Check\PhpIniCheck;
 use PHPUnit\Framework\TestCase;
 
@@ -46,9 +47,8 @@ class PhpIniCheckTest extends TestCase
      * @param string $varName
      * @param string $varType
      * @param bool $expected
-     *
-     * @dataProvider getTestData
      */
+    #[DataProvider('getTestData')]
     public function testPhpIniCheck($varName, $varType, mixed $minValue, mixed $maxValue, $expected): void
     {
         $checker = new PhpIniCheck('UnitTest_'.$varName, $varName, $varType, $minValue, $maxValue);

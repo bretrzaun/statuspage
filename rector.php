@@ -10,10 +10,10 @@ return RectorConfig::configure()
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
-    // uncomment to reach your current PHP version
-    // ->withPhpSets()
+    ->withImportNames(importNames: true)
     ->withPhpSets(php81: true)
+    ->withAttributesSets(symfony: true, doctrine: true, phpunit: true)
     ->withSets([
         PHPUnitSetList::PHPUNIT_100
     ])
-    ->withTypeCoverageLevel(0);
+    ->withTypeCoverageLevel(2);

@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class CallbackCheckTest extends TestCase
 {
-
     public function testSuccess(): void
     {
         $check = new CallbackCheck('callback test', fn() => true);
@@ -38,6 +37,5 @@ class CallbackCheckTest extends TestCase
 
         $this->assertTrue($result->isSuccess());
         $this->assertEquals('ok - with comment', $result->getDetails());
-
     }
 }

@@ -1,6 +1,9 @@
 <?php
 namespace BretRZaun\StatusPage\Tests\Check;
 
+use ArrayIterator;
+use MongoDB\Driver\Exception\ConnectionTimeoutException;
+use MongoDB\Database;
 use MongoDB\Client;
 use BretRZaun\StatusPage\Check\MongoDbCheck;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +18,7 @@ class MongoDbCheckTest extends TestCase
         $client = $this->createMock(Client::class);
         $client->expects($this->once())
             ->method('listDatabases')
-            ->willReturn(new \ArrayIterator(
+            ->willReturn(new ArrayIterator(
                 [new DatabaseInfo(['name' => 'test'])]
             ));
 
@@ -31,7 +34,7 @@ class MongoDbCheckTest extends TestCase
         $client = $this->createMock(Client::class);
         $client->expects($this->once())
             ->method('listDatabases')
-            ->willThrowException(new \MongoDB\Driver\Exception\ConnectionTimeoutException);
+            ->willThrowException(new ConnectionTimeoutException);
 
         $check = new MongoDbCheck('mongodb test', $client);
         $result = $check->checkStatus();
@@ -44,7 +47,7 @@ class MongoDbCheckTest extends TestCase
         $client = $this->createMock(Client::class);
         $client->expects($this->exactly(2))
             ->method('listDatabases')
-            ->willReturn(new \ArrayIterator(
+            ->willReturn(new ArrayIterator(
                 [new DatabaseInfo(['name' => 'test'])]
             ));
 
@@ -65,14 +68,14 @@ class MongoDbCheckTest extends TestCase
         $client = $this->createMock(Client::class);
         $client->expects($this->exactly(2))
             ->method('listDatabases')
-            ->willReturn(new \ArrayIterator(
+            ->willReturn(new ArrayIterator(
                 [new DatabaseInfo(['name' => 'test-db'])]
             ));
 
-        $mockDatabase = $this->createMock(\MongoDB\Database::class);
+        $mockDatabase = $this->createMock(Database::class);
         $mockDatabase->expects($this->exactly(2))
             ->method('listCollections')
-            ->willReturn(new \ArrayIterator(
+            ->willReturn(new ArrayIterator(
                 [new CollectionInfo(['name' => 'my-collection'])]
             ));
 

@@ -2,6 +2,7 @@
 
 namespace BretRZaun\StatusPage\Tests\Check;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use BretRZaun\StatusPage\Check\PhpVersionCheck;
 use PHPUnit\Framework\TestCase;
 
@@ -30,9 +31,8 @@ class PhpVersionCheckTest extends TestCase
      * @param string|null $lessThan
      * @param string $phpVersion
      * @param bool $expected
-     *
-     * @dataProvider getTestPhpVersionCheck
      */
+    #[DataProvider('getTestPhpVersionCheck')]
     public function testPhpVersionCheck($greaterEquals, $lessThan, $phpVersion, $expected): void
     {
         $mock = $this->getMockBuilder(PhpVersionCheck::class)

@@ -1,5 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
+use Exception;
+use RuntimeException;
 use MongoDB\Client;
 
 use BretRZaun\StatusPage\Result;
@@ -9,7 +11,7 @@ class MongoDbCheck extends AbstractCheck
     private $databases = [];
     private $collections = [];
 
-    public function __construct(string $label, private Client $client)
+    public function __construct(string $label, private readonly Client $client)
     {
         parent::__construct($label);
     }
@@ -39,7 +41,7 @@ class MongoDbCheck extends AbstractCheck
             if (count($this->collections) > 0) {
                 $this->checkCollections($databases);
             }
-        } catch(\Exception $e) {
+        } catch(Exception $e) {
             $result->setError($e->getMessage());
         }
         return $result;
@@ -70,7 +72,7 @@ class MongoDbCheck extends AbstractCheck
     {
         foreach($this->databases as $database) {
             if (!in_array($database, $databases)) {
-                throw new \RuntimeException('Database '.$database.' does not exist');
+                throw new RuntimeException('Database '.$database.' does not exist');
             }
         }
     }
@@ -81,7 +83,7 @@ class MongoDbCheck extends AbstractCheck
             $collectionNames = $this->listCollectionNames($databaseName);
             foreach ($collections as $collection) {
                 if (!in_array($collection, $collectionNames)) {
-                    throw new \RuntimeException('Collection '.$collection.' does not exist in database '.$databaseName);
+                    throw new RuntimeException('Collection '.$collection.' does not exist in database '.$databaseName);
                 }
             }
         }

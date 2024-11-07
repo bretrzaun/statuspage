@@ -1,13 +1,14 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
 
+use Throwable;
 use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Result;
 use Doctrine\Migrations\DependencyFactory;
 
 class DoctrineMigrationCheck extends AbstractCheck
 {
-    public function __construct(string $label, private DependencyFactory $dependencyFactory)
+    public function __construct(string $label, private readonly DependencyFactory $dependencyFactory)
     {
         parent::__construct($label);
     }
@@ -28,7 +29,7 @@ class DoctrineMigrationCheck extends AbstractCheck
             if ($count > 0) {
                 $result->setError($count.' outstanding migration(s)');
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $result->setError($e->getMessage());
         }
         

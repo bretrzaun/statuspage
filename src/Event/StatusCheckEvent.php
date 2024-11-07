@@ -11,7 +11,7 @@ class StatusCheckEvent extends Event
      */
     private $showDetails;
 
-    public function __construct(private StatusChecker $checker)
+    public function __construct(private readonly StatusChecker $checker)
     {
     }
 

@@ -2,6 +2,7 @@
 
 namespace BretRZaun\StatusPage\Tests\Check;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use BretRZaun\StatusPage\Check\PhpMemoryLimitCheck;
 use PHPUnit\Framework\TestCase;
 
@@ -30,9 +31,8 @@ class PhpMemoryLimitCheckTest extends TestCase
     /**
      * @param string $sizeString
      * @param int|float $expectedMegabytes
-     *
-     * @dataProvider getTestSizeStringConversion
      */
+    #[DataProvider('getTestSizeStringConversion')]
     public function testSizeStringConversion($sizeString, $expectedMegabytes): void
     {
         $actual = $this->checker->getMegabytesFromSizeString($sizeString);

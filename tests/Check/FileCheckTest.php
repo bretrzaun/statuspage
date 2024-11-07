@@ -1,6 +1,7 @@
 <?php
 namespace BretRZaun\StatusPage\Tests\Check;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use BretRZaun\StatusPage\Check\FileCheck;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +32,7 @@ class FileCheckTest extends TestCase {
     }
 
 
-    public function testFileExists()
+    public function testFileExists(): void
     {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $result = $check->checkStatus();
@@ -42,7 +43,7 @@ class FileCheckTest extends TestCase {
         $this->assertFalse($result->isSuccess());
     }
 
-    public function testAge()
+    public function testAge(): void
     {
         // file is newer than one minute
         $check = new FileCheck(__METHOD__, self::$testFile);
@@ -75,9 +76,9 @@ class FileCheckTest extends TestCase {
     /**
      * @param string $pattern
      * @param bool $expected
-     * @dataProvider dataPattern
      */
-    public function testPattern($pattern, $expected)
+    #[DataProvider('dataPattern')]
+    public function testPattern($pattern, $expected): void
     {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $check->setUnwantedRegex($pattern);
@@ -86,7 +87,7 @@ class FileCheckTest extends TestCase {
     }
 
 
-    public function testWriteable()
+    public function testWriteable(): void
     {
         $check = new FileCheck(__METHOD__, self::$testFile);
         $check->setWritable();

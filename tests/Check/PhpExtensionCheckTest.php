@@ -2,6 +2,7 @@
 
 namespace BretRZaun\StatusPage\Tests\Check;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use BretRZaun\StatusPage\Check\PhpExtensionCheck;
 use PHPUnit\Framework\TestCase;
 
@@ -30,9 +31,8 @@ class PhpExtensionCheckTest extends TestCase
      * @param string|null $lessThan
      * @param string $extensionVersion
      * @param bool $expected
-     *
-     * @dataProvider getTestPhpExtensionCheck
      */
+    #[DataProvider('getTestPhpExtensionCheck')]
     public function testPhpExtensionCheck($greaterEquals, $lessThan, $extensionVersion, $expected): void
     {
         $mock = $this->getMockBuilder(PhpExtensionCheck::class)

@@ -5,17 +5,14 @@ use BretRZaun\StatusPage\Result;
 
 class LogfileContentCheck extends AbstractCheck
 {
+    protected ?string $content = null;
 
-    protected $filename;
-    protected $content;
-
-    public function __construct(string $label, string $filename)
+    public function __construct(string $label, protected string $filename)
     {
         parent::__construct($label);
-        $this->filename = $filename;
     }
 
-    public function setCheckfor($content): void
+    public function setCheckFor(string $content): void
     {
         $this->content = $content;
     }
@@ -31,7 +28,7 @@ class LogfileContentCheck extends AbstractCheck
 
         if (!empty($this->content)) {
             $fileContent = file_get_contents($this->filename);
-            if (!str_contains($fileContent, $this->content)) {
+            if (!str_contains($fileContent, (string) $this->content)) {
                 $result->setError('Log file failure');
                 $result->setDetails('Timestamp: '.date('d.m.Y H:i', filemtime($this->filename)));
             }

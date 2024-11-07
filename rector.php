@@ -10,10 +10,10 @@ return RectorConfig::configure()
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
-    ->withImportNames(importNames: true)
+    ->withImportNames(removeUnusedImports: true)
     ->withPhpSets(php81: true)
     ->withAttributesSets(symfony: true, doctrine: true, phpunit: true)
     ->withSets([
         PHPUnitSetList::PHPUNIT_100
     ])
-    ->withTypeCoverageLevel(2);
+    ->withTypeCoverageLevel(4);

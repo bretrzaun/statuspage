@@ -1,7 +1,6 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
 
-use Exception;
 use BretRZaun\StatusPage\Result;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Client\ClientExceptionInterface;

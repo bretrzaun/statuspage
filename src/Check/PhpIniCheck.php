@@ -14,8 +14,6 @@ class PhpIniCheck extends AbstractCheck
 
     protected $varName;
     protected $varType;
-    protected $varValue;
-    protected $maxValue;
     protected $iniValue;
 
     /**
@@ -29,13 +27,11 @@ class PhpIniCheck extends AbstractCheck
      *
      * @return PhpIniCheck
      */
-    public function __construct(string $label, string $varName, string $varType, $varValue, $maxValue = null)
+    public function __construct(string $label, string $varName, string $varType, protected $varValue, protected $maxValue = null)
     {
         parent::__construct($label);
         $this->varName = $varName;
         $this->varType = $varType;
-        $this->varValue = $varValue;
-        $this->maxValue = $maxValue;
         $this->iniValue = ini_get($varName);
     }
 
@@ -46,16 +42,12 @@ class PhpIniCheck extends AbstractCheck
     protected function stringToMegabyte(string $size)
     {
         $value = preg_replace('~[^0-9]*~', '', $size);
-        switch (substr(strtolower($size), -1)) {
-            case 'm':
-                return (int) $value;
-            case 'k':
-                return (int) round((int) $value / 1024);
-            case 'g':
-                return ((int) $value * 1024);
-            default:
-                return false;
-        }
+        return match (substr(strtolower($size), -1)) {
+            'm' => (int) $value,
+            'k' => (int) round((int) $value / 1024),
+            'g' => (int) $value * 1024,
+            default => false,
+        };
     }
 
 

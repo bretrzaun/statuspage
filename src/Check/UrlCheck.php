@@ -53,7 +53,7 @@ class UrlCheck extends AbstractCheck
             if ($response->getStatusCode() !== 200) {
                 $result->setError('HTTP status code for '.$this->url.' is '.$response->getStatusCode());
             }
-        } catch (ClientExceptionInterface $e) {
+        } catch (ClientExceptionInterface) {
             $result->setError('URL failed: '.$this->url);
         }
         return $result;

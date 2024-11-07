@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class PhpVersionCheckTest extends TestCase
 {
-    public function getTestPhpVersionCheck(): array
+    public static function getTestPhpVersionCheck(): array
     {
         return [
             [null, null, '7.1.0', true],

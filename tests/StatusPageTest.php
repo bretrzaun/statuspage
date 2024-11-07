@@ -64,7 +64,7 @@ class StatusPageTest extends TestCase
     public function testFailer(): void
     {
         $mock = $this->getMockBuilder(AbstractCheck::class)
-            ->setConstructorArgs(array('TestCheck'))
+            ->setConstructorArgs(['TestCheck'])
             ->getMock();
 
         $result = new Result('TestCheck');
@@ -89,7 +89,7 @@ class StatusPageTest extends TestCase
      *
      * @return array
      */
-    public function getTestShowDetails(): array
+    public static function getTestShowDetails(): array
     {
         return [
             [false, false, 'System is up and running', 'my test detail'],
@@ -107,7 +107,7 @@ class StatusPageTest extends TestCase
     public function testShowDetails($hasFailure, $showDetailsParam, $htmlContains, $htmlNotContains): void
     {
         $checker = new StatusChecker();
-        $check = new CallbackCheck('my test detail', function (Result $result) use ($hasFailure) {
+        $check = new CallbackCheck('my test detail', function (Result $result) use ($hasFailure): void {
             if ($hasFailure) {
                 $result->setError('an error occured!');
             }

@@ -7,18 +7,12 @@ use BretRZaun\StatusPage\StatusChecker;
 class StatusCheckEvent extends Event
 {
     /**
-     * @var StatusChecker
-     */
-    private $checker;
-
-    /**
      * @var bool
      */
     private $showDetails;
 
-    public function __construct(StatusChecker $checker)
+    public function __construct(private StatusChecker $checker)
     {
-        $this->checker = $checker;
     }
 
     public function getChecker(): StatusChecker

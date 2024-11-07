@@ -6,14 +6,12 @@ use BretRZaun\StatusPage\Result;
 
 class MongoDbCheck extends AbstractCheck
 {
-    private $client;
     private $databases = [];
     private $collections = [];
 
-    public function __construct(string $label, Client $client)
+    public function __construct(string $label, private Client $client)
     {
         parent::__construct($label);
-        $this->client = $client;
     }
 
     public function ensureDatabaseExists(string $database)

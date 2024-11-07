@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class PhpIniCheckTest extends TestCase
 {
 
-    public function getTestData(): array
+    public static function getTestData(): array
     {
         return [
             // php.ini default value: true
@@ -45,13 +45,11 @@ class PhpIniCheckTest extends TestCase
     /**
      * @param string $varName
      * @param string $varType
-     * @param mixed $minValue
-     * @param mixed $maxValue
      * @param bool $expected
      *
      * @dataProvider getTestData
      */
-    public function testPhpIniCheck($varName, $varType, $minValue, $maxValue, $expected): void
+    public function testPhpIniCheck($varName, $varType, mixed $minValue, mixed $maxValue, $expected): void
     {
         $checker = new PhpIniCheck('UnitTest_'.$varName, $varName, $varType, $minValue, $maxValue);
         $result = $checker->checkStatus();

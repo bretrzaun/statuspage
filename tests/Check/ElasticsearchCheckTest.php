@@ -9,10 +9,7 @@ use Elastic\Elasticsearch\Response\Elasticsearch;
 use PHPUnit\Framework\TestCase;
 
 // enable mock final classes
-
-/**
- * @runTestsInSeparateProcesses
- */
+#[\PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses]
 class ElasticsearchCheckTest extends TestCase
 {
 

@@ -15,7 +15,7 @@ class PhpMemoryLimitCheckTest extends TestCase
         $this->checker = new PhpMemoryLimitCheck('Test', 1024);
     }
 
-    public function getTestSizeStringConversion(): array
+    public static function getTestSizeStringConversion(): array
     {
         return [
             ['1024M', 1024],

@@ -7,19 +7,13 @@ class PhpMemoryLimitCheck extends AbstractCheck
 {
 
     /**
-     * @var string
-     */
-    protected $memoryRequired;
-
-    /**
      *
      * @param string $label Label
      * @param string|int $memoryRequired amount of memory that is (at least) required in megabytes
      */
-    public function __construct(string $label, $memoryRequired)
+    public function __construct(string $label, protected $memoryRequired)
     {
         parent::__construct($label);
-        $this->memoryRequired = $memoryRequired;
     }
 
     /**
@@ -30,22 +24,12 @@ class PhpMemoryLimitCheck extends AbstractCheck
      */
     public function getMegabytesFromSizeString($sizeStr)
     {
-        switch (substr($sizeStr, -1)) {
-            case 'M':
-            case 'm':
-                return (int) $sizeStr;
-
-            case 'K':
-            case 'k':
-                return (int) $sizeStr / 1024;
-
-            case 'G':
-            case 'g':
-                return (int) $sizeStr * 1024;
-
-            default:
-                return (int) $sizeStr;
-        }
+        return match (substr($sizeStr, -1)) {
+            'M', 'm' => (int) $sizeStr,
+            'K', 'k' => (int) $sizeStr / 1024,
+            'G', 'g' => (int) $sizeStr * 1024,
+            default => (int) $sizeStr,
+        };
     }
 
     /**

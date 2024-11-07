@@ -7,12 +7,9 @@ use Doctrine\Migrations\DependencyFactory;
 
 class DoctrineMigrationCheck extends AbstractCheck
 {
-    private DependencyFactory $dependencyFactory;
-
-    public function __construct(string $label, DependencyFactory $dependencyFactory)
+    public function __construct(string $label, private DependencyFactory $dependencyFactory)
     {
         parent::__construct($label);
-        $this->dependencyFactory = $dependencyFactory;
     }
 
     public function checkStatus(): Result

@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class PhpExtensionCheckTest extends TestCase
 {
-    public function getTestPhpExtensionCheck(): array
+    public static function getTestPhpExtensionCheck(): array
     {
         return [
             [null, null, '7.1.0', true],

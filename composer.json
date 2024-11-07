@@ -14,21 +14,22 @@
     }
   },
   "require": {
-    "php": ">=8.0",
+    "php": ">=8.1",
     "psr/http-client": "^1.0",
     "psr/log": "^2.0||^3.0",
     "twig/twig": "^2.0||^3.0"
   },
   "require-dev": {
     "dg/bypass-finals": "^1.4",
-    "doctrine/dbal": "~3.2",
+    "doctrine/dbal": "^4.0",
     "doctrine/migrations": "^3.3",
     "elasticsearch/elasticsearch": "^6.0||^7.0||^8.0",
     "mongodb/mongodb": "^1.4",
-    "monolog/monolog": "^2.3",
+    "monolog/monolog": "^3.0",
     "nyholm/psr7": "^1.5",
     "phpstan/phpstan": "^1.0",
-    "phpunit/phpunit": "^9.0",
+    "phpunit/phpunit": "^10.0",
+    "rector/rector": "^1.2",
     "symfony/browser-kit": "^5.0||^6.0",
     "symfony/css-selector": "^5.0||^6.0",
     "symfony/event-dispatcher": "^5.0||^6.0",
@@ -41,7 +42,10 @@
     "mongodb/mongodb": "for checking MongoDB connections"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   },
   "scripts": {
     "test": "phpunit"

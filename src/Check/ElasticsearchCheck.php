@@ -24,30 +24,14 @@ class ElasticsearchCheck extends AbstractCheck
     {
         $result = new Result($this->label);
         try {
-            $info = $this->client->info();
-            $versionParts = explode('.', (string) $info['version']['number']);
-            $esMajorVersion = (int)array_shift($versionParts);
-            if ($esMajorVersion >= 8) {
-                if ($this->client->ping()->asBool() !== true) {
-                    $result->setError("Elasticsearch is not reachable (ping failed)");
-                    return $result;
-                }
-            } else {
-                if ($this->client->ping() !== true) {
-                    $result->setError("Elasticsearch is not reachable (ping failed)");
-                    return $result;
-                }
+            if ($this->client->ping()->asBool() !== true) {
+                $result->setError("Elasticsearch is not reachable (ping failed)");
+                return $result;
             }
 
             foreach ($this->indices as $index) {
-                if ($esMajorVersion >= 8) {
-                    if (!$this->client->indices()->exists(['index' => $index])->asBool()) {
-                        $result->setError("Index '$index' does not exist");
-                    }
-                } else {
-                    if (!$this->client->indices()->exists(['index' => $index])) {
-                        $result->setError("Index '$index' does not exist");
-                    }
+                if (!$this->client->indices()->exists(['index' => $index])->asBool()) {
+                    $result->setError("Index '$index' does not exist");
                 }
             }
         } catch (Exception $e) {

@@ -20,9 +20,6 @@ class ElasticsearchCheckTest extends TestCase
 
         /** @noinspection PhpUnitInvalidMockingEntityInspection */
         $client = $this->createMock(Client::class);
-        $client->expects($this->once())
-            ->method('info')
-            ->willReturn(['version' => ['number' => '8.1.2']]);
         $ping = $this->createMock(Elasticsearch::class);
         $ping->expects($this->once())
             ->method('asBool')
@@ -44,9 +41,6 @@ class ElasticsearchCheckTest extends TestCase
 
         /** @noinspection PhpUnitInvalidMockingEntityInspection */
         $client = $this->createMock(Client::class);
-        $client->expects($this->once())
-            ->method('info')
-            ->willReturn(['version' => ['number' => '8.1.2']]);
         $ping = $this->createMock(Elasticsearch::class);
         $ping->expects($this->once())
             ->method('asBool')
@@ -67,9 +61,6 @@ class ElasticsearchCheckTest extends TestCase
 
         /** @noinspection PhpUnitInvalidMockingEntityInspection */
         $client = $this->createMock(Client::class);
-        $client->expects($this->once())
-            ->method('info')
-            ->willReturn(['version' => ['number' => '8.1.2']]);
         $ping = $this->createMock(Elasticsearch::class);
         $ping->expects($this->once())
             ->method('asBool')

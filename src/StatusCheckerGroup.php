@@ -21,16 +21,12 @@ class StatusCheckerGroup implements LoggerAwareInterface
 
     /**
      * StatusCheckerGroup constructor.
-     * @param string $title
      */
     public function __construct(string $title)
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
@@ -38,8 +34,6 @@ class StatusCheckerGroup implements LoggerAwareInterface
 
     /**
      * Adds check to the group.
-     *
-     * @param CheckInterface $checker
      */
     public function addCheck(CheckInterface $checker): void
     {
@@ -76,8 +70,6 @@ class StatusCheckerGroup implements LoggerAwareInterface
 
     /**
      * Returns if there is an erroneous result in this group.
-     *
-     * @return bool
      */
     public function hasErrors(): bool
     {

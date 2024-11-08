@@ -28,8 +28,6 @@ class FileCheck extends AbstractCheck
 
     /**
      * FileCheck constructor.
-     * @param string $label
-     * @param string $filename
      */
     public function __construct(string $label, string $filename)
     {
@@ -37,48 +35,30 @@ class FileCheck extends AbstractCheck
         $this->filename = $filename;
     }
 
-    /**
-     * @param string $filename
-     * @return FileCheck
-     */
     public function setFilename(string $filename): self
     {
         $this->filename = $filename;
         return $this;
     }
 
-    /**
-     * @return FileCheck
-     */
     public function setWritable(): self
     {
         $this->writable = true;
         return $this;
     }
 
-    /**
-     * @param int $maxage
-     * @return FileCheck
-     */
     public function setMaxage(int $maxage): self
     {
         $this->maxage = $maxage;
         return $this;
     }
 
-    /**
-     * @param string $unwantedRegex
-     * @return FileCheck
-     */
     public function setUnwantedRegex(string $unwantedRegex): self
     {
         $this->unwantedRegex = $unwantedRegex;
         return $this;
     }
 
-    /**
-     * @return Result
-     */
     public function checkStatus(): Result
     {
         $result = new Result($this->label);

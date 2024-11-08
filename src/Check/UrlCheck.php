@@ -7,14 +7,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class UrlCheck extends AbstractCheck
 {
-
-    protected $url;
-
-    /**
-     * @var Client
-     */
-    protected $client;
-
     /**
      * UrlCheck constructor.
      *
@@ -22,11 +14,9 @@ class UrlCheck extends AbstractCheck
      * @param string $url URL to be tested
      * @param ClientInterface $client HTTP-Client to use
      */
-    public function __construct(string $label, string $url, ClientInterface $client)
+    public function __construct(string $label, protected string $url, protected ClientInterface $client)
     {
         parent::__construct($label);
-        $this->url = $url;
-        $this->setHttpClient($client);
     }
 
     /**
@@ -39,9 +29,6 @@ class UrlCheck extends AbstractCheck
 
     /**
      * Check URL
-     *
-     * @return Result
-     * @throws GuzzleException
      */
     public function checkStatus(): Result
     {

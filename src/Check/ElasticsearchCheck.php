@@ -1,28 +1,20 @@
 <?php
 namespace BretRZaun\StatusPage\Check;
 
+use Elastic\Elasticsearch\Client;
 use BretRZaun\StatusPage\Result;
 use Exception;
 
 class ElasticsearchCheck extends AbstractCheck
 {
-    protected \Elastic\Elasticsearch\Client $client;
-
-    protected array $indices;
-
     /**
      * Constructor
      *
-     * @param string $label
-     * @param \Elastic\Elasticsearch\Client $client
      * @param array $indices Indices to check for
      */
-    public function __construct(string $label, \Elastic\Elasticsearch\Client $client, array $indices = [])
+    public function __construct(string $label, protected Client $client, protected array $indices = [])
     {
         parent::__construct($label);
-
-        $this->client = $client;
-        $this->indices = $indices;
     }
 
     /**

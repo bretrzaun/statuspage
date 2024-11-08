@@ -22,14 +22,13 @@ class StatusPageTest extends TestCase
         $twig = new Environment($loader, ['autoescape' => false]);
 
         $checker->check();
-        $content = $twig->render(
+        return $twig->render(
             'status.twig',
             [
                 'results' => $checker->getResults(),
                 'title' => $title
             ]
         );
-        return $content;
     }
 
     public function testNoChecks(): void
@@ -87,8 +86,6 @@ class StatusPageTest extends TestCase
 
     /**
      * DataProvider for testShowDetails.
-     *
-     * @return array
      */
     public static function getTestShowDetails(): array
     {

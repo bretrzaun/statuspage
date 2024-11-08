@@ -31,8 +31,6 @@ class PhpExtensionCheck extends AbstractCheck
 
     /**
      * Gets version constraint string for display within the error message.
-     *
-     * @return string
      */
     protected function getVersionConstraintString(): string
     {
@@ -49,8 +47,6 @@ class PhpExtensionCheck extends AbstractCheck
 
     /**
      * Finds out whether the extension is loaded.
-     *
-     * @return bool
      */
     protected function isExtensionLoaded(): bool
     {
@@ -59,8 +55,6 @@ class PhpExtensionCheck extends AbstractCheck
 
     /**
      * Gets the installed extension version.
-     *
-     * @return string
      */
     protected function getExtensionVersion(): string
     {
@@ -69,8 +63,6 @@ class PhpExtensionCheck extends AbstractCheck
 
     /**
      * Check URL
-     *
-     * @return Result
      */
     public function checkStatus(): Result
     {

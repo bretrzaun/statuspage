@@ -19,12 +19,10 @@ class PhpIniCheck extends AbstractCheck
     /**
      * PhpIniCheck constructor.
      *
-     * @param string $label
      * @param string $varName <b>Name</b> of ini value - used for ini_get(...)
      * @param string $varType <b>Type</b> of ini value - see class constant
      * @param mixed $varValue <b>Value</b> which is expected
      * @param null $maxValue <b>maximum</b> value is optional used for numbers
-     *
      * @return PhpIniCheck
      */
     public function __construct(string $label, string $varName, string $varType, protected $varValue, protected $maxValue = null)
@@ -36,7 +34,6 @@ class PhpIniCheck extends AbstractCheck
     }
 
     /**
-     * @param string $size
      * @return int|bool(false)
      */
     protected function stringToMegabyte(string $size)
@@ -51,9 +48,6 @@ class PhpIniCheck extends AbstractCheck
     }
 
 
-    /**
-     * @return Result
-     */
     public function checkStatus(): Result
     {
         switch ($this->varType) {
@@ -83,14 +77,10 @@ class PhpIniCheck extends AbstractCheck
         // some boolval advance
         switch (strtolower((string) $this->iniValue)) {
             case 'on':
-                $this->iniValue = true;
-                break;
-            case 'off':
-                $this->iniValue = false;
-                break;
             case 'yes':
                 $this->iniValue = true;
                 break;
+            case 'off':
             case 'no':
                 $this->iniValue = false;
                 break;

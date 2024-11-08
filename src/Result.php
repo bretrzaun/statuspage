@@ -3,14 +3,12 @@ namespace BretRZaun\StatusPage;
 
 class Result
 {
-    protected $success = true;
-    protected $error;
-    protected $label;
-    protected $details;
+    protected bool $success = true;
+    protected ?string $error = null;
+    protected ?string $details = null;
 
-    public function __construct(string $label)
+    public function __construct(protected string $label)
     {
-        $this->label = $label;
     }
 
     public function getLabel(): string
@@ -21,14 +19,6 @@ class Result
     public function setSuccess(bool $success): void
     {
         $this->success = $success;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getSuccess(): bool
-    {
-        return $this->success;
     }
 
     public function isSuccess(): bool

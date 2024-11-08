@@ -39,7 +39,7 @@ class MongoDbCheck extends AbstractCheck
                 $this->checkDatabases($databases);
             }
             if (count($this->collections) > 0) {
-                $this->checkCollections($databases);
+                $this->checkCollections();
             }
         } catch(Exception $e) {
             $result->setError($e->getMessage());
@@ -77,7 +77,7 @@ class MongoDbCheck extends AbstractCheck
         }
     }
 
-    private function checkCollections(array $databases)
+    private function checkCollections()
     {
         foreach ($this->collections as $databaseName => $collections) {
             $collectionNames = $this->listCollectionNames($databaseName);

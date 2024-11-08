@@ -22,8 +22,6 @@ class DoctrineConnectionCheck extends AbstractCheck
 
     /**
      * Check Doctrine connection
-     *
-     * @return Result
      */
     public function checkStatus(): Result
     {

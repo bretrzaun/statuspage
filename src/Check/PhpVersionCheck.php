@@ -31,8 +31,6 @@ class PhpVersionCheck extends AbstractCheck
 
     /**
      * Check URL
-     *
-     * @return Result
      */
     public function checkStatus(): Result
     {

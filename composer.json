@@ -29,7 +29,7 @@
     "doctrine/dbal": "^4.0",
     "doctrine/migrations": "^3.3",
     "elasticsearch/elasticsearch": "^8.0",
-    "mongodb/mongodb": "^1.11",
+    "mongodb/mongodb": "^1.11 || ^2.0",
     "monolog/monolog": "^3.0",
     "nyholm/psr7": "^1.5",
     "phpstan/phpstan": "^2.0",

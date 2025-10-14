@@ -6,7 +6,7 @@ on:
 
 jobs:
   integration:
-    runs-on: Ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:

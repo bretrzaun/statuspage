@@ -73,15 +73,15 @@ class ElasticsearchCheckTest extends TestCase
         $exists->expects($this->once())
             ->method('asBool')
             ->willReturn(false);
-        $incidesMock = $this->createMock(Indices::class);
-        $incidesMock->expects($this->once())
+        $indicesMock = $this->createMock(Indices::class);
+        $indicesMock->expects($this->once())
             ->method('exists')
             ->with(['index' => 'notexisting-test-index'])
             ->willReturn($exists);
 
         $client->expects($this->once())
             ->method('indices')
-            ->willReturn($incidesMock);
+            ->willReturn($indicesMock);
 
         $check = new ElasticsearchCheck('elasticsearch test', $client, ['notexisting-test-index']);
         $result = $check->checkStatus();

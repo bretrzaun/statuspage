@@ -25,6 +25,7 @@ jobs:
           coverage: xdebug
           php-version: "${{ matrix.php }}"
           tools: composer
+          extensions: mongodb-mongodb/mongo-php-driver
 
       - name: Cache Composer packages
         id: composer-cache

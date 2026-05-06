@@ -6,6 +6,7 @@ class Result
     protected bool $success = true;
     protected ?string $error = null;
     protected ?string $details = null;
+    protected ?float $duration = null;
 
     public function __construct(protected string $label)
     {
@@ -45,5 +46,18 @@ class Result
     public function getDetails(): ?string
     {
         return $this->details;
+    }
+        
+    public function setDuration(float $duration): void
+    {
+        $this->duration = $duration;
+    }
+
+    /**
+     * Returns the execution duration in milliseconds, or null if not measured.
+     */
+    public function getDuration(): ?float
+    {
+        return $this->duration;
     }
 }

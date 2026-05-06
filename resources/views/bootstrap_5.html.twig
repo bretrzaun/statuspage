@@ -85,6 +85,11 @@
                                                         {{- result.error|default('Failure') -}}
                                                     {%- endif -%}
                                                 </td>
+                                                <td class="text-end text-nowrap w-auto">
+                                                    {%- if result.duration is not null -%}
+                                                        {{- result.duration|number_format(1) }} ms
+                                                    {%- endif -%}
+                                                </td>                                                
                                             </tr>
                                         {% endfor %}
                                     </table>

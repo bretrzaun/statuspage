@@ -4,20 +4,21 @@ namespace BretRZaun\StatusPage;
 use BretRZaun\StatusPage\Check\CheckInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 class StatusCheckerGroup implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /** @var string */
-    protected $title;
+    protected string $title;
 
     /** @var CheckInterface[] */
-    protected $checks = [];
+    protected array$checks = [];
 
     /** @var Result[] */
-    protected $results = [];
+    protected array $results = [];
 
+    private Stopwatch $stopwatch;
 
     /**
      * StatusCheckerGroup constructor.
@@ -25,6 +26,7 @@ class StatusCheckerGroup implements LoggerAwareInterface
     public function __construct(string $title)
     {
         $this->title = $title;
+        $this->stopwatch = new Stopwatch();
     }
 
     public function getTitle(): string
@@ -46,12 +48,21 @@ class StatusCheckerGroup implements LoggerAwareInterface
     public function check(): void
     {
         foreach ($this->checks as $checker) {
+            $eventName = get_class($checker);
+
+            $this->stopwatch->start($eventName);
             $result = $checker->checkStatus();
+            $result->setDuration($this->stopwatch->stop($eventName)->getDuration());
+
             if ($this->logger) {
+                $context = [
+                    'details'  => $result->getDetails(),
+                    'duration' => $result->getDuration(),
+                ];
                 if ($result->isSuccess()) {
-                    $this->logger->info($result->getLabel().': OK', ['details' => $result->getDetails()]);
+                    $this->logger->info($result->getLabel().': OK', $context);
                 } else {
-                    $this->logger->alert($result->getLabel().': '.$result->getError(), ['details' => $result->getDetails()]);
+                    $this->logger->alert($result->getLabel().': '.$result->getError(), $context);
                 }
             }
             $this->results[] = $result;
@@ -73,13 +84,11 @@ class StatusCheckerGroup implements LoggerAwareInterface
      */
     public function hasErrors(): bool
     {
-        $error = false;
         foreach ($this->results as $result) {
             if (!$result->isSuccess()) {
-                $error = true;
-                break;
+                return true;
             }
         }
-        return $error;
+        return false;
     }
 }

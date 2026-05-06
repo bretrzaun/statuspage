@@ -10,8 +10,6 @@ class StatusCheckerGroup implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    protected string $title;
-
     /** @var CheckInterface[] */
     protected array$checks = [];
 
@@ -23,9 +21,8 @@ class StatusCheckerGroup implements LoggerAwareInterface
     /**
      * StatusCheckerGroup constructor.
      */
-    public function __construct(string $title)
+    public function __construct(protected string $title)
     {
-        $this->title = $title;
         $this->stopwatch = new Stopwatch();
     }
 
@@ -48,7 +45,7 @@ class StatusCheckerGroup implements LoggerAwareInterface
     public function check(): void
     {
         foreach ($this->checks as $checker) {
-            $eventName = get_class($checker);
+            $eventName = $checker::class;
 
             $this->stopwatch->start($eventName);
             $result = $checker->checkStatus();

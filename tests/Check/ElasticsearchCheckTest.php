@@ -1,7 +1,6 @@
 <?php
 namespace BretRZaun\StatusPage\Tests\Check;
 
-use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use BretRZaun\StatusPage\Check\ElasticsearchCheck;
 use DG\BypassFinals;
 use Elastic\Elasticsearch\Client;

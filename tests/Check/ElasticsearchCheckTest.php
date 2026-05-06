@@ -10,10 +10,8 @@ use Elastic\Elasticsearch\Response\Elasticsearch;
 use PHPUnit\Framework\TestCase;
 
 // enable mock final classes
-#[RunTestsInSeparateProcesses]
 class ElasticsearchCheckTest extends TestCase
 {
-
     public function testSuccess(): void
     {
         BypassFinals::enable();
@@ -24,7 +22,7 @@ class ElasticsearchCheckTest extends TestCase
         $ping->expects($this->once())
             ->method('asBool')
             ->willReturn(true);
-        $client->expects($this->any())
+        $client->expects($this->once())
             ->method('ping')
             ->willReturn($ping);
 
@@ -45,7 +43,7 @@ class ElasticsearchCheckTest extends TestCase
         $ping->expects($this->once())
             ->method('asBool')
             ->willReturn(false);
-        $client->expects($this->any())
+        $client->expects($this->once())
             ->method('ping')
             ->willReturn($ping);
 
@@ -65,7 +63,7 @@ class ElasticsearchCheckTest extends TestCase
         $ping->expects($this->once())
             ->method('asBool')
             ->willReturn(true);
-        $client->expects($this->any())
+        $client->expects($this->once())
             ->method('ping')
             ->willReturn($ping);
 

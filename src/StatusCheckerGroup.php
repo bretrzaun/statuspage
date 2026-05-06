@@ -16,14 +16,11 @@ class StatusCheckerGroup implements LoggerAwareInterface
     /** @var Result[] */
     protected array $results = [];
 
-    private Stopwatch $stopwatch;
-
     /**
      * StatusCheckerGroup constructor.
      */
     public function __construct(protected string $title)
     {
-        $this->stopwatch = new Stopwatch();
     }
 
     public function getTitle(): string
@@ -47,9 +44,10 @@ class StatusCheckerGroup implements LoggerAwareInterface
         foreach ($this->checks as $checker) {
             $eventName = $checker::class;
 
-            $this->stopwatch->start($eventName);
+            $stopwatch = new Stopwatch();
+            $stopwatch->start($eventName);
             $result = $checker->checkStatus();
-            $result->setDuration($this->stopwatch->stop($eventName)->getDuration());
+            $result->setDuration($stopwatch->stop($eventName)->getDuration());
 
             if ($this->logger) {
                 $context = [

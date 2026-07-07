@@ -7,19 +7,17 @@ use Psr\Log\LoggerAwareTrait;
 
 class StatusChecker implements StatusCheckerInterface, LoggerAwareInterface
 {
-
     use LoggerAwareTrait;
 
     /**
      * registered ungrouped checks
-     * @var StatusCheckerGroup
      */
-    protected $ungroupedChecks;
+    protected ?StatusCheckerGroup $ungroupedChecks = null;
 
     /**
      * @var StatusCheckerGroup[]
      */
-    protected $results = [];
+    protected array $results = [];
 
     public function addCheck(CheckInterface $checker): void
     {

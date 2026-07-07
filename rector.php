@@ -10,7 +10,7 @@ return RectorConfig::configure()
         __DIR__ . '/tests',
     ])
     ->withImportNames(removeUnusedImports: true)
-    ->withPhpSets()
+    ->withPhpSets(php83: true)
     ->withPreparedSets(deadCode: true)
     ->withAttributesSets(symfony: true, doctrine: true, phpunit: true)
     ->withComposerBased(phpunit: true)

@@ -74,3 +74,10 @@ To run the tests, just enter:
 composer install
 vendor/bin/phpunit
 ```
+
+## Docker
+
+```
+docker build -t statuspage .
+docker run -it --rm --name statuspage -v "$PWD":/app statuspage bash
+```

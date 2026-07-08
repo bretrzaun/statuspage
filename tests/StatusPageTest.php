@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Symfony\Component\DomCrawler\Crawler;
+use BretRZaun\StatusPage\Enum\ResultType;
 
 class StatusPageTest extends TestCase
 {
@@ -23,7 +24,7 @@ class StatusPageTest extends TestCase
 
         $checker->check();
         return $twig->render(
-            'status.twig',
+            'bootstrap_5.html.twig',
             [
                 'results' => $checker->getResults(),
                 'title' => $title
@@ -57,18 +58,19 @@ class StatusPageTest extends TestCase
         $html = $this->render($statusChecker, 'TestPage');
 
         $crawler = new Crawler($html);
+        $this->assertCount(1, $crawler->filter('tr'));
+        $this->assertCount(1, $crawler->filter('tr.table-success'));
         $this->assertCount(1, $crawler->filter('th:contains("TestCheck")'));
         $this->assertCount(1, $crawler->filter('td:contains("OK")'));
     }
 
-    public function testFailer(): void
+    public function testFailure(): void
     {
         $mock = $this->getMockBuilder(AbstractCheck::class)
             ->setConstructorArgs(['TestCheck'])
             ->getMock();
 
         $result = new Result('TestCheck');
-        $result->setSuccess(false);
         $result->setError('Failed');
 
         $mock->expects($this->once())
@@ -80,8 +82,34 @@ class StatusPageTest extends TestCase
         $html = $this->render($statusChecker, 'TestPage');
 
         $crawler = new Crawler($html);
+        $this->assertCount(1, $crawler->filter('tr'));
+        $this->assertCount(1, $crawler->filter('tr.table-danger'));
         $this->assertCount(1, $crawler->filter('th:contains("TestCheck")'));
         $this->assertCount(1, $crawler->filter('td:contains("Failed")'));
+    }
+
+    public function testWarning(): void
+    {
+        $mock = $this->getMockBuilder(AbstractCheck::class)
+            ->setConstructorArgs(['TestCheck'])
+            ->getMock();
+
+        $result = new Result('TestCheck');
+        $result->setWarning('test warning');
+
+        $mock->expects($this->once())
+            ->method('checkStatus')
+            ->willReturn($result);
+
+        $statusChecker = new StatusChecker();
+        $statusChecker->addCheck($mock);
+        $html = $this->render($statusChecker, 'TestPage');
+
+        $crawler = new Crawler($html);
+        $this->assertCount(1, $crawler->filter('tr'));
+        $this->assertCount(1, $crawler->filter('tr.table-warning'));
+        $this->assertCount(1, $crawler->filter('th:contains("TestCheck")'));
+        $this->assertCount(1, $crawler->filter('td:contains("test warning")'));        
     }
 
     /**

@@ -26,14 +26,8 @@ class PhpVersionCheckTest extends TestCase
         ];
     }
 
-    /**
-     * @param string|null $greaterEquals
-     * @param string|null $lessThan
-     * @param string $phpVersion
-     * @param bool $expected
-     */
     #[DataProvider('getTestPhpVersionCheck')]
-    public function testPhpVersionCheck($greaterEquals, $lessThan, $phpVersion, $expected): void
+    public function testPhpVersionCheck(?string $greaterEquals, ?string $lessThan, string $phpVersion, bool $expected): void
     {
         $mock = $this->getMockBuilder(PhpVersionCheck::class)
             ->setConstructorArgs(['Test', $greaterEquals, $lessThan])

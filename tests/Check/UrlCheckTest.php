@@ -9,7 +9,6 @@ use Symfony\Component\HttpClient\Psr18Client;
 
 class UrlCheckTest extends TestCase
 {
-
     public function testSuccess(): void
     {
         $responses = [

@@ -6,8 +6,8 @@ use BretRZaun\StatusPage\Check\FileCheck;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 
-class FileCheckTest extends TestCase {
-
+class FileCheckTest extends TestCase 
+{
     protected static $testFile;
 
     public static function setUpBeforeClass(): void

@@ -12,7 +12,6 @@ use MongoDB\Model\CollectionInfo;
 
 class MongoDbCheckTest extends TestCase
 {
-
     public function testSuccess(): void
     {
         $client = $this->createMock(Client::class);

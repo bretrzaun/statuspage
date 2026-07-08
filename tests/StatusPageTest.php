@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Symfony\Component\DomCrawler\Crawler;
-use BretRZaun\StatusPage\Enum\ResultType;
 
 class StatusPageTest extends TestCase
 {

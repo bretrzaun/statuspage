@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class PhpIniCheckTest extends TestCase
 {
-
     public static function getTestData(): array
     {
         return [

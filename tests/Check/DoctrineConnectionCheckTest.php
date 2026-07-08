@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class DoctrineConnectionCheckTest extends TestCase
 {
-
     public function testSuccess(): void
     {
         $db = $this->getMockBuilder(Connection::class)

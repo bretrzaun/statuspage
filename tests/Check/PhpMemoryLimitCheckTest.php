@@ -8,8 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class PhpMemoryLimitCheckTest extends TestCase
 {
-    /** @var PhpMemoryLimitCheck */
-    protected $checker;
+    protected PhpMemoryLimitCheck $checker;
 
     protected function setUp(): void
     {

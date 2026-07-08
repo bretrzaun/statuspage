@@ -15,7 +15,6 @@ use BretRZaun\StatusPage\Enum\ResultType;
 
 class StatusPageTest extends TestCase
 {
-
     protected function render(StatusChecker $checker, string $title): string
     {
         // use the built-in Twig template
@@ -146,7 +145,7 @@ class StatusPageTest extends TestCase
         $loader = new FilesystemLoader(__DIR__ . '/../resources/views/');
         $twig = new Environment($loader, ['autoescape' => false]);
         $content = $twig->render(
-            'status.twig',
+            'bootstrap_5.html.twig',
             [
                 'results' => $checker->getResults(),
                 'title' => 'My test status page',

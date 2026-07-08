@@ -5,6 +5,7 @@ use BretRZaun\StatusPage\Check\CheckInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Stopwatch\Stopwatch;
+use BretRZaun\StatusPage\Enum\ResultType;
 
 class StatusCheckerGroup implements LoggerAwareInterface
 {
@@ -80,7 +81,7 @@ class StatusCheckerGroup implements LoggerAwareInterface
     public function hasErrors(): bool
     {
         foreach ($this->results as $result) {
-            if (!$result->isSuccess()) {
+            if ($result->getType() === ResultType::ERROR) {
                 return true;
             }
         }

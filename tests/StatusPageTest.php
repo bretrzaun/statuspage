@@ -56,6 +56,7 @@ class StatusPageTest extends TestCase
         $statusChecker = new StatusChecker();
         $statusChecker->addCheck($mock);
         $html = $this->render($statusChecker, 'TestPage');
+        $this->assertFalse($statusChecker->hasErrors());
 
         $crawler = new Crawler($html);
         $this->assertCount(1, $crawler->filter('tr'));
@@ -80,6 +81,7 @@ class StatusPageTest extends TestCase
         $statusChecker = new StatusChecker();
         $statusChecker->addCheck($mock);
         $html = $this->render($statusChecker, 'TestPage');
+        $this->assertTrue($statusChecker->hasErrors());
 
         $crawler = new Crawler($html);
         $this->assertCount(1, $crawler->filter('tr'));
@@ -104,6 +106,7 @@ class StatusPageTest extends TestCase
         $statusChecker = new StatusChecker();
         $statusChecker->addCheck($mock);
         $html = $this->render($statusChecker, 'TestPage');
+        $this->assertFalse($statusChecker->hasErrors());
 
         $crawler = new Crawler($html);
         $this->assertCount(1, $crawler->filter('tr'));

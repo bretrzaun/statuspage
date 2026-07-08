@@ -57,6 +57,7 @@ class StatusChecker implements StatusCheckerInterface, LoggerAwareInterface
                 break;
             }
         }
+
         return $error;
     }
 }

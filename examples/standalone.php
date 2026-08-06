@@ -1,10 +1,12 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
+use BretRZaun\StatusPage\Check\CallbackCheck;
 use BretRZaun\StatusPage\Check\PhpExtensionCheck;
 use BretRZaun\StatusPage\Check\PhpIniCheck;
 use BretRZaun\StatusPage\Check\PhpMemoryLimitCheck;
 use BretRZaun\StatusPage\Check\PhpVersionCheck;
+use BretRZaun\StatusPage\Result;
 use BretRZaun\StatusPage\StatusChecker;
 use BretRZaun\StatusPage\StatusCheckerGroup;
 
@@ -38,6 +40,11 @@ $checker->addGroup($group03);
 
 $checker->addCheck(new PhpExtensionCheck('PHP Extension / libxml', 'libxml'));
 $checker->addCheck(new PhpExtensionCheck('PHP Extension / SimpleXML', 'SimpleXML'));
+
+// example check that reports a warning instead of an error
+$checker->addCheck(new CallbackCheck('Disk space', function (Result $result): void {
+    $result->setWarning('Disk usage is above 80%');
+}));
 
 $client = \Elastic\Elasticsearch\ClientBuilder::create()
     ->setHosts(['localhost:9200'])

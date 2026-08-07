@@ -66,14 +66,12 @@ class StatusChecker implements StatusCheckerInterface, LoggerAwareInterface
     {
         $worstResultType = ResultType::SUCCESS;
         foreach ($this->results as $group) {
-            foreach ($group->getResults() as $result) {
-                if ($result->getType() == ResultType::ERROR) {
-                    $worstResultType = $result->getType();
-                    break 2;
-                }
-                if ($result->getType() == ResultType::WARNING) {
-                    $worstResultType = $result->getType();
-                }
+            if ($group->getWorstResultType() == ResultType::ERROR) {
+                $worstResultType = ResultType::ERROR;
+                break;
+            }
+            if ($group->getWorstResultType() == ResultType::WARNING) {
+                $worstResultType = ResultType::WARNING;
             }
         }
         return $worstResultType;

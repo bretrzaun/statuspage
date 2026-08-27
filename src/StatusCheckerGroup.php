@@ -87,4 +87,35 @@ class StatusCheckerGroup implements LoggerAwareInterface
         }
         return false;
     }
+
+    /**
+     * Returns if there is a warning result in this group.
+     */
+    public function hasWarnings(): bool
+    {
+        foreach ($this->results as $result) {
+            if ($result->getType() === ResultType::WARNING) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns worst result type of group
+     */
+    public function getWorstResultType(): ResultType
+    {
+        $worstResultType = ResultType::SUCCESS;
+        foreach ($this->results as $result) {
+            if ($result->getType() == ResultType::ERROR) {
+                $worstResultType = $result->getType();
+                break;
+            }
+            if ($result->getType() == ResultType::WARNING) {
+                $worstResultType = $result->getType();
+            }
+        }
+        return $worstResultType;
+    }
 }

@@ -2,6 +2,7 @@
 namespace BretRZaun\StatusPage;
 
 use BretRZaun\StatusPage\Check\CheckInterface;
+use BretRZaun\StatusPage\Enum\ResultType;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
@@ -59,5 +60,20 @@ class StatusChecker implements StatusCheckerInterface, LoggerAwareInterface
         }
 
         return $error;
+    }
+
+    public function getWorstResultType(): ResultType
+    {
+        $worstResultType = ResultType::SUCCESS;
+        foreach ($this->results as $group) {
+            if ($group->getWorstResultType() == ResultType::ERROR) {
+                $worstResultType = ResultType::ERROR;
+                break;
+            }
+            if ($group->getWorstResultType() == ResultType::WARNING) {
+                $worstResultType = ResultType::WARNING;
+            }
+        }
+        return $worstResultType;
     }
 }

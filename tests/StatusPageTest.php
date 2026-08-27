@@ -7,6 +7,7 @@ use BretRZaun\StatusPage\Check\AbstractCheck;
 use BretRZaun\StatusPage\Check\CallbackCheck;
 use BretRZaun\StatusPage\Result;
 use BretRZaun\StatusPage\StatusChecker;
+use BretRZaun\StatusPage\StatusCheckerGroup;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -110,7 +111,70 @@ class StatusPageTest extends TestCase
         $this->assertCount(1, $crawler->filter('tr'));
         $this->assertCount(1, $crawler->filter('tr.table-warning'));
         $this->assertCount(1, $crawler->filter('th:contains("TestCheck")'));
-        $this->assertCount(1, $crawler->filter('td:contains("test warning")'));        
+        $this->assertCount(1, $crawler->filter('td:contains("test warning")'));
+    }
+
+    public function testGroupColorForWarning(): void
+    {
+        $group = new StatusCheckerGroup('My Group');
+        $group->addCheck(new CallbackCheck('TestCheck', function (Result $result): void {
+            $result->setWarning('test warning');
+        }));
+
+        $statusChecker = new StatusChecker();
+        $statusChecker->addGroup($group);
+        $html = $this->render($statusChecker, 'TestPage');
+
+        $crawler = new Crawler($html);
+        $this->assertCount(1, $crawler->filter('.card-header.bg-warning'));
+    }
+
+    /**
+     * An error in one group must still color the group card danger even if another
+     * check in the same group only produced a warning.
+     */
+    public function testGroupColorForErrorTakesPrecedenceOverWarning(): void
+    {
+        $group = new StatusCheckerGroup('My Group');
+        $group->addCheck(new CallbackCheck('WarningCheck', function (Result $result): void {
+            $result->setWarning('test warning');
+        }));
+        $group->addCheck(new CallbackCheck('ErrorCheck', function (Result $result): void {
+            $result->setError('test error');
+        }));
+
+        $statusChecker = new StatusChecker();
+        $statusChecker->addGroup($group);
+        $html = $this->render($statusChecker, 'TestPage');
+
+        $crawler = new Crawler($html);
+        $this->assertCount(1, $crawler->filter('.card-header.bg-danger'));
+        $this->assertCount(0, $crawler->filter('.card-header.bg-warning'));
+    }
+
+    public function testAbbreviatedWarning(): void
+    {
+        $checker = new StatusChecker();
+        $checker->addCheck(new CallbackCheck('TestCheck', function (Result $result): void {
+            $result->setWarning('test warning');
+        }));
+        $checker->check();
+
+        $loader = new FilesystemLoader(__DIR__ . '/../resources/views/');
+        $twig = new Environment($loader, ['autoescape' => false]);
+        $content = $twig->render(
+            'bootstrap_5.html.twig',
+            [
+                'results' => $checker->getResults(),
+                'title' => 'My test status page',
+                'showDetails' => false,
+            ]
+        );
+
+        $this->assertStringContainsString('System has some warnings', $content);
+        $this->assertStringContainsString('bg-warning', $content);
+        $this->assertStringNotContainsString('System is having some issues', $content);
+        $this->assertStringNotContainsString('System is up and running', $content);
     }
 
     /**

@@ -45,11 +45,7 @@
                 <div>
                     {% for group in results %}
                         {# determine group color #}
-                        {% if group.hasErrors() == false %}
-                            {% set classColor = 'success' %}
-                        {% else %}
-                            {% set classColor = 'danger' %}
-                        {% endif %}
+                        {% set classColor = group.getWorstResultType().cssClass %}
 
                         {# determin if group contents are shown by default #}
                         {% set classShow = '' %}
@@ -73,15 +69,10 @@
                                 <div class="card-body p-0">
                                     <table class="table table-bordered table-hover m-0">
                                         {% for result in group.getResults() %}
-                                            {% if result.success == true %}
-                                                {% set classColor = 'success' %}
-                                            {% else %}
-                                                {% set classColor = 'danger' %}
-                                            {% endif %}
-                                            <tr class="table-{{ classColor }}">
+                                            <tr class="table-{{ result.type.cssClass }}">
                                                 <th width="50%">{{ result.label }}</th>
                                                 <td width="50%">
-                                                    {%- if result.success == true %}
+                                                    {%- if result.type.value != 'error' %}
                                                         {{- result.details|default('OK') -}}
                                                     {% else %}
                                                         {{- result.error|default('Failure') -}}
@@ -97,19 +88,18 @@
                 </div>
             {% else %}
                 {# show abbreviated results #}
-                {% set hasErrors = false %}
+                {% set classColor = 'success' %}
+                {% set statusText = 'System is up and running' %}
                 {% for group in results %}
-                    {% if group.hasErrors() == true %}
-                        {% set hasErrors = true %}
+                    {% set groupWorstType = group.getWorstResultType() %}
+                    {% if groupWorstType.value == 'error' %}
+                        {% set classColor = groupWorstType.cssClass %}
+                        {% set statusText = 'System is having some issues' %}
+                    {% elseif groupWorstType.value == 'warning' and classColor != 'danger' %}
+                        {% set classColor = groupWorstType.cssClass %}
+                        {% set statusText = 'System has some warnings' %}
                     {% endif %}
                 {% endfor %}
-                {% if hasErrors == false %}
-                    {% set classColor = 'success' %}
-                    {% set statusText = 'System is up and running' %}
-                {% else %}
-                    {% set classColor = 'danger' %}
-                    {% set statusText = 'System is having some issues' %}
-                {% endif %}
 
                 <div class="text-white bg-{{ classColor }} p-3 rounded">
                     <h2 class="mb-0">
